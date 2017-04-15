@@ -1,0 +1,303 @@
+<div class="row">
+
+    <div class="col-lg-2 pull-left act-box">
+
+
+
+
+        <button class="btn btn-info btn-lg" (click)="createSubActivity(activity)" role="button">Create Subactivity</button>
+        <div class="clear"></div>
+        <button *ngIf="status!='Closed'" class="btn btn-primary btn-lg" (click)="showTaskDialog()" role="button">Progress Update</button>
+        <div class="clear"></div>
+        <!--<div class="ui-grid-row act-aligned">
+            <div *ngIf="childrenActivities.length > 0" class="ui-grid-col-12">
+                <div class="panel-group">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse1" class="collapsed">Related Sub Activities</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li *ngFor="let anAct of childrenActivities" class="list-group-item list-group-item-success"><a style="cursor: pointer" (click)="viewActivity(anAct._id)">{{anAct.title}}</a></li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="ui-grid-row act-aligned">
+
+            <div *ngIf="parentActivity!=null" class="ui-grid-col-12">
+                <div class="panel-group">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse2" class="collapsed">Parent Activity</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse in">
+                            <div class="panel-body">
+
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-warning"> <a style="cursor: pointer" (click)="viewActivity(parentActivity._id)">{{parentActivity.title}}</a></li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+
+    <div class="col-lg-7 act-box">
+
+        <div class="act-tree">
+            <div class="clt">
+                <ul>
+                    <li>
+                        {{dept}}
+                        <!--department -->
+                        <ul *ngIf="parentActivity!=null">
+                            <li>
+                                {{parentActivity.title}}
+                                <!--Parent-->
+                                <ul>
+                                    <li>
+                                        <!--self -->
+                                        {{activity.title}}
+                                        <ul *ngIf="childrenActivities.length > 0">
+                                            <li *ngFor="let item of childrenActivities">
+                                                {{item.title}}
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- if parent is not found -->
+                        <ul *ngIf="parentActivity==null">
+
+                            <li>
+                                <!--self -->
+                                {{activity.title}}
+                                <ul *ngIf="childrenActivities.length > 0">
+                                    <li *ngFor="let item of childrenActivities">
+                                        {{item.title}}
+                                    </li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd">Title </div>
+        <div class="right act-ct">
+            <h4>{{activity.title}}</h4>
+        </div>
+        <div class="left act-hd">Description </div>
+        <div class="right act-ct">
+            {{activity.desc}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Category </div>
+        <div class="right act-ct">
+            {{category}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Department(s) </div>
+        <div class="right act-ct">
+            {{dept}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Status </div>
+        <div class="right act-ct">
+            {{status}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Created By </div>
+        <div class="right act-ct">
+            {{activity.createdBy}} On {{activity.createdAt|date}}
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct">Start Date</div>
+        <div class="right act-ct">
+            {{activity.startDate|date }}
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct">End Date</div>
+        <div class="right act-ct">
+            {{activity.endDate|date}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Milestone</div>
+        <div class="right act-ct">
+            {{phase}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Sponsers </div>
+        <div class="right act-ct">
+            {{activity.sponsor}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Assignee </div>
+        <div class="right act-ct">
+            {{activity.assignee}}
+        </div>
+        <div class="clear"></div>
+
+
+        <div class="left act-hd act-ct">Completion (%) </div>
+        <div class="right act-ct">
+            {{activity.percentage}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Focus Area </div>
+        <div class="right act-ct">
+            {{focus}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Escalation </div>
+        <div class="right act-ct">
+            {{visibility}}
+        </div>
+        <div class="clear"></div>
+
+
+
+
+    </div>
+    <div *ngIf="tasks.length > 0" class="col-lg-3 pull-right act-box">
+        <div class="panel panel-info">
+            <div class="panel-heading">Progress Updates</div>
+            <div class="panel-body">
+                <div *ngFor="let task of tasks" class="panel panel-default">
+                    <div class="panel-body">
+                        <p>{{task.desc}}</p>
+                        <p>{{task.createdBy}}, {{task.createdAt|date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<br />
+<button type="button" class="btn btn-default btn-lg" (click)="goback()">
+  <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back
+</button>
+<button class="btn btn-info btn-lg pull-right" (click)="createSubActivity(activity)" role="button">Create Subactivity</button>
+
+<br />
+<br />-->
+
+
+<!--<p-panel [toggleable]="true" collapsed="false">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title" style="font-size:16px;font-weight: bold; display:inline-block;">Tasks Detail </span>
+        </div>
+    </p-header>
+
+    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input #gb type="text" pInputText size="50" placeholder="Search Anything">
+    </div>
+    <p-dataTable [value]="tasks" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
+        <p-header>List of Tasks</p-header>
+        <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="desc" header="Description" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="startDate" header="Start Date">
+            <template let-col let-task="rowData" pTemplate="body">
+                {{task[col.field]|date }}
+            </template>
+        </p-column>
+        <p-column field="endDate" header="End Date">
+            <template let-col let-task="rowData" pTemplate="body">
+                {{task[col.field]|date }}
+            </template>
+        </p-column>
+        <p-column field="percentage" header="(%)"></p-column>
+        <p-column field="createdBy" header="Created By" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="createdAt" header="Created At">
+            <template let-col let-task="rowData" pTemplate="body">
+                {{task[col.field]|date }}
+            </template>
+        </p-column>
+    </p-dataTable>
+
+
+
+</p-panel>-->
+
+
+<p-dialog #aDialog header="Create Task" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
+    <app-task [activityId]="activity._id" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
+</p-dialog>
+<!--<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+            <label for="title">Task Title</label>
+            <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required />
+            <div *ngIf="f.submitted && !title.valid" class="help-block"> Title is required</div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !desc.valid }">
+            <label for="desc">Task Description</label>
+            <textarea class="form-control" name="desc" [(ngModel)]="model.desc" #desc="ngModel" required></textarea>
+            <div *ngIf="f.submitted && !desc.valid" class="help-block"> Description is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !startDate.valid }">
+            <label for="startDate">Start Date</label>
+            <p-calendar [appendTo]="aDialog" name="startDate" [icon]="true" [(ngModel)]="model.startDate" dateFormat="mm/dd/yy" dataType="string" required></p-calendar>
+
+            <div *ngIf="f.submitted && !startDate.valid" class="help-block">Start Date is required</div>
+        </div>
+
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
+            <label for="startDate">Start Date</label>
+            <p-calendar [appendTo]="aDialog" name="endDate" [icon]="true" [(ngModel)]="model.endDate" dateFormat="mm/dd/yy" dataType="string" required></p-calendar>
+
+            <div *ngIf="f.submitted && !endDate.valid" class="help-block">End Date is required</div>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
+            <label for="percentage">Completion Percentage(%)</label>
+
+
+            <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="model.percentage" style="width:200px" />
+            <p-slider name="percentage" [(ngModel)]="model.percentage" [style]="{'width':'200px'}"></p-slider>
+
+
+        </div>
+
+        <div class="form-group">
+            <button [disabled]="loading" (click)="saveTask(activity._id)" [disabled]="!f.form.valid" class="btn btn-primary">Save</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <button (click)="close()" class="btn btn-link">Cancel</button>
+        </div>
+    </form>-->

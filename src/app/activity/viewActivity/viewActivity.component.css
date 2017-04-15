@@ -1,0 +1,94 @@
+.ui-grid-row {
+    text-align: center;
+}
+
+.ui-grid {
+    margin: 10px 0px;
+}
+
+.ui-grid-row>div {
+    padding: 4px 10px;
+}
+
+.em-sm-panel {
+    height: 320px;
+    width: 100%;
+}
+
+.left {
+    width: 200px;
+    float: left;
+}
+
+.right {
+    margin-left: 200px;
+}
+
+.clear {
+    clear: both;
+}
+
+.act-hd {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.act-ct {
+    margin-bottom: 10px;
+    padding-left: 40px;
+}
+
+.act-aligned {
+    text-align: left!important;
+}
+
+.act-box {
+    padding: 5px;
+}
+
+
+/* tree view*/
+
+.clt,
+.clt ul,
+.clt li {
+    position: relative;
+    font-size: small;
+}
+
+.clt ul {
+    list-style: none;
+    padding-left: 32px;
+}
+
+.clt li::before,
+.clt li::after {
+    content: "";
+    position: absolute;
+    left: -12px;
+}
+
+.clt li::before {
+    border-top: 1px solid #000;
+    top: 9px;
+    width: 8px;
+    height: 0;
+}
+
+.clt li::after {
+    border-left: 1px solid #000;
+    height: 100%;
+    width: 0px;
+    top: 2px;
+}
+
+.clt ul>li:last-child::after {
+    height: 8px;
+}
+
+.act-tree {
+    border: 1px solid #DCDCDC;
+    border-radius: 10px;
+    padding: 0 10px 10px 10px;
+}

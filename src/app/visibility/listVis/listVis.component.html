@@ -1,0 +1,40 @@
+<p-dataTable [value]="visibilities">
+    <p-column field="title" header="Title"></p-column>
+    <p-column field="code" header="Title"></p-column>
+    <p-column field="createdBy" header="Created By"></p-column>
+
+    <p-column styleClass="col-button" [style]="{'width':'80px'}">
+        <template pTemplate="header">
+      <i class="fa fa-cogs"></i>
+    </template>
+
+        <template let-vis="rowData" pTemplate="body">
+      <button type="button" pButton (click)="editVisibility(vis)" icon="fa-pencil"></button>
+      <button type="button" (click)="deleteVisibility(vis)" pButton icon="fa-trash"></button>
+    </template>
+    </p-column>
+</p-dataTable>
+
+<p-dialog header="Department Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}" [style]="{'overflow':'visible'}" [resizable]="false">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="vis">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="title">Title</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="vis.title" required /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="code">Department Code</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="vis.code" required /></div>
+        </div>
+
+
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-window-close-o" (click)="cancel()" label="Cancel"></button>
+            <button type="button" pButton icon="fa-floppy-o" (click)="updateVisibility(vis)" label="Update"></button>
+
+        </div>
+    </p-footer>
+
+</p-dialog>
+<p-confirmDialog width="425"></p-confirmDialog>

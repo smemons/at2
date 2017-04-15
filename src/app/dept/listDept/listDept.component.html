@@ -1,0 +1,45 @@
+<p-dataTable [value]="depts">
+    <p-column field="title" header="Title"></p-column>
+    <p-column field="code" header="Dept Code"></p-column>
+    <p-column field="desc" header="Description"></p-column>
+    <p-column field="createdBy" header="Created By"></p-column>
+
+    <p-column styleClass="col-button" [style]="{'width':'80px'}">
+        <template pTemplate="header">
+      <i class="fa fa-cogs"></i>
+    </template>
+
+        <template let-dept="rowData" pTemplate="body">
+      <button type="button" pButton (click)="editDept(dept)" icon="fa-pencil"></button>
+      <button type="button" (click)="deleteDept(dept)" pButton icon="fa-trash"></button>
+    </template>
+    </p-column>
+</p-dataTable>
+
+<p-dialog header="Department Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}" [style]="{'overflow':'visible'}" [resizable]="false">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="dept">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="title">Title</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="dept.title" required /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="code">Department Code</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="dept.code" required /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="desc">Description</label></div>
+            <div class="ui-grid-col-8"><textarea class="form-control" name="desc" [(ngModel)]="dept.desc" #desc="ngModel" required></textarea>
+            </div>
+        </div>
+
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-window-close-o" (click)="cancel()" label="Cancel"></button>
+            <button type="button" pButton icon="fa-floppy-o" (click)="updateDept(dept)" label="Update"></button>
+
+        </div>
+    </p-footer>
+
+</p-dialog>
+<p-confirmDialog width="425"></p-confirmDialog>

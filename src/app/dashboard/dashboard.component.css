@@ -1,0 +1,34 @@
+/* basic positioning */
+
+.legend {
+    list-style: none;
+    margin-left: 30%;
+}
+
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+
+.legend span {
+    border: 1px solid #ccc;
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin: 2px;
+}
+
+
+/* your colors */
+
+.legend .closedact {
+    background-color: #D9534F;
+}
+
+.legend .createdbyme {
+    background-color: #6FF5B2;
+}
+
+.legend .assignedtome {
+    background-color: #8A9AFB;
+}

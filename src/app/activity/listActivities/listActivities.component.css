@@ -1,0 +1,14 @@
+.at-sm-panel {
+    height: 400px;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.opend {
+    background-color: #d4e0a1;
+}
+
+.closed {
+    background-color: #f76a6a;
+}
+

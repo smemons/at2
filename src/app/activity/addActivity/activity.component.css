@@ -1,0 +1,28 @@
+label {
+    display: block;
+}
+
+.at100-col {
+    width: 100%;
+}
+
+.left {
+    width: 200px;
+    float: left;
+}
+
+.right {
+    margin-left: 200px;
+}
+
+.clear {
+    clear: both;
+}
+
+.act-hd {
+    font-weight: bold;
+}
+
+.act-ct {
+    margin-bottom: 10px;
+}
