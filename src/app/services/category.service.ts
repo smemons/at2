@@ -1,3 +1,4 @@
+
 import { Category } from './../models/category';
 import { AuthService } from './auth.service';
 import { Http, Response } from '@angular/http';
@@ -5,6 +6,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CategoryService {
+
 
 constructor(private http:Http,private authService: AuthService) { }
 

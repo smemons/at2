@@ -1,4 +1,6 @@
-
+import { CacheStoreService } from '../../services/cacheStore.service';
+import { Wrapper } from './../../models/wrapper';
+import {DDType} from './../../models/DDType.enum';
 import { StatusService } from './../../services/status.service';
 import { Router } from '@angular/router';
 import { AlertService } from './../../services/alert.service';
@@ -14,7 +16,7 @@ export class AddStatusComponent implements OnInit {
    model : any = {};
   loading = false;
 
-  constructor(private statusService : StatusService, private alertService : AlertService, private router : Router) {}
+  constructor(private cache:CacheStoreService,  private statusService : StatusService, private alertService : AlertService, private router : Router) {}
 
   ngOnInit() {}
   createStatus() {
@@ -25,9 +27,9 @@ export class AddStatusComponent implements OnInit {
       .statusService
       .create(this.model)
       .subscribe(data => {
-        //statu changed - notify all subscriber
-        this.statusService.isStatusChanged.next(true);
-        console.log('Status created - Service!');
+
+        let wrapper=new Wrapper(data.title,data._id,DDType.STATUS);
+        this.cache.isDataCreated.next(wrapper);
         this
           .alertService
           .success('Status created!');

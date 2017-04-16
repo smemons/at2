@@ -10,15 +10,13 @@ var savePhase = function(req, res, next) {
         console.log('creating Phase now');
         var phase = new Phase(req.body);
 
-        phase.save(function(err) {
+        phase.save(function(err, doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Phase created!'
-                });
+                return res.json(doc);
             }
         });
     }

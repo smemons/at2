@@ -1,3 +1,4 @@
+import { CacheStoreService } from '../../services/cacheStore.service';
 import { StatusService } from './../../services/status.service';
 
 
@@ -28,34 +29,40 @@ export class ActivityComponent implements OnInit,AfterViewInit {
       isChild : boolean;
       parentTitle : string;
       category : string;
-      categories : SelectItem[]=[];
+     // categories : SelectItem[]=[];
       status : string;
-      statuses : SelectItem[]=[];
+     // statuses : SelectItem[]=[];
 
       focus : string;
-      focuses : SelectItem[];
+      //focuses : SelectItem[];
 
       dept : string[];
-      depts : SelectItem[];
+      //depts : SelectItem[];
 
       phase : string;
-      phases : SelectItem[];
+      //phases : SelectItem[];
 
       visibility : string[];
-      visibilities : SelectItem[];
+      //visibilities : SelectItem[];
 
-  constructor(private userService:Userservice,
+  constructor(
               private utilityService:UtilityService,
               private alertService:AlertService,
               private activityService:ActivityService,
-              private statusService:StatusService,
-              private cd:ChangeDetectorRef,
+
+              private cache:CacheStoreService,
               private router:Router,
              ) { }
 
 ngAfterViewInit()
 {
-  this.cd.detectChanges();
+    //this.categories=this.cache.categories;
+   // this.depts=this.cache.depts;
+    // this.focuses=this.cache.depts;
+    // this.statuses=this.cache.statuses;
+    // this.phases=this.cache.statuses;
+    // this.visibilities=this.cache.visibilities;
+    // this.cd.markForCheck();
 }
   ngOnInit() {
 
@@ -77,56 +84,58 @@ ngAfterViewInit()
       this.model._id=undefined;
       this.model.level=this.model.level+1;
    }
+   this.cache.populateAll();
+
 
     //observers section
     //check if status is changed
-    this.statusService.isStatusChanged.subscribe(chg=>{
+//     this.statusService.isStatusChanged.subscribe(chg=>{
 
-      if(chg)
-      {
-            console.log("reloading statuses again! with observer ");
+//       if(chg)
+//       {
+//             console.log("reloading statuses again! with observer ");
 
-            this.utilityService.getAllStatus().subscribe(sts=>{
-            this.statuses=this.utilityService.getSelectItemPublished(sts,null);
-          });
-      }
+//             this.utilityService.getAllStatus().subscribe(sts=>{
+//             this.statuses=this.utilityService.getSelectItemPublished(sts,null);
+//           });
+//       }
 
-    })
+//     })
 
-    // //get all the dept List
-    this.depts = [];
-    this.utilityService.getAllDepts().subscribe(depts=>{
+//     // //get all the dept List
+//     this.depts = [];
+//     this.utilityService.getAllDepts().subscribe(depts=>{
 
-      this.depts=this.utilityService.getSelectItemPublished(depts,null);
+//       this.depts=this.utilityService.getSelectItemPublished(depts,null);
 
-    });
+//     });
 
-    this.utilityService.getAllCategories().subscribe(cat=>this.categories=cat);
+//     this.utilityService.getAllCategories().subscribe(cat=>this.categories=cat);
 
-  //get all Status
+//   //get all Status
 
-    this.utilityService.getAllStatus().subscribe(sts=>{
-    this.statuses=this.utilityService.getSelectItemPublished(sts,null);
-  });
+//     this.utilityService.getAllStatus().subscribe(sts=>{
+//     this.statuses=this.utilityService.getSelectItemPublished(sts,null);
+//   });
 
-   //get all focus areas
-this.focuses=[];
-    this.utilityService.getAllFocuses().subscribe(foc=>{
-       this.focuses=this.utilityService.getSelectItemPublished(foc,"Focus Area");
-  });
+//    //get all focus areas
+// this.focuses=[];
+//     this.utilityService.getAllFocuses().subscribe(foc=>{
+//        this.focuses=this.utilityService.getSelectItemPublished(foc,"Focus Area");
+//   });
 
-  /////////////////////
-   //get all visiblities areas
-this.visibilities=[];
-    this.utilityService.getAllVisibilities().subscribe(vis=>{
-     this.visibilities=this.utilityService.getSelectItemPublished(vis,null);
-  });
-  /////////////////////
-   //get all phases areas
-this.phases=[];
-    this.utilityService.getAllPhases().subscribe(phase=>{
-       this.phases=this.utilityService.getSelectItemPublished(phase,"Phase");
-    });
+//   /////////////////////
+//    //get all visiblities areas
+// this.visibilities=[];
+//     this.utilityService.getAllVisibilities().subscribe(vis=>{
+//      this.visibilities=this.utilityService.getSelectItemPublished(vis,null);
+//   });
+//   /////////////////////
+//    //get all phases areas
+// this.phases=[];
+//     this.utilityService.getAllPhases().subscribe(phase=>{
+//        this.phases=this.utilityService.getSelectItemPublished(phase,"Phase");
+//     });
   }
   createActivity(){
 
@@ -137,7 +146,7 @@ this.phases=[];
 
                 data => {
 
-                   debugger;
+
                    this.alertService.success('Activty created!');
                    this.activityService.isReceived=true;
                    this.activityService.isActivityChanged.next(data);
@@ -170,5 +179,24 @@ this.phases=[];
 viewActivity(id:String)
 {
   this.utilityService.viewActivity(id);
+}
+//get all drop down from cache service
+get categories():SelectItem[] {
+  return this.cache.categories;
+}
+get depts():SelectItem[] {
+  return this.cache.depts;
+}
+get statuses():SelectItem[] {
+  return this.cache.statuses;
+}
+get focuses():SelectItem[] {
+  return this.cache.focuses;
+}
+get visibilities():SelectItem[] {
+  return this.cache.visibilities;
+}
+get phases():SelectItem[] {
+  return this.cache.phases;
 }
 }

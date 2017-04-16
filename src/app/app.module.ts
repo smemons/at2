@@ -1,3 +1,4 @@
+import { CacheStoreService } from './services/cacheStore.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreeBuilderService } from './services/treeBuilder.service';
 import { StatusService } from './services/status.service';
@@ -127,7 +128,8 @@ import { AppComponent } from './app.component';
     UtilityService,
     StatusService,
     TreeBuilderService,
-    TruncatePipe
+    TruncatePipe,
+    CacheStoreService
   ],
   bootstrap: [AppComponent]
 })

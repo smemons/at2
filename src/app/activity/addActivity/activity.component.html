@@ -25,9 +25,11 @@
         </div>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !category.valid }">
             <label for="category">Category</label>
-            <select class="form-control" id="category" name="category" [(ngModel)]="model.catId" #category="ngModel" required>
+            <!--<select class="form-control" id="category" name="category" [(ngModel)]="model.catId" #category="ngModel" required>
               <option *ngFor="let cat of categories" [ngValue]="cat._id">{{cat.title}}</option>
-            </select>
+            </select>-->
+            <p-dropdown name="category" [options]="categories" [(ngModel)]="model.catId" [style]="{'width':'100%'}" #category="ngModel" required></p-dropdown>
+
             <div *ngIf="f.submitted && !category.valid" class="help-block"> Category is required</div>
         </div>
         <div class="row">

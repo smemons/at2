@@ -9,15 +9,13 @@ var saveCategory = function(req, res, next) {
         console.log('creating Category now');
         var category = new Category(req.body);
 
-        category.save(function(err) {
+        category.save(function(err, doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Category created!'
-                });
+                return res.json(doc);
             }
         });
     }

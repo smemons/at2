@@ -1,3 +1,6 @@
+import { DDType } from '../models/DDType.enum';
+import { Wrapper } from './../models/wrapper';
+import { CacheStoreService } from './../services/cacheStore.service';
 import { Category } from './../models/category';
 import { Router } from '@angular/router';
 import { AlertService } from './../services/alert.service';
@@ -13,6 +16,7 @@ export class CategoryComponent implements OnInit {
     model: any = {};
     loading = false;
   constructor(private categoryService:CategoryService,private alertService:AlertService,
+  private cache:CacheStoreService,
   private router:Router) { }
 
   ngOnInit() {
@@ -27,6 +31,8 @@ export class CategoryComponent implements OnInit {
                 data => {
                    console.log('Category created - Service!');
                    this.alertService.success('Category created!');
+                   let wrapper=new Wrapper(data.title,data._id,DDType.CATEGORY);
+                   this.cache.isDataCreated.next(wrapper);
                     this.router.navigate(['/home']);
                 },
                 error => {

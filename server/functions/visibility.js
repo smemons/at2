@@ -10,15 +10,13 @@ var saveVisibility = function(req, res, next) {
         console.log('creating Visibility now');
         var vis = new Visibility(req.body);
 
-        vis.save(function(err) {
+        vis.save(function(err, doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Visibility created!'
-                });
+                return res.json(doc);
             }
         });
     }

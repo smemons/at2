@@ -10,15 +10,13 @@ var saveStatus = function(req, res, next) {
         console.log('creating Status now');
         var status = new Status(req.body);
 
-        status.save(function(err) {
+        status.save(function(err,doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Status created!'
-                });
+                return res.json(doc);
             }
         });
     }

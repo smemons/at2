@@ -1,3 +1,6 @@
+import { CacheStoreService } from './../../services/cacheStore.service';
+import { Wrapper } from './../../models/wrapper';
+import { DDType } from './../../models/DDType.enum';
 import { Router } from '@angular/router';
 import { AlertService } from './../../services/alert.service';
 import { PhaseService } from './../../services/phase.service';
@@ -12,7 +15,7 @@ export class AddPhaseComponent implements OnInit {
 
    model : any = {};
   loading = false;
-  constructor(private phaseService : PhaseService, private alertService : AlertService, private router : Router) {}
+  constructor(private cache:CacheStoreService, private phaseService : PhaseService, private alertService : AlertService, private router : Router) {}
 
   ngOnInit() {}
   createPhase() {
@@ -23,7 +26,8 @@ export class AddPhaseComponent implements OnInit {
       .phaseService
       .create(this.model)
       .subscribe(data => {
-        console.log('Phase created - Service!');
+        let wrapper=new Wrapper(data.title,data._id,DDType.PHASE);
+        this.cache.isDataCreated.next(wrapper);
         this
           .alertService
           .success('Phase created!');

@@ -10,15 +10,13 @@ var saveDept = function(req, res, next) {
         console.log('creating Dept now');
         var dept = new Dept(req.body);
 
-        dept.save(function(err) {
+        dept.save(function(err,doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Dept created!'
-                });
+                return res.json(doc);
             }
         });
     }

@@ -10,15 +10,13 @@ var saveFocus = function(req, res, next) {
         console.log('creating Focus now');
         var focus = new Focus(req.body);
 
-        focus.save(function(err) {
+        focus.save(function(err,doc) {
             if (err) {
 
                 return next(err);
             } else {
 
-                return res.json({
-                    message: 'Focus created!'
-                });
+                return res.json(doc);
             }
         });
     }

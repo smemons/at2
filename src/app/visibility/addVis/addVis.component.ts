@@ -1,4 +1,6 @@
-
+import { CacheStoreService } from './../../services/cacheStore.service';
+import { Wrapper } from './../../models/wrapper';
+import { DDType } from './../../models/DDType.enum';
 import { Router } from '@angular/router';
 import { AlertService } from './../../services/alert.service';
 import { VisibilityService } from './../../services/visibility.service';
@@ -13,7 +15,7 @@ export class AddVisComponent implements OnInit {
 
    model : any = {};
   loading = false;
-  constructor(private visibilityService : VisibilityService, private alertService : AlertService, private router : Router) {}
+  constructor(private cache:CacheStoreService,private visibilityService : VisibilityService, private alertService : AlertService, private router : Router) {}
 
   ngOnInit() {}
   createVisibility() {
@@ -24,7 +26,8 @@ export class AddVisComponent implements OnInit {
       .visibilityService
       .create(this.model)
       .subscribe(data => {
-        console.log('Visibility created - Service!');
+        let wrapper=new Wrapper(data.title,data._id,DDType.VISIBILITY);
+        this.cache.isDataCreated.next(wrapper);
         this
           .alertService
           .success('Visibility created!');

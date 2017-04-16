@@ -6,8 +6,6 @@ import { Subject,BehaviorSubject } from 'rxjs/Rx';
 @Injectable()
 export class StatusService {
 
-isStatusChanged: Subject<boolean> = new BehaviorSubject(false);
-  isLoggedIn$ = this.isStatusChanged.asObservable();
   constructor(private http : Http, private authService : AuthService) {}
 
   //create Status

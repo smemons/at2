@@ -1,3 +1,4 @@
+
 import { Location } from '@angular/common';
 import { Activity } from './../models/activity';
 import { SelectItem } from 'primeng/primeng';
@@ -11,6 +12,7 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class UtilityService {
+
 
 passedActivity:Activity;
 previousUrl:string;
