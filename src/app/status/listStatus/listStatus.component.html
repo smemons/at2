@@ -10,10 +10,10 @@
       <i class="fa fa-cogs"></i>
     </template>
 
-        <template let-status="rowData" pTemplate="body">
-      <button type="button" pButton (click)="editStatus(status)" icon="fa-pencil"></button>
-      <button type="button" (click)="deleteStatus(status)" pButton icon="fa-trash"></button>
-    </template>
+        <ng-template let-status="rowData" pTemplate="body">
+            <button type="button" pButton (click)="editStatus(status)" icon="fa-pencil"></button>
+            <button type="button" (click)="deleteStatus(status)" pButton icon="fa-trash"></button>
+        </ng-template>
     </p-column>
 </p-dataTable>
 

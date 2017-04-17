@@ -1,3 +1,4 @@
+import { Activity } from './../models/activity';
 import { DDType } from '../models/DDType.enum';
 import { Wrapper } from './../models/wrapper';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -13,6 +14,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CacheStoreService {
 isDataCreated: Subject<any> = new BehaviorSubject(Wrapper);
+isActivityCreated: Subject<any> = new BehaviorSubject(Activity);
 
       categories :  SelectItem[]=[];
       statuses :    SelectItem[]=[];
@@ -20,6 +22,7 @@ isDataCreated: Subject<any> = new BehaviorSubject(Wrapper);
       depts :       SelectItem[]=[];
       phases :      SelectItem[]=[];
       visibilities: SelectItem[]=[];
+      activity:Activity =new Activity();
 
 constructor(private utilityService:UtilityService) {
 this.isDataCreated.subscribe(data=>{

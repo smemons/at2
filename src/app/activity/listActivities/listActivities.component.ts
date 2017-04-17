@@ -1,3 +1,4 @@
+import { CacheStoreService } from '../../services/cacheStore.service';
 import { UtilityService } from '../../services/utility.service';
 import { AlertService } from './../../services/alert.service';
 import { CategoryService } from '../../services/category.service';
@@ -35,6 +36,7 @@ export class ListActivitiesComponent implements OnInit {
               private activityService:ActivityService,
               private alertService:AlertService,
               private utilityService:UtilityService,
+              private cache:CacheStoreService,
               private router:Router
               ) { }
 
@@ -76,8 +78,31 @@ export class ListActivitiesComponent implements OnInit {
 
 
     })
-  }
 
+    //subscribe to a subject created by create Activity component
+    //if activity was created
+this.cache.isActivityCreated.subscribe(data=>{
+
+  this.activity=data;
+
+  //if created by logged in user
+  if(this.activity.createdBy==loggedInUser)
+  {
+    this.created.unshift(this.activity);
+  }
+  //if assigned to me
+ if(this.activity.assignee!=undefined)
+ {
+  this.activity.assignee.forEach(str=>{
+    if(str==loggedInUser)
+      {
+        this.assigned.unshift(this.activity);
+      }
+  })
+ }
+
+});
+  }
 
 
 

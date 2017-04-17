@@ -44,12 +44,13 @@ export class ActivityComponent implements OnInit,AfterViewInit {
 
       visibility : string[];
       //visibilities : SelectItem[];
+      minDate:Date;
+      maxDate:Date;
 
   constructor(
               private utilityService:UtilityService,
               private alertService:AlertService,
               private activityService:ActivityService,
-
               private cache:CacheStoreService,
               private router:Router,
              ) { }
@@ -83,6 +84,9 @@ ngAfterViewInit()
       this.isChild=true;
       this.model._id=undefined;
       this.model.level=this.model.level+1;
+      //set min max date
+      this.minDate=this.model.startDate;
+      this.maxDate=this.model.endDate;
    }
    this.cache.populateAll();
 

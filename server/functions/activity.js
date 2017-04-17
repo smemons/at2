@@ -95,7 +95,7 @@ var getAllCreated = function(req, res, next) {
 
                 res.json(docs);
             }
-        });
+        }).sort({ 'createdAt': -1 });
     }
     //all assigned
 var getAllAssigned = function(req, res, next) {
@@ -109,7 +109,7 @@ var getAllAssigned = function(req, res, next) {
 
             res.json(docs);
         }
-    });
+    }).sort({ 'createdAt': -1 });
 }
 
 var getActivityByName = function(req, res, next) {
