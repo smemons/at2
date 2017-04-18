@@ -26,7 +26,7 @@ isActivityCreated: Subject<any> = new BehaviorSubject(Activity);
 
 constructor(private utilityService:UtilityService) {
 this.isDataCreated.subscribe(data=>{
-
+  console.log('this.isDataCreated.subscribe' +data);
   let wrapper:Wrapper=data;
   this.addNewItem(wrapper);
 });

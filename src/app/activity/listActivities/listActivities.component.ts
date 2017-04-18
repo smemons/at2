@@ -82,7 +82,7 @@ export class ListActivitiesComponent implements OnInit {
     //subscribe to a subject created by create Activity component
     //if activity was created
 this.cache.isActivityCreated.subscribe(data=>{
-
+console.log('this.cache.isActivityCreated.subscribe' +data);
   this.activity=data;
 
   //if created by logged in user
