@@ -77,6 +77,14 @@ getAllDepts() {
       .get('/api/status/all')
       .map((response : Response) => response.json());
   }
+
+  ///////////////////////////////////////////////// get all Users
+  getAllUsers() {
+    return this
+      .http
+      .get('/api/user/all')
+      .map((response : Response) => response.json());
+  }
 //return the typeahead portion of users for string completion
   getUsersTypeAhead(q:string)
   {

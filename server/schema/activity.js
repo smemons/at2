@@ -22,7 +22,14 @@ const ActSchema = new Schema({
     createdBy: String,
     updatedAt: { type: Date, default: Date.now },
     updatedBy: String,
-    level: { type: Number, default: 0 }
+    level: { type: Number, default: 0 },
+    proDetail: String,
+    docLink: String,
+    outOfScope: String,
+    challenge: String,
+    nextStep: String,
+    monitored: Boolean,
+    chartered: Boolean
 
 });
 module.exports = mongoose.model('Activity', ActSchema)

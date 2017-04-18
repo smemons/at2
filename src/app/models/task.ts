@@ -3,6 +3,7 @@ export class Task{
 
     desc: string;
     activityId: string;
+    percentage:number;
     createdBy: string;
     createdAt:Date;
     updatedBy: string;

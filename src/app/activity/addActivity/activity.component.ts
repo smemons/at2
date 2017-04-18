@@ -26,7 +26,7 @@ export class ActivityComponent implements OnInit,AfterViewInit {
       model : any = {};
       loading = false;
       users : User[];
-      foundUsers : string[];
+      foundUsers : SelectItem[];
       isChild : boolean;
       parentTitle : string;
       category : string;
@@ -58,13 +58,7 @@ export class ActivityComponent implements OnInit,AfterViewInit {
 
 ngAfterViewInit()
 {
-    //this.categories=this.cache.categories;
-   // this.depts=this.cache.depts;
-    // this.focuses=this.cache.depts;
-    // this.statuses=this.cache.statuses;
-    // this.phases=this.cache.statuses;
-    // this.visibilities=this.cache.visibilities;
-    // this.cd.markForCheck();
+
 }
   ngOnInit() {
 
@@ -91,56 +85,16 @@ ngAfterViewInit()
    }
    this.cache.populateAll();
 
+    // //get users
+    // this.utilityService.getAllUsers().subscribe(users=>{
 
-    //observers section
-    //check if status is changed
-//     this.statusService.isStatusChanged.subscribe(chg=>{
+    //  users.forEach(usr => {
+    //    this.foundUsers.push({label:usr.username, value:usr.username});
+    //  });
 
-//       if(chg)
-//       {
-//             console.log("reloading statuses again! with observer ");
+    // });
 
-//             this.utilityService.getAllStatus().subscribe(sts=>{
-//             this.statuses=this.utilityService.getSelectItemPublished(sts,null);
-//           });
-//       }
 
-//     })
-
-//     // //get all the dept List
-//     this.depts = [];
-//     this.utilityService.getAllDepts().subscribe(depts=>{
-
-//       this.depts=this.utilityService.getSelectItemPublished(depts,null);
-
-//     });
-
-//     this.utilityService.getAllCategories().subscribe(cat=>this.categories=cat);
-
-//   //get all Status
-
-//     this.utilityService.getAllStatus().subscribe(sts=>{
-//     this.statuses=this.utilityService.getSelectItemPublished(sts,null);
-//   });
-
-//    //get all focus areas
-// this.focuses=[];
-//     this.utilityService.getAllFocuses().subscribe(foc=>{
-//        this.focuses=this.utilityService.getSelectItemPublished(foc,"Focus Area");
-//   });
-
-//   /////////////////////
-//    //get all visiblities areas
-// this.visibilities=[];
-//     this.utilityService.getAllVisibilities().subscribe(vis=>{
-//      this.visibilities=this.utilityService.getSelectItemPublished(vis,null);
-//   });
-//   /////////////////////
-//    //get all phases areas
-// this.phases=[];
-//     this.utilityService.getAllPhases().subscribe(phase=>{
-//        this.phases=this.utilityService.getSelectItemPublished(phase,"Phase");
-//     });
   }
   createActivity(){
 

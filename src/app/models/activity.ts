@@ -22,4 +22,11 @@ createdAt:Date;
 updatedBy: string;
 updatedAt: Date;
 level:number;
+proDetail:string;
+docLink:string;
+outOfScope:string;
+challenge:string;
+nextStep:string;
+monitored:boolean;
+chartered:boolean;
 }

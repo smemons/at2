@@ -26,3 +26,9 @@ label {
 .act-ct {
     margin-bottom: 10px;
 }
+
+.act-border {
+    border-radius: 25px;
+    border: 1px solid #d0f796;
+    padding: 50px;
+}
