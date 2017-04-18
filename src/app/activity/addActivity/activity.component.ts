@@ -210,4 +210,7 @@ get visibilities():SelectItem[] {
 get phases():SelectItem[] {
   return this.cache.phases;
 }
+get kpis():SelectItem[] {
+  return this.cache.kpis;
+}
 }

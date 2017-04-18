@@ -8,5 +8,6 @@ export enum DDType {
   STATUS,
   VISIBILITY,
   PHASE,
-  FOCUS
+  FOCUS,
+  KPI
 }

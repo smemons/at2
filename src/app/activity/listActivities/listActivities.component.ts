@@ -24,8 +24,7 @@ export class ListActivitiesComponent implements OnInit {
   displayDialog: boolean = false;
   taskDialog:boolean;
   activity:Activity=new Activity();
- // assigned:Activity[];
- // created:Activity[];
+  activityId:string;
   assignees: SelectItem[];
   categories:Category[];
   selectedCategory:string;
@@ -86,19 +85,19 @@ export class ListActivitiesComponent implements OnInit {
 
 
    //edit activity
-  editAct(act:Activity)
+  editAct(id:string)
   {
-
-   this.activity=act;
-    this.selectedCategory=this.utilityService.getTitleById(act.catId,this.categories);
-   this.displayDialog = true;
+    this.activityService.getActivity(id).subscribe(act=>{
+            this.activity=act;
+            this.selectedCategory=this.utilityService.getTitleById(act.catId,this.categories);
+            this.displayDialog = true;
+          });
   }
 
   //update the Activity
   updateActivity(act:Activity)
   {
-
-  this.activityService.update(act)
+     this.activityService.update(act)
             .subscribe(
                 data => {
                    console.log('Category updated - Service!');
@@ -112,19 +111,21 @@ export class ListActivitiesComponent implements OnInit {
                     this.alertService.error(error);
                      this.displayDialog = false;
                 });
-  }
+   }
 
   //viewActivity(act)
-  viewActivity(act){
-     this.router.navigate(['/viewActivity', act._id]);
+  viewActivity(id:string){
+    this.utilityService.viewActivity(id);
   }
-closeActivityDialog()
-{
-  this.displayDialog = false;
-}
-createTask(act)
+
+  closeActivityDialog()
   {
-    this.activity=act;
+    this.displayDialog = false;
+  }
+
+  createTask(id:string)
+  {
+    this.activityId=id;
     this.taskDialog=true;
   }
   //task created event passed form component

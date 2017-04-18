@@ -1,3 +1,5 @@
+import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
+import { AddKpiComponent } from './kpi/addKpi/addKpi.component';
 import { ListStatusComponent } from './status/listStatus/listStatus.component';
 import { AddStatusComponent } from './status/addStatus/addStatus.component';
 import { ActivityComponent } from './activity/addActivity/activity.component';
@@ -70,6 +72,16 @@ export const ROUTES = [
     {
         path: 'listDept',
         component:ListDeptComponent,
+         canActivate: [AuthGuard]
+    },
+     {
+        path: 'addKpi',
+        component:AddKpiComponent,
+         canActivate: [AuthGuard]
+    },
+    {
+        path: 'listKpi',
+        component:ListKpiComponent,
          canActivate: [AuthGuard]
     },
     {

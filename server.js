@@ -16,6 +16,7 @@ const focusapi = require('./server/routes/focusapi');
 const phaseapi = require('./server/routes/phaseapi');
 const statusapi = require('./server/routes/statusapi');
 const lookupapi = require('./server/routes/actlookupapi');
+const kpiapi = require('./server/routes/kpiapi');
 
 // // Parsers for POST data
 app.use(bodyParser.json());
@@ -35,6 +36,7 @@ app.use('/api/focus', focusapi);
 app.use('/api/phase', phaseapi);
 app.use('/api/status', statusapi);
 app.use('/api/actLookup', lookupapi);
+app.use('/api/kpi', kpiapi);
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));

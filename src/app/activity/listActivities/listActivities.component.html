@@ -35,9 +35,9 @@
                             <i class="fa fa-cogs"></i>
                         </template>
                         <template let-act="rowData" pTemplate="body">
-                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActivity(act)" pButton  icon="fa-eye"></button>
-                             <button type="button" class="pull-left" title="Activity Edit" pButton (click)="editAct(act)" icon="fa-pencil"></button>
-                             <button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act)" icon="fa-check-square-o"></button>
+                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActivity(act._id)" pButton  icon="fa-eye"></button>
+                             <button type="button" class="pull-left" title="Activity Edit" pButton (click)="editAct(act._id)" icon="fa-pencil"></button>
+                             <button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act._id)" icon="fa-check-square-o"></button>
 
                         </template>
                     </p-column>
@@ -81,8 +81,8 @@
                         </template>
 
                         <template let-act="rowData" pTemplate="body">
-                            <button title="Activity Detail" type="button" pButton (click)="viewActivity(act)" icon="fa-eye"></button>
-                            <button type="button" title="Create Task" pButton (click)="createTask(act)" icon="fa-check-square-o"></button>
+                            <button title="Activity Detail" type="button" pButton (click)="viewActivity(act._id)" icon="fa-eye"></button>
+                            <button type="button" title="Create Task" pButton (click)="createTask(act._id)" icon="fa-check-square-o"></button>
 
                         </template>
                     </p-column>
@@ -94,8 +94,8 @@
     </div>
 
 </div>
-<p-dialog #aTaskDialog header="Create Task" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
-    <app-task [activityId]="activity._id" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
+<p-dialog #aTaskDialog header="Add Progress Update" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+    <app-task [activityId]="activityId" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
 </p-dialog>
 
 <p-dialog #aDialog header="Activity Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="500" [height]="500">
@@ -143,8 +143,8 @@
             <div class="ui-grid-col-4"><label for="status">Status</label></div>
             <div class="ui-grid-col-8">
 
-                <!--<p-dropdown name="status" [appendTo]="aDialog" inputId="status" [options]="listStatuses" [(ngModel)]="activity.statusId" required></p-dropdown>-->
-                <p-selectButton [style]="{'font-size':'x-small'}" name="status" inputId="status" [options]="listStatuses" [(ngModel)]="activity.statusId" #status="ngModel" required></p-selectButton>
+                <p-dropdown [style]="{'width':'100%'}" name="status" [appendTo]="aDialog" inputId="status" [options]="listStatuses" [(ngModel)]="activity.statusId" required></p-dropdown>
+                <!--<p-selectButton [style]="{'font-size':'x-small'}" name="status" inputId="status" [options]="listStatuses" [(ngModel)]="activity.statusId" #status="ngModel" required></p-selectButton>-->
             </div>
         </div>
 
@@ -164,9 +164,9 @@
 
             <button type="button" pButton icon="fa-check" (click)="updateActivity(activity)" label="Update"></button>
             <button type="button" pButton icon="fa-close" (click)="closeActivityDialog()" label="Cancel"></button>
-            <button type="button" class="pull-left btn-primary btn-lg" (click)="showDetail(activity._id)" label="Detail">Detail</button>
+            <button type="button" class="pull-left btn-primary btn-lg" (click)="viewActivity(activity._id)" label="Detail">Detail</button>
             <div class="clearfix"></div>
-            <button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity)" label="Detail">Create Task</button>
+            <button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity._id)" label="Detail">Create Task</button>
 
         </div>
     </p-footer>

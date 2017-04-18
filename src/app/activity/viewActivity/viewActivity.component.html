@@ -207,97 +207,9 @@
 </div>
 
 
-<!--<br />
-<button type="button" class="btn btn-default btn-lg" (click)="goback()">
-  <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back
-</button>
-<button class="btn btn-info btn-lg pull-right" (click)="createSubActivity(activity)" role="button">Create Subactivity</button>
-
-<br />
-<br />-->
-
-
-<!--<p-panel [toggleable]="true" collapsed="false">
-    <p-header>
-        <div class="ui-helper-clearfix">
-            <span class="ui-panel-title" style="font-size:16px;font-weight: bold; display:inline-block;">Tasks Detail </span>
-        </div>
-    </p-header>
-
-    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
-        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input #gb type="text" pInputText size="50" placeholder="Search Anything">
-    </div>
-    <p-dataTable [value]="tasks" [rows]="10" [paginator]="true" [globalFilter]="gb" #dt>
-        <p-header>List of Tasks</p-header>
-        <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="desc" header="Description" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="startDate" header="Start Date">
-            <template let-col let-task="rowData" pTemplate="body">
-                {{task[col.field]|date }}
-            </template>
-        </p-column>
-        <p-column field="endDate" header="End Date">
-            <template let-col let-task="rowData" pTemplate="body">
-                {{task[col.field]|date }}
-            </template>
-        </p-column>
-        <p-column field="percentage" header="(%)"></p-column>
-        <p-column field="createdBy" header="Created By" [filter]="true" filterPlaceholder="Search"></p-column>
-        <p-column field="createdAt" header="Created At">
-            <template let-col let-task="rowData" pTemplate="body">
-                {{task[col.field]|date }}
-            </template>
-        </p-column>
-    </p-dataTable>
 
 
 
-</p-panel>-->
-
-
-<p-dialog #aDialog header="Create Task" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
+<p-dialog #aDialog header="Add Progress Update" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
     <app-task [activityId]="activity._id" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
 </p-dialog>
-<!--<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
-            <label for="title">Task Title</label>
-            <input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" required />
-            <div *ngIf="f.submitted && !title.valid" class="help-block"> Title is required</div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !desc.valid }">
-            <label for="desc">Task Description</label>
-            <textarea class="form-control" name="desc" [(ngModel)]="model.desc" #desc="ngModel" required></textarea>
-            <div *ngIf="f.submitted && !desc.valid" class="help-block"> Description is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !startDate.valid }">
-            <label for="startDate">Start Date</label>
-            <p-calendar [appendTo]="aDialog" name="startDate" [icon]="true" [(ngModel)]="model.startDate" dateFormat="mm/dd/yy" dataType="string" required></p-calendar>
-
-            <div *ngIf="f.submitted && !startDate.valid" class="help-block">Start Date is required</div>
-        </div>
-
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
-            <label for="startDate">Start Date</label>
-            <p-calendar [appendTo]="aDialog" name="endDate" [icon]="true" [(ngModel)]="model.endDate" dateFormat="mm/dd/yy" dataType="string" required></p-calendar>
-
-            <div *ngIf="f.submitted && !endDate.valid" class="help-block">End Date is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
-            <label for="percentage">Completion Percentage(%)</label>
-
-
-            <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="model.percentage" style="width:200px" />
-            <p-slider name="percentage" [(ngModel)]="model.percentage" [style]="{'width':'200px'}"></p-slider>
-
-
-        </div>
-
-        <div class="form-group">
-            <button [disabled]="loading" (click)="saveTask(activity._id)" [disabled]="!f.form.valid" class="btn btn-primary">Save</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-            />
-            <button (click)="close()" class="btn btn-link">Cancel</button>
-        </div>
-    </form>-->

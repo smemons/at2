@@ -53,6 +53,14 @@ getAllDepts() {
       .get('/api/phase/all')
       .map((response : Response) => response.json());
   }
+   ///////////////////////////////////////////////
+  //get all kpi
+   getAllKpis() {
+    return this
+      .http
+      .get('/api/kpi/all')
+      .map((response : Response) => response.json());
+  }
   ////////////////////////////////////////////////
    //get all Visibility
   getAllVisibilities() {

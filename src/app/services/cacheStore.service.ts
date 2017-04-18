@@ -24,6 +24,7 @@ isActivityCreated: Subject<any> = new BehaviorSubject(MiniActivity);
       depts :       SelectItem[]=[];
       phases :      SelectItem[]=[];
       visibilities: SelectItem[]=[];
+      kpis: SelectItem[]=[];
       activity:MiniActivity =new MiniActivity();
       assigned:MiniActivity[]=[];
       created:MiniActivity[]=[];
@@ -87,6 +88,10 @@ addNewItem(wrapper:Wrapper)
        let vis:SelectItem={label:wrapper.label,value:wrapper.id};
        this.visibilities.push(vis);
       break;
+       case DDType.VISIBILITY:
+       let kpi:SelectItem={label:wrapper.label,value:wrapper.id};
+       this.kpis.push(kpi);
+
     default:
       break;
   }
@@ -108,13 +113,14 @@ populateAllActivities()
     this.getPhases();
     this.getStatuses();
     this.getvisibilities();
+    this.getKpis();
 
 
 }
 private getCategories() {
   if(this.categories.length==0){
       this.utilityService.getAllCategories().subscribe(cat=>{
-       this.categories = this.utilityService.getSelectItemPublished(cat,"Category");
+       this.categories = this.utilityService.getSelectItemPublished(cat,"Reference");
     })
   }
 }
@@ -149,6 +155,13 @@ private getPhases(){
   }
 }
 
+private getKpis(){
+  if(this.phases.length==0){
+      this.utilityService.getAllKpis().subscribe(elm=>{
+       this.kpis = this.utilityService.getSelectItemPublished(elm,"KPI");
+    })
+  }
+}
 private getvisibilities(){
   if(this.visibilities.length==0){
       this.utilityService.getAllVisibilities().subscribe(elm=>{

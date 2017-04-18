@@ -3,10 +3,13 @@ _id:string;
 parentId:string;
 title:string;
 desc:string;
+benefit:string;
+cost:number;
 startDate:Date;
 endDate:Date;
 sponsor:[string];
 assignee:[string];
+kpiId:string;
 percentage: number;//percentage of completion
 catId:string; //category Id
 deptId:[string]; //dept Id

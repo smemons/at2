@@ -1,3 +1,6 @@
+import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
+import { AddKpiComponent } from './kpi/addKpi/addKpi.component';
+import { KpiService } from './services/kpi.service';
 import { CacheStoreService } from './services/cacheStore.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreeBuilderService } from './services/treeBuilder.service';
@@ -82,7 +85,9 @@ import { AppComponent } from './app.component';
     ListStatusComponent,
     TreeComponent,
     TaskComponent,
-    TruncatePipe
+    TruncatePipe,
+    AddKpiComponent,
+    ListKpiComponent
 
   ],
   imports: [
@@ -129,7 +134,8 @@ import { AppComponent } from './app.component';
     StatusService,
     TreeBuilderService,
     TruncatePipe,
-    CacheStoreService
+    CacheStoreService,
+    KpiService
   ],
   bootstrap: [AppComponent]
 })
