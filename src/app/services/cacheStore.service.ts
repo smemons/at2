@@ -1,4 +1,6 @@
-import { Activity } from './../models/activity';
+import { element } from 'protractor';
+import { MiniActivity } from './../models/miniActivity';
+import { ActivityService } from './activity.service';
 import { DDType } from '../models/DDType.enum';
 import { Wrapper } from './../models/wrapper';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -14,7 +16,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CacheStoreService {
 isDataCreated: Subject<any> = new BehaviorSubject(Wrapper);
-isActivityCreated: Subject<any> = new BehaviorSubject(Activity);
+isActivityCreated: Subject<any> = new BehaviorSubject(MiniActivity);
 
       categories :  SelectItem[]=[];
       statuses :    SelectItem[]=[];
@@ -22,13 +24,38 @@ isActivityCreated: Subject<any> = new BehaviorSubject(Activity);
       depts :       SelectItem[]=[];
       phases :      SelectItem[]=[];
       visibilities: SelectItem[]=[];
-      activity:Activity =new Activity();
+      activity:MiniActivity =new MiniActivity();
+      assigned:MiniActivity[]=[];
+      created:MiniActivity[]=[];
 
-constructor(private utilityService:UtilityService) {
+constructor(private utilityService:UtilityService,private activityService:ActivityService) {
 this.isDataCreated.subscribe(data=>{
-  console.log('this.isDataCreated.subscribe' +data);
   let wrapper:Wrapper=data;
   this.addNewItem(wrapper);
+});
+
+    //subscribe to a subject created by create Activity component
+    //if activity was created
+let loggedInUser=utilityService.getCurrentUser();
+this.isActivityCreated.subscribe(data=>{
+  this.activity=data;
+
+  //if created by logged in user
+  if(this.activity.createdBy==loggedInUser)
+  {
+    this.created.unshift(this.activity);
+  }
+  //if assigned to me
+ if(this.activity.assignee!=undefined)
+ {
+  this.activity.assignee.forEach(str=>{
+    if(str==loggedInUser)
+      {
+        this.assigned.unshift(this.activity);
+      }
+  })
+ }
+
 });
 
 }
@@ -65,9 +92,15 @@ addNewItem(wrapper:Wrapper)
   }
 }
 
+/**
+ * populate all assigned activities
+ */
+populateAllActivities()
+{
+  this.getAllActivities();
+}
 //populate all drop downs array with intial data from db
  populateAll() {
-
     //get categories
     this.getCategories();
     this.getDepts();
@@ -122,5 +155,53 @@ private getvisibilities(){
        this.visibilities = this.utilityService.getSelectItemPublished(elm,null);
     })
   }
+}
+
+//get all activities for this users and put them in small objects for displaying purpose alone.
+private getAllActivities()
+{
+debugger;
+  let loggedInUser=this.utilityService.getCurrentUser();
+
+    //get all assigned
+    if(this.assigned.length==0)
+    {
+     this.activityService.getAllAssigned(loggedInUser).
+                          subscribe(act=>{
+                            act.forEach(el => {
+                             let mini=new MiniActivity();
+                                mini._id=el._id;
+                                mini.assignee=el.assignee;
+                                mini.endDate=el.endDate;
+                                mini.startDate=el.startDate;
+                                mini.title=el.title;
+                                mini.percentage=el.percentage;
+                                mini.createdBy=el.createdBy;
+                             this.assigned.push(mini);
+                            });
+
+                                });
+    }
+
+     //get all created
+      if(this.created.length==0)
+    {
+                     this.activityService.getAllCreated(loggedInUser).
+                          subscribe(act=>{
+
+                            act.forEach(el => {
+                             let mini=new MiniActivity();
+                                mini._id=el._id;
+                                mini.assignee=el.assignee;
+                                mini.endDate=el.endDate;
+                                mini.startDate=el.startDate;
+                                mini.title=el.title;
+                                mini.percentage=el.percentage;
+                                 mini.createdBy=el.createdBy;
+                             this.created.push(mini);
+                            });
+
+                          });
+    }
 }
 }

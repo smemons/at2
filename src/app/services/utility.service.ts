@@ -138,4 +138,14 @@ getAllDepts() {
    // this.location.back(); // <-- go back to previous location on cancel
    this.router.navigateByUrl(this.previousUrl);
   }
+
+  //get current user
+  getCurrentUser():string
+  {
+    let usr="";
+     if(sessionStorage.getItem('currentUser')){
+        usr = JSON.parse(sessionStorage.getItem('currentUser')).username;
+     }
+     return usr;
+  }
 }

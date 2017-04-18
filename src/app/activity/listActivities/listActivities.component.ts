@@ -1,3 +1,4 @@
+import { MiniActivity } from './../../models/miniActivity';
 import { CacheStoreService } from '../../services/cacheStore.service';
 import { UtilityService } from '../../services/utility.service';
 import { AlertService } from './../../services/alert.service';
@@ -23,8 +24,8 @@ export class ListActivitiesComponent implements OnInit {
   displayDialog: boolean = false;
   taskDialog:boolean;
   activity:Activity=new Activity();
-  assigned:Activity[];
-  created:Activity[];
+ // assigned:Activity[];
+ // created:Activity[];
   assignees: SelectItem[];
   categories:Category[];
   selectedCategory:string;
@@ -44,28 +45,28 @@ export class ListActivitiesComponent implements OnInit {
 
     this.categoryService.getAll().subscribe(cat=>this.categories=cat);
     let loggedInUser=this.authService.getCurrentUser();
-
+    this.cache.populateAllActivities();
     //get all assigned
-     this.activityService.getAllAssigned(loggedInUser).
-                          subscribe(act=>{
-                            act.forEach(element => {
-                              element.startDate=moment(element.startDate).toDate();
-                              element.endDate=moment(element.endDate).toDate();
-                            });
-                            this.assigned=act
-                          });
+    //  this.activityService.getAllAssigned(loggedInUser).
+    //                       subscribe(act=>{
+    //                         act.forEach(element => {
+    //                           element.startDate=moment(element.startDate).toDate();
+    //                           element.endDate=moment(element.endDate).toDate();
+    //                         });
+    //                         this.assigned=act
+    //                       });
 
-     //get all created
-                     this.activityService.getAllCreated(loggedInUser).
-                          subscribe(act=>{
+    //  //get all created
+    //                  this.activityService.getAllCreated(loggedInUser).
+    //                       subscribe(act=>{
 
-                            act.forEach(element => {
+    //                         act.forEach(element => {
 
-                              element.startDate=moment(element.startDate).toDate();
-                              element.endDate=moment(element.endDate).toDate();
-                            });
-                            this.created=act
-                          });
+    //                           element.startDate=moment(element.startDate).toDate();
+    //                           element.endDate=moment(element.endDate).toDate();
+    //                         });
+    //                         this.created=act
+    //                       });
 
                           //get all statuses for color
 
@@ -79,29 +80,7 @@ export class ListActivitiesComponent implements OnInit {
 
     })
 
-    //subscribe to a subject created by create Activity component
-    //if activity was created
-this.cache.isActivityCreated.subscribe(data=>{
-console.log('this.cache.isActivityCreated.subscribe' +data);
-  this.activity=data;
 
-  //if created by logged in user
-  if(this.activity.createdBy==loggedInUser)
-  {
-    this.created.unshift(this.activity);
-  }
-  //if assigned to me
- if(this.activity.assignee!=undefined)
- {
-  this.activity.assignee.forEach(str=>{
-    if(str==loggedInUser)
-      {
-        this.assigned.unshift(this.activity);
-      }
-  })
- }
-
-});
   }
 
 
@@ -157,6 +136,15 @@ createTask(act)
   taskClosed(val)
   {
     this.taskDialog=false;
+  }
+
+  get assigned():MiniActivity[]
+  {
+    return this.cache.assigned;
+  }
+  get created():MiniActivity[]
+  {
+    return this.cache.created;
   }
 
 }

@@ -1,3 +1,4 @@
+import { MiniActivity } from './../../models/miniActivity';
 import { CacheStoreService } from '../../services/cacheStore.service';
 import { StatusService } from './../../services/status.service';
 
@@ -149,11 +150,16 @@ ngAfterViewInit()
             .subscribe(
 
                 data => {
-
-
                    this.alertService.success('Activty created!');
-                   this.activityService.isReceived=true;
-                   this.activityService.isActivityChanged.next(data);
+                   let mini=new MiniActivity();
+                                mini._id=data._id;
+                                mini.assignee=data.assignee;
+                                mini.endDate=data.endDate;
+                                mini.startDate=data.startDate;
+                                mini.title=data.title;
+                                mini.percentage=data.percentage;
+                                mini.createdBy=data.createdBy;
+                   this.cache.isActivityCreated.next(mini);
                    // this.router.navigate(['/home']);
                    this.viewActivity(data._id);
                 },
