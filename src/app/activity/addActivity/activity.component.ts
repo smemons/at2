@@ -154,7 +154,8 @@ ngAfterViewInit()
                    this.alertService.success('Activty created!');
                    this.activityService.isReceived=true;
                    this.activityService.isActivityChanged.next(data);
-                    this.router.navigate(['/home']);
+                   // this.router.navigate(['/home']);
+                   this.viewActivity(data._id);
                 },
                 error => {
                     //this.alertService.error(error);
