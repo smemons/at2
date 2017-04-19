@@ -1,7 +1,17 @@
 var Status = require('../schema/status');
 // get single room
-var getStatus = function(req, resp, next) {
-    resp.send("GET");
+var getStatus = function(req, res, next) {
+    var id = req.params.id;
+    Status.findById(id, function(err, docs) {
+        if (err) {
+            console.log('Got status error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single status
@@ -10,7 +20,7 @@ var saveStatus = function(req, res, next) {
         console.log('creating Status now');
         var status = new Status(req.body);
 
-        status.save(function(err,doc) {
+        status.save(function(err, doc) {
             if (err) {
 
                 return next(err);

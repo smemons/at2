@@ -6,10 +6,11 @@ const uf = require('../functions/dept');
 
 
 var depts = express.Router();
-depts.get('/', uf.getDept);
+depts.get('/all', uf.getAll);
+depts.get('/:id', uf.getDept);
 depts.post('/', uf.saveDept);
 depts.put('/', uf.updateDept);
-depts.get('/all', uf.getAll);
+
 depts.delete('/:id', uf.deleteDept);
 
 

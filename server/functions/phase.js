@@ -1,7 +1,17 @@
 var Phase = require('../schema/phase');
 // get single room
-var getPhase = function(req, resp, next) {
-    resp.send("GET");
+var getPhase = function(req, res, next) {
+    var id = req.params.id;
+    Phase.findById(id, function(err, docs) {
+        if (err) {
+            console.log('Got Phase error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single phase

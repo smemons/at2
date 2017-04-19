@@ -61,7 +61,8 @@ getAllDepts() {
       .get('/api/kpi/all')
       .map((response : Response) => response.json());
   }
-  ////////////////////////////////////////////////
+   ///////////////////////////////////////////////
+
    //get all Visibility
   getAllVisibilities() {
     return this
@@ -85,6 +86,63 @@ getAllDepts() {
       .get('/api/user/all')
       .map((response : Response) => response.json());
   }
+////////////////////////////////////
+   //get  kpi
+   getKpiById(id:string) {
+    return this
+      .http
+      .get('/api/kpi/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+   //get  category by id
+   getCategoryById(id:string) {
+    return this
+      .http
+      .get('/api/category/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+     //get  category by id
+   getStatusById(id:string) {
+    return this
+      .http
+      .get('/api/status/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+     //get  category by id
+   getPhaseById(id:string) {
+    return this
+      .http
+      .get('/api/phase/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+     //get  category by id
+   getVisById(id:string) {
+    return this
+      .http
+      .get('/api/vis/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+     //get  category by id
+   getFocusById(id:string) {
+    return this
+      .http
+      .get('/api/focus/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
+     //get  category by id
+   getDeptById(id:string) {
+    return this
+      .http
+      .get('/api/dept/'+id)
+      .map((response : Response) => response.json());
+  }
+  ////////////////////////////////////////////////
 //return the typeahead portion of users for string completion
   getUsersTypeAhead(q:string)
   {

@@ -23,7 +23,7 @@ const ActSchema = new Schema({
     updatedAt: { type: Date, default: Date.now },
     updatedBy: String,
     level: { type: Number, default: 0 },
-    proDetail: String,
+    projDetail: String,
     docLink: String,
     outOfScope: String,
     challenge: String,

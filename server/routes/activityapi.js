@@ -6,11 +6,12 @@ const uf = require('../functions/activity');
 
 
 var acts = express.Router();
+acts.get('/all', uf.getAll);
 acts.get('/:id', uf.getActivity);
 acts.post('/', uf.saveActivity);
 acts.put('/percent', uf.updateActivityPercent);
 acts.put('/', uf.updateActivity);
-acts.get('/all', uf.getAll);
+
 acts.get('/allByUserId/:id', uf.getAllByUserId);
 acts.get('/allAssigned/:id', uf.getAllAssigned);
 acts.get('/allCreated/:id', uf.getAllCreated);

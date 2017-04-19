@@ -1,7 +1,7 @@
 var ActivityLookup = require('../schema/actLookup');
 // get single room
-var getActivityLookup = function(req, resp, next) {
-    resp.send("GET");
+var getActivityLookup = function(req, res, next) {
+    res.send("GET");
 }
 
 // create single actLookup

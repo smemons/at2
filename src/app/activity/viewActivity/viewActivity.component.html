@@ -1,14 +1,19 @@
 <div class="row">
 
-    <div class="col-lg-2 pull-left act-box">
+    <div class="col-lg-3 pull-left act-pad {">
 
+        <div class="act-box">
 
+            <br/>
+            <br/>
+            <button class="btn btn-block btn-lg btn-info" (click)="createSubActivity(activity)" role="button"> Create Subactivity <span class="glyphicon glyphicon-tasks"></span></button>
 
-
-        <button class="btn btn-info btn-lg" (click)="createSubActivity(activity)" role="button">Create Subactivity</button>
-        <div class="clear"></div>
-        <button *ngIf="status!='Closed'" class="btn btn-primary btn-lg" (click)="showTaskDialog()" role="button">Progress Update</button>
-        <div class="clear"></div>
+            <div class="clear"></div>
+            <br/>
+            <br/>
+            <button class="btn btn-block btn-lg btn-warning" (click)="showTaskDialog()" role="button">Progress Update <span class="glyphicon glyphicon-check"></span> </button>
+            <div class="clear"></div>
+        </div>
         <!--<div class="ui-grid-row act-aligned">
             <div *ngIf="childrenActivities.length > 0" class="ui-grid-col-12">
                 <div class="panel-group">
@@ -58,13 +63,13 @@
         </div>-->
     </div>
 
-    <div class="col-lg-7 act-box">
+    <div class="col-lg-6 act-pad ">
 
-        <div class="act-tree">
+        <div class="act-box">
             <div class="clt">
                 <ul>
                     <li>
-                        {{dept}}
+                        <span *ngFor="let dpt of dept ; let isLast=last">{{dpt}}{{isLast ? '' : ', '}}</span>
                         <!--department -->
                         <ul *ngIf="parentActivity!=null">
                             <li>
@@ -106,17 +111,18 @@
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd">Title </div>
-        <div class="right act-ct">
-            <h4>{{activity.title}}</h4>
-        </div>
+
+
+        <h3>{{activity.title}}</h3>
+
+        <div class="clear"></div>
         <div class="left act-hd">Description </div>
         <div class="right act-ct">
             {{activity.desc}}
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Category </div>
+        <div class="left act-hd act-ct">Reference </div>
         <div class="right act-ct">
             {{category}}
         </div>
@@ -124,7 +130,7 @@
 
         <div class="left act-hd act-ct">Department(s) </div>
         <div class="right act-ct">
-            {{dept}}
+            <span *ngFor="let dpt of dept ; let isLast=last">{{dpt}}{{isLast ? '' : ', '}}</span>
         </div>
         <div class="clear"></div>
 
@@ -134,11 +140,7 @@
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Created By </div>
-        <div class="right act-ct">
-            {{activity.createdBy}} On {{activity.createdAt|date}}
-        </div>
-        <div class="clear"></div>
+
         <div class="left act-hd act-ct">Start Date</div>
         <div class="right act-ct">
             {{activity.startDate|date }}
@@ -150,23 +152,13 @@
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Milestone</div>
+        <div class="left act-hd act-ct">Phase</div>
         <div class="right act-ct">
             {{phase}}
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Sponsers </div>
-        <div class="right act-ct">
-            {{activity.sponsor}}
-        </div>
-        <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Assignee </div>
-        <div class="right act-ct">
-            {{activity.assignee}}
-        </div>
-        <div class="clear"></div>
 
 
         <div class="left act-hd act-ct">Completion (%) </div>
@@ -175,31 +167,109 @@
         </div>
         <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Focus Area </div>
+        <div class="left act-hd act-ct">Assignee </div>
         <div class="right act-ct">
-            {{focus}}
+            {{activity.assignee}}
         </div>
         <div class="clear"></div>
+        <div *ngIf="!isChild">
+            <div class="left act-hd act-ct">Sponsers </div>
+            <div class="right act-ct">
+                {{activity.sponsor}}
+            </div>
+            <div class="clear"></div>
+            <div class="left act-hd act-ct">Focus Area </div>
+            <div class="right act-ct">
+                {{focus}}
+            </div>
+            <div class="clear"></div>
 
-        <div class="left act-hd act-ct">Escalation </div>
-        <div class="right act-ct">
-            {{visibility}}
+            <div class="left act-hd act-ct">Escalation </div>
+            <div class="right act-ct">
+                <span *ngFor="let vis of visibility ; let isLast=last">{{vis}}{{isLast ? '' : ', '}}</span>
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Cost(MM)</div>
+            <div class="right act-ct">
+                {{activity.cost}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Benefit </div>
+            <div class="right act-ct">
+                {{activity.benefit}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct"> KPI</div>
+            <div class="right act-ct">
+                {{kpi}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Chartered </div>
+            <div class="right act-ct">
+                {{activity.chartered?'Yes':'No'}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Monitored </div>
+            <div class="right act-ct">
+                {{activity.monitored?'Yes':'No'}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct"> Next Step</div>
+            <div class="right act-ct">
+                {{activity.nextStep}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Out of Scope</div>
+            <div class="right act-ct">
+                {{activity.outOfScope}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Project Detail</div>
+            <div class="right act-ct">
+                {{activity.proDetail}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Challenges</div>
+            <div class="right act-ct">
+                {{activity.challenge}}
+            </div>
+            <div class="clear"></div>
+            <div class="left act-hd act-ct">Documentation Link</div>
+            <div class="right act-ct">
+                {{activity.docLink}}
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="left act-hd act-ct "></div>
+        <div class="right act-ct act-sm">
+            Created by: {{activity.createdBy}} on {{activity.createdAt|date:'short'}}
         </div>
         <div class="clear"></div>
-
-
-
+        <div class="left act-hd act-ct "></div>
+        <div class="right act-ct act-sm">
+            last updated by: {{activity.updatedBy}} on {{activity.updatedAt|date:'short'}}
+        </div>
+        <div class="clear"></div>
 
     </div>
-    <div *ngIf="tasks.length > 0" class="col-lg-3 pull-right act-box">
-        <div class="panel panel-info">
+    <div *ngIf="tasks.length > 0" class="col-lg-3 pull-right act-pad {">
+        <div class="panel panel-warning" style="max-height: 900px;overflow-y: auto;">
             <div class="panel-heading">Progress Updates</div>
             <div class="panel-body">
-                <div *ngFor="let task of tasks" class="panel panel-default">
-                    <div class="panel-body">
-                        <p>{{task.desc}}</p>
-                        <p>{{task.createdBy}}, {{task.createdAt|date}}</p>
-                    </div>
+                <div *ngFor="let task of tasks">
+
+                    <p>{{task.desc}}</p>
+                    <span class="act-sm">{{task.createdBy}}, {{task.createdAt|date:'short'}} </span><span class="act-bs"> {{task.percentage}}% completed</span>
+                    <hr/>
                 </div>
             </div>
         </div>

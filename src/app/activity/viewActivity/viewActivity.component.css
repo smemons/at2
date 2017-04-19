@@ -16,12 +16,12 @@
 }
 
 .left {
-    width: 200px;
+    width: 150px;
     float: left;
 }
 
 .right {
-    margin-left: 200px;
+    margin-left: 150px;
 }
 
 .clear {
@@ -43,7 +43,7 @@
     text-align: left!important;
 }
 
-.act-box {
+.act-pad {
     padding: 5px;
 }
 
@@ -54,7 +54,7 @@
 .clt ul,
 .clt li {
     position: relative;
-    font-size: small;
+    font-size: large;
 }
 
 .clt ul {
@@ -87,8 +87,18 @@
     height: 8px;
 }
 
-.act-tree {
-    border: 1px solid #DCDCDC;
+.act-box {
+    border: 1px solid #BCE8F1;
     border-radius: 10px;
     padding: 0 10px 10px 10px;
+}
+
+.act-sm {
+    font-size: smaller;
+    font-style: italic;
+}
+
+.act-bs {
+    font-size: smaller;
+    font-weight: bold;
 }

@@ -6,10 +6,11 @@ const uf = require('../functions/focus');
 
 
 var focus = express.Router();
-focus.get('/', uf.getFocus);
+focus.get('/all', uf.getAll);
+focus.get('/:id', uf.getFocus);
 focus.post('/', uf.saveFocus);
 focus.put('/', uf.updateFocus);
-focus.get('/all', uf.getAll);
+
 focus.delete('/:id', uf.deleteFocus);
 
 

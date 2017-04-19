@@ -6,10 +6,11 @@ const uf = require('../functions/visibility');
 
 
 var vis = express.Router();
-vis.get('/', uf.getVisibility);
+vis.get('/all', uf.getAll);
+vis.get('/:id', uf.getVisibility);
 vis.post('/', uf.saveVisibility);
 vis.put('/', uf.updateVisibility);
-vis.get('/all', uf.getAll);
+
 vis.delete('/:id', uf.deleteVisibility);
 
 

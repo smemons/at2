@@ -1,7 +1,17 @@
 var Visibility = require('../schema/visibility');
 // get single room
-var getVisibility = function(req, resp, next) {
-    resp.send("GET");
+var getVisibility = function(req, res, next) {
+    var id = req.params.id;
+    Visibility.find({ '_id': { $in: id } }, function(err, docs) {
+        if (err) {
+            console.log('Got vis error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single vis

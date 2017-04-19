@@ -6,10 +6,11 @@ const uf = require('../functions/kpi');
 
 
 var phase = express.Router();
-phase.get('/', uf.getKPI);
+phase.get('/all', uf.getAll);
+phase.get('/:id', uf.getKPI);
 phase.post('/', uf.saveKPI);
 phase.put('/', uf.updateKPI);
-phase.get('/all', uf.getAll);
+
 phase.delete('/:id', uf.deleteKPI);
 
 

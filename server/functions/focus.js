@@ -1,7 +1,17 @@
 var Focus = require('../schema/focus');
 // get single room
-var getFocus = function(req, resp, next) {
-    resp.send("GET");
+var getFocus = function(req, res, next) {
+    var id = req.params.id;
+    Focus.findById(id, function(err, docs) {
+        if (err) {
+            console.log('Got focus error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single focus
@@ -10,7 +20,7 @@ var saveFocus = function(req, res, next) {
         console.log('creating Focus now');
         var focus = new Focus(req.body);
 
-        focus.save(function(err,doc) {
+        focus.save(function(err, doc) {
             if (err) {
 
                 return next(err);

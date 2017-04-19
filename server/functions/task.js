@@ -1,6 +1,6 @@
 var Task = require('../schema/task');
 // get single room
-var getTask = function(req, resp, next) {
+var getTask = function(req, res, next) {
     resp.send("GET");
 }
 

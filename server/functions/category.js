@@ -1,7 +1,17 @@
 var Category = require('../schema/category');
 // get single room
-var getCategory = function(req, resp, next) {
-    resp.send("GET");
+var getCategory = function(req, res, next) {
+    var id = req.params.id;
+    Category.findById(id, function(err, docs) {
+        if (err) {
+            console.log('Got Category error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single room

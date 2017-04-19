@@ -22,7 +22,7 @@ createdAt:Date;
 updatedBy: string;
 updatedAt: Date;
 level:number;
-proDetail:string;
+projDetail:string;
 docLink:string;
 outOfScope:string;
 challenge:string;

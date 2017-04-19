@@ -1,8 +1,6 @@
 var KPI = require('../schema/kpi');
 // get single room
-var getKPI = function(req, resp, next) {
-    resp.send("GET");
-}
+
 
 // create single kpi
 ////////////////////////////////////////////////////
@@ -52,18 +50,31 @@ var deleteKPI = function(req, res, next) {
     /////////////////////////////////////////////////////////
     //get all kpi list
 var getAll = function(req, res, next) {
-    KPI.find(function(err, kpi) {
-        if (err) {
+        KPI.find(function(err, kpi) {
+            if (err) {
 
-            next(err);
-        } else {
+                next(err);
+            } else {
 
-            res.json(kpi);
-        }
-    });
-}
+                res.json(kpi);
+            }
+        });
+    }
+    //////////////////////////////////////////////
+var getKPI = function(req, res, next) {
+        // var id = req.params.id;
+        // KPI.findById(id, function(err, docs) {
+        //     if (err) {
+        //         console.log('Got Kpi error :' + err);
+        //         next(err);
+        //     } else {
 
-////////////////////////////////////////////////////////
+
+        //         res.json(docs);
+        //     }
+        // });
+    }
+    ////////////////////////////////////////////////////////
 
 module.exports = {
     getKPI: getKPI,

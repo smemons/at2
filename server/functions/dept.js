@@ -1,7 +1,17 @@
 var Dept = require('../schema/dept');
 // get single room
-var getDept = function(req, resp, next) {
-    resp.send("GET");
+var getDept = function(req, res, next) {
+    var id = req.params.id;
+    Dept.find({ '_id': { $in: id } }, function(err, docs) {
+        if (err) {
+            console.log('Got dept error :' + err);
+            next(err);
+        } else {
+
+
+            res.json(docs);
+        }
+    });
 }
 
 // create single dept
@@ -10,7 +20,7 @@ var saveDept = function(req, res, next) {
         console.log('creating Dept now');
         var dept = new Dept(req.body);
 
-        dept.save(function(err,doc) {
+        dept.save(function(err, doc) {
             if (err) {
 
                 return next(err);
