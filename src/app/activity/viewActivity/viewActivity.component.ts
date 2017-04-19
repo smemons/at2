@@ -31,9 +31,13 @@ export class ViewActivityComponent implements OnInit {
 
   focus:string;
 
+  dept:string[]=[];
 
   phase:string;
 
+  visibility:string[]=[];
+
+  kpi:string;
 
   constructor(private route: ActivatedRoute,private router: Router,
               private taskService:TaskService,
@@ -46,6 +50,7 @@ export class ViewActivityComponent implements OnInit {
 
 
       this.tasks=[];
+
       this.childrenActivities=[];
       this.activity=new Activity();
       let id:string;
@@ -59,47 +64,103 @@ export class ViewActivityComponent implements OnInit {
       //let id=this.route.snapshot.params['id'];
         this.activityService.getActivity(id).subscribe(act=>{
         this.activity=act;
+
+         //get kpi
+         if(act.kpiId!=null)
+         {
+            this.utilityService.getKpiById(act.kpiId).subscribe(kpi=>{
+                this.kpi=kpi.title;
+            });
+         }
         //get category detail
+        if(act.catId!=null)
+        {
+          this.utilityService.getCategoryById(act.catId).subscribe(cat=>{
+          this.category=cat.title;
          });
+        }
+
        //get status
+          if(act.statusId!=null)
+        {
+          this.utilityService.getStatusById(act.statusId).subscribe(st=>{
+          this.status=st.title;
+         });
+        }
 
        //get focus
+        if(act.focusId!=null)
+        {
+          this.utilityService.getFocusById(act.focusId).subscribe(fc=>{
+          this.focus=fc.title;
+         });
+        }
 
       //get all depts
+       if(act.deptId!=null)
+        {
+debugger;
          this.utilityService.getAllDepts().subscribe(dept=>{
          //there may more then one dept
             let dptId=act.deptId;
             dptId.forEach(dpt => {
               this.dept.push(this.utilityService.getTitleById(dpt,dept));
-         });
+             });
        });
+        }
+
+
+
+
+
+        //   this.utilityService.getDeptById(act.deptId).subscribe(dept=>{
+        //     //there could be mulitple department
+        //     dept.forEach(dpt=>{
+        //         this.dept.push(dpt.title);
+        //     });
+
+        //  });
+      //  }
 
 
     //get all visibilities
-      this.visibility=[];
-       this.utilityService.getAllVisibilities().subscribe(vis=>{
-         this.visibilities=this.utilityService.getSelectItemPublished(vis,null);
-
+      if(act.visId!=null)
+        {
+           this.utilityService.getAllVisibilities().subscribe(vis=>{
             let visIds=act.visId;
             visIds.forEach(avis => {
               this.visibility.push(this.utilityService.getTitleById(avis,vis));
-         });
+          });
        });
 
-     //get phase
+        //   this.utilityService.getVisById(act.visId).subscribe(vis=>{
+        //   vis.forEach(vs=>{
+        //         this.visibility.push(vs.title);
+        //     });
+        //  });
         }
 
+     //get phase
+     if(act.phaseId!=null)
+        {
+          this.utilityService.getPhaseById(act.phaseId).subscribe(ph=>{
+          this.phase=ph.title;
+         });
+        }
+///======================================================================================
           //get all tasks associated with this activity
         this.taskService.getAllByActivityId(id).subscribe(tasks=>this.tasks=tasks);
 
         //get all children activities associated with this activity
         this.activityService.getAllChildrenById(id).subscribe(act=>{
+
           this.childrenActivities=act
         });
 
         //if parentid exist
         if(this.activity.parentId!=null)
         {
+          this.isChild=true;
           this.activityService.getActivity(this.activity.parentId).subscribe(el=>this.parentActivity=el);
         }
 
