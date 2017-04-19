@@ -152,7 +152,7 @@ private getCategories() {
 private getStatuses() {
   if(this.statuses.length==0){
       this.utilityService.getAllStatus().subscribe(elm=>{
-       this.statuses = this.utilityService.getSelectItemPublished(elm,null);
+       this.statuses = this.utilityService.getSelectItemPublished(elm,"Status");
     })
   }
 }
