@@ -197,7 +197,7 @@ private getvisibilities(){
 //get all activities for this users and put them in small objects for displaying purpose alone.
 private getAllActivities()
 {
-debugger;
+
   let loggedInUser=this.utilityService.getCurrentUser();
 
     //get all assigned

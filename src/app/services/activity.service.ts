@@ -29,12 +29,24 @@ create(activity:Activity)
 update(activity:Activity)
 {
 
-  activity.createdBy=this.authService.getCurrentUser();
+  activity.updatedBy=this.authService.getCurrentUser();
    console.log('putting/updating Activity from service: ' + activity);
     //return this.http.post('/api/user', JSON.stringify(user), this.options);
     return this
       .http
       .put('/api/activity', activity)
+      .map((response: Response) => response);
+}
+//update Activity Percentage only
+updatePercentage(activity:Activity)
+{
+
+  activity.updatedBy=this.authService.getCurrentUser();
+   console.log('putting/updating Activity from service: ' + activity);
+    //return this.http.post('/api/user', JSON.stringify(user), this.options);
+    return this
+      .http
+      .put('/api/activity/percent', activity)
       .map((response: Response) => response);
 }
   //get one activity by id

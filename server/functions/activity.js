@@ -33,9 +33,28 @@ var saveActivity = function(req, res, next) {
 // updateActivity
 var updateActivity = function(req, res, next) {
 
+        var activity = new Activity(req.body);
+        console.log('updating Activity now' + activity);
+        Activity.findByIdAndUpdate(activity._id, { $set: activity }, function(err, result) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("Activity updated: " + result);
+            res.send('Done')
+        });
+    }
+    // updateActivity
+var updateActivityPercent = function(req, res, next) {
+
     var activity = new Activity(req.body);
     console.log('updating Activity now' + activity);
-    Activity.findByIdAndUpdate(activity._id, { $set: activity }, function(err, result) {
+    Activity.findByIdAndUpdate(activity._id, {
+        $set: {
+            percentage: activity.percentage,
+            updatedBy: activity.updatedBy,
+            updatedAt: new Date()
+        }
+    }, function(err, result) {
         if (err) {
             console.log(err);
         }
@@ -149,6 +168,7 @@ module.exports = {
     getAllAssigned: getAllAssigned,
     getAllCreated: getAllCreated,
     updateActivity: updateActivity,
+    updateActivityPercent: updateActivityPercent,
     getAllByUserId: getAllByUserId,
     getAllByLevel: getAllByLevel,
     getAllByParentId: getAllByParentId

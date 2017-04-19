@@ -1,7 +1,7 @@
 <div class="col-md-6 col-md-offset-3">
     <div class="act-border">
-        <h2>New <span *ngIf="isChild">Sub </span>Activity</h2>
-
+        <h2 *ngIf="!isChild">New Activity</h2>
+        <h2 *ngIf="isChild">New Task</h2>
         <div *ngIf="isChild" class="panel panel-warning">
 
             <div class="panel-heading">
@@ -34,7 +34,7 @@
                 <div *ngIf="f.submitted && !category.valid" class="help-block"> Reference is required</div>
             </div>
             <div class="row">
-                <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
+                <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                     <label for="dept">Department</label>
                     <!--<p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" [style]="{'width':'100%'}" #dept="ngModel" required></p-multiSelect>-->
                     <p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
@@ -85,89 +85,89 @@
                 <div *ngIf="f.submitted && !status.valid" class="help-block">Status is required</div>
             </div>
             <div class="form-group">
-                <label for="benefit">Benefits</label>
-                <textarea class="form-control" name="benefit" [(ngModel)]="model.benefit"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="cost">Cost(MM)</label>
-                <input class="form-control" type="number" name="cost" [(ngModel)]="model.cost" />
-            </div>
-
-            <div class="form-group">
-                <label for="kpi">KPI</label>
-
-                <p-dropdown name="kpi" [options]="kpis" [(ngModel)]="model.kpi" [style]="{'width':'100%'}"></p-dropdown>
-
-
-            </div>
-
-            <div class="row">
-                <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
-                    <label for="phase">Phase</label>
-                    <p-dropdown name="phase" [options]="phases" [(ngModel)]="model.phaseId" [style]="{'width':'100%'}" #phase="ngModel" required></p-dropdown>
-                    <div *ngIf="f.submitted && !phase.valid" class="help-block"> Phase is required</div>
-                </div>
-
-                <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
-                    <label for="focus">Focus Area</label>
-                    <p-dropdown name="focus" [options]="focuses" [(ngModel)]="model.focusId" [style]="{'width':'100%'}" #focus="ngModel"></p-dropdown>
-                </div>
-            </div>
-            <div *ngIf="!isChild" class="form-group">
-                <label for="monitor">Chartered</label>
-                <p-inputSwitch name="monitor" onLabel="Yes" offLabel="No" [(ngModel)]="model.chartered"></p-inputSwitch>
-            </div>
-            <div *ngIf="!isChild" class="form-group" [ngClass]="{ 'has-error': f.submitted  }">
-                <label for="sponsor">Sponsor</label>
-                <p-autoComplete [style]="{'width':'100%'}" inputId="sponsor" name="sponsor" [(ngModel)]="model.sponsor" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true"></p-autoComplete>
-                <!--<p-multiSelect name="sponsor" [options]="foundUsers" [(ngModel)]="model.sponsor" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter"  >
-            </p-multiSelect>-->
-            </div>
-
-
-            <div class="form-group" [ngClass]="{ 'has-error': f.submitted  }">
-                <label for="assignee">Assignee</label>
-
-                <!--<p-listbox name="assignee" [options]="assignees" [(ngModel)]="model.assignee" multiple="multiple" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
-            </p-listbox>-->
-
-                <p-autoComplete [style]="{'width':'100%'}" inputId="assignee" name="assignee" [(ngModel)]="model.assignee" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true" #assignee="ngModel" required></p-autoComplete>
-                <!--<p-multiSelect name="assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
-            </p-multiSelect>-->
-                <div *ngIf="f.submitted && !assignee.valid" class="help-block"> Assignee required</div>
-            </div>
-
-            <div class="form-group">
-                <label for="monitor">Monitored</label>
-                <p-inputSwitch name="monitor" onLabel="Yes" offLabel="No" [(ngModel)]="model.monitored"></p-inputSwitch>
-            </div>
-
-            <div class="form-group">
                 <label for="percentage">Completion (%)</label>
                 <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="model.percentage" style="width:200px" />
                 <p-slider name="percentage" [(ngModel)]="model.percentage" [style]="{'width':'200px'}"></p-slider>
             </div>
-            <div class="form-group">
-                <label for="next">Next Step</label>
-                <textarea class="form-control" name="next" [(ngModel)]="model.nextStep"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="outscope">Out of Scope</label>
-                <textarea class="form-control" name="outscope" [(ngModel)]="model.outOfScope"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="detail">Project Detail</label>
-                <input type="text" class="form-control" name="detail" placeholder="link to project details" [(ngModel)]="model.projDetail" />
 
-            </div>
-            <div class="form-group">
-                <label for="challenge">Challenges</label>
-                <textarea class="form-control" name="challenge" [(ngModel)]="model.challenge"></textarea>
-            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted  }">
+                <label for="assignee">Assignee</label>
 
-            <div class="form-group">
-                <label for="doc">Documentation Link</label>
-                <input type="text" class="form-control" name="doc" placeholder="link to documentation" [(ngModel)]="model.docLink" />
+
+                <p-autoComplete [style]="{'width':'100%'}" inputId="assignee" name="assignee" [(ngModel)]="model.assignee" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true" #assignee="ngModel" required></p-autoComplete>
+                <div *ngIf="f.submitted && !assignee.valid" class="help-block"> Assignee required</div>
+            </div>
+            <!-- set this entire group hidden if it is sub activity -->
+            <div *ngIf="!isChild">
+                <div class="form-group" [ngClass]="{ 'has-error': f.submitted  }">
+                    <label for="sponsor">Sponsor</label>
+                    <p-autoComplete [style]="{'width':'100%'}" inputId="sponsor" name="sponsor" [(ngModel)]="model.sponsor" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true"></p-autoComplete>
+                </div>
+                <div class="form-group">
+                    <label for="benefit">Benefits</label>
+                    <textarea class="form-control" name="benefit" [(ngModel)]="model.benefit"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cost">Cost(MM)</label>
+                    <input class="form-control" type="number" name="cost" [(ngModel)]="model.cost" />
+                </div>
+
+                <div class="form-group">
+                    <label for="kpi">KPI</label>
+
+                    <p-dropdown name="kpi" [options]="kpis" [(ngModel)]="model.kpi" [style]="{'width':'100%'}"></p-dropdown>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
+                        <label for="phase">Phase</label>
+                        <p-dropdown name="phase" [options]="phases" [(ngModel)]="model.phaseId" [style]="{'width':'100%'}" #phase="ngModel" required></p-dropdown>
+                        <div *ngIf="f.submitted && !phase.valid" class="help-block"> Phase is required</div>
+                    </div>
+
+                    <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
+                        <label for="focus">Focus Area</label>
+                        <p-dropdown name="focus" [options]="focuses" [(ngModel)]="model.focusId" [style]="{'width':'100%'}" #focus="ngModel"></p-dropdown>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="monitor">Chartered</label>
+                    <p-inputSwitch name="monitor" onLabel="Yes" offLabel="No" [(ngModel)]="model.chartered"></p-inputSwitch>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <label for="monitor">Monitored</label>
+                    <p-inputSwitch name="monitor" onLabel="Yes" offLabel="No" [(ngModel)]="model.monitored"></p-inputSwitch>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="next">Next Step</label>
+                    <textarea class="form-control" name="next" [(ngModel)]="model.nextStep"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="outscope">Out of Scope</label>
+                    <textarea class="form-control" name="outscope" [(ngModel)]="model.outOfScope"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="detail">Project Detail</label>
+                    <input type="text" class="form-control" name="detail" placeholder="link to project details" [(ngModel)]="model.projDetail" />
+
+                </div>
+                <div class="form-group">
+                    <label for="challenge">Challenges</label>
+                    <textarea class="form-control" name="challenge" [(ngModel)]="model.challenge"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="doc">Documentation Link</label>
+                    <input type="text" class="form-control" name="doc" placeholder="link to documentation" [(ngModel)]="model.docLink" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="fileupload">Upload Documents</label>

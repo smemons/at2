@@ -137,10 +137,10 @@ export class ListActivitiesComponent implements OnInit {
     let act=new Activity();
     act._id=task.activityId;
     act.percentage=task.percentage;
-    this.activityService.update(act).subscribe();
+    this.activityService.updatePercentage(act).subscribe();
     //tell cache that data is changed
     this.cache.isActivityChanged.next(act);
-    this.cache.isActivityCreated
+
     this.taskDialog=false;
   }
   //again through injection
