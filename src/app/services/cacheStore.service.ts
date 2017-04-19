@@ -1,3 +1,5 @@
+import { Activity } from './../models/activity';
+
 import { element } from 'protractor';
 import { MiniActivity } from './../models/miniActivity';
 import { ActivityService } from './activity.service';
@@ -17,6 +19,7 @@ import { Injectable } from '@angular/core';
 export class CacheStoreService {
 isDataCreated: Subject<any> = new BehaviorSubject(Wrapper);
 isActivityCreated: Subject<any> = new BehaviorSubject(MiniActivity);
+isActivityChanged: Subject<any> = new BehaviorSubject(Activity);
 
       categories :  SelectItem[]=[];
       statuses :    SelectItem[]=[];
@@ -35,6 +38,27 @@ this.isDataCreated.subscribe(data=>{
   this.addNewItem(wrapper);
 });
 
+
+//is activity changed
+this.isActivityChanged.subscribe(act=>{
+ //check array of my created and change percentage there
+ this.created.forEach(el => {
+ if(el._id==act._id)
+ {
+   el.percentage=act.percentage;
+ }
+});
+
+//check array of my assignment and change percentage there
+ this.assigned.forEach(el => {
+ if(el._id==act._id)
+ {
+   el.percentage=act.percentage;
+ }
+ });
+});
+
+///////////////////////////////////////////
     //subscribe to a subject created by create Activity component
     //if activity was created
 let loggedInUser=utilityService.getCurrentUser();

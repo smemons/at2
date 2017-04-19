@@ -37,7 +37,7 @@
                         <template let-act="rowData" pTemplate="body">
                              <button type="button" class="pull-left" title="Activity Detail" (click)="viewActivity(act._id)" pButton  icon="fa-eye"></button>
                              <button type="button" class="pull-left" title="Activity Edit" pButton (click)="editAct(act._id)" icon="fa-pencil"></button>
-                             <button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act._id)" icon="fa-check-square-o"></button>
+                             <button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>
 
                         </template>
                     </p-column>
@@ -82,7 +82,7 @@
 
                         <template let-act="rowData" pTemplate="body">
                             <button title="Activity Detail" type="button" pButton (click)="viewActivity(act._id)" icon="fa-eye"></button>
-                            <button type="button" title="Create Task" pButton (click)="createTask(act._id)" icon="fa-check-square-o"></button>
+                            <button type="button" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>
 
                         </template>
                     </p-column>
@@ -95,7 +95,7 @@
 
 </div>
 <p-dialog #aTaskDialog header="Add Progress Update" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
-    <app-task [activityId]="activityId" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
+    <app-task [(percentage)]="percentage" [activityId]="activityId" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
 </p-dialog>
 
 <p-dialog #aDialog header="Activity Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="500" [height]="500">
@@ -166,65 +166,8 @@
             <button type="button" pButton icon="fa-close" (click)="closeActivityDialog()" label="Cancel"></button>
             <button type="button" class="pull-left btn-primary btn-lg" (click)="viewActivity(activity._id)" label="Detail">Detail</button>
             <div class="clearfix"></div>
-            <button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity._id)" label="Detail">Create Task</button>
+            <button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity._id,activity.percentage)" label="Detail">Create Task</button>
 
         </div>
     </p-footer>
 </p-dialog>
-
-<!--<p-dialog #aDialog header="Activity Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="500" [height]="600">
-    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="activity">
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="title">Title</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="activity.title" /></div>
-        </div>
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="desc">Description</label></div>
-            <div class="ui-grid-col-8"><textarea id="desc" pInputTextarea [(ngModel)]="activity.desc"></textarea></div>
-        </div>
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="category">Category</label></div>
-            <div class="ui-grid-col-8">
-                <select class="form-control" id="category" name="category" [(ngModel)]="activity.category" #category="ngModel" required>
-              <option *ngFor="let cat of categories" [ngValue]="cat.title">{{cat.title}}</option>
-            </select> </div>
-        </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="startDate">Start Date</label></div>
-            <div class="ui-grid-col-8">
-                <p-calendar [appendTo]="aDialog" name="startDate" [icon]="true" [(ngModel)]="activity.startDate" dateFormat="mm/dd/yy"></p-calendar>
-            </div>
-        </div>
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="endDate">End Date</label></div>
-            <div class="ui-grid-col-8">
-                <p-calendar [appendTo]="aDialog" name="endDate" [icon]="true" [(ngModel)]="activity.endDate" dateFormat="mm/dd/yy"></p-calendar>
-            </div>
-        </div>
-        <br>
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="status">Status</label></div>
-            <div class="ui-grid-col-8">
-                <p-inputSwitch name="status" onLabel="Open" offLabel="Close" [(ngModel)]="activity.opened">></p-inputSwitch>
-            </div>
-        </div>
-
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="assignee">Assignee</label></div>
-            <div class="ui-grid-col-8">
-                <p-listbox name="assignee" [options]="assignees" [(ngModel)]="activity.assignee" multiple="multiple" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
-                </p-listbox>
-
-            </div>
-        </div>
-
-    </div>
-    <p-footer>
-        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" pButton icon="fa-check" (click)="updateActivity(activity)" label="Save"></button>
-
-            <button type="button" pButton icon="fa-close" (click)="deleteActivity()" label="Delete"></button>
-        </div>
-    </p-footer>
-</p-dialog>-->

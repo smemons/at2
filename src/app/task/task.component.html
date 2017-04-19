@@ -7,8 +7,8 @@
     </div>
     <div class="form-group">
         <label for="percentage">Completion (%)</label>
-        <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="model.percentage" style="width:200px" />
-        <p-slider name="percentage" [(ngModel)]="model.percentage" [style]="{'width':'200px'}"></p-slider>
+        <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="percentage" style="width:200px" />
+        <p-slider name="percentage" [(ngModel)]="percentage" [style]="{'width':'200px'}"></p-slider>
     </div>
     <div class="form-group">
         <button [disabled]="loading" (click)="saveTask()" [disabled]="!f.form.valid" class="btn btn-primary">Save</button>

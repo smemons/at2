@@ -8,7 +8,7 @@ import { Category } from './../../models/category';
 import { SelectItem } from 'primeng/primeng';
 import { element } from 'protractor';
 import { Activity } from './../../models/activity';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ActivityService } from '../../services/activity.service';
 import { AuthService } from './../../services/auth.service';
 import { Component, NgZone, OnInit } from '@angular/core';
@@ -25,6 +25,7 @@ export class ListActivitiesComponent implements OnInit {
   taskDialog:boolean;
   activity:Activity=new Activity();
   activityId:string;
+  percentage:number;
   assignees: SelectItem[];
   categories:Category[];
   selectedCategory:string;
@@ -123,14 +124,23 @@ export class ListActivitiesComponent implements OnInit {
     this.displayDialog = false;
   }
 
-  createTask(id:string)
+  createTask(id:string,percentage:number)
   {
     this.activityId=id;
+    this.percentage=percentage;
     this.taskDialog=true;
   }
   //task created event passed form component
   taskCreated(task)
   {
+
+    let act=new Activity();
+    act._id=task.activityId;
+    act.percentage=task.percentage;
+    this.activityService.update(act).subscribe();
+    //tell cache that data is changed
+    this.cache.isActivityChanged.next(act);
+    this.cache.isActivityCreated
     this.taskDialog=false;
   }
   //again through injection

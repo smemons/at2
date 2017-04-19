@@ -10,11 +10,14 @@ import { Component, Input,Output, OnInit,EventEmitter } from '@angular/core';
 })
 export class TaskComponent implements OnInit {
 
-@Input() activityId:String;
+@Input() activityId:string;
+@Input() percentage:number;
 
   model: any = {};
   task:Task;
   loading = false;
+ @Output()
+ percentageChange=new EventEmitter<number>();
  @Output()
     taskChanged = new EventEmitter();
   @Output()
@@ -30,13 +33,13 @@ export class TaskComponent implements OnInit {
 
      this.loading=true;
      this.model.activityId=this.activityId;
+     this.model.percentage=this.percentage;
       event.preventDefault();
       this.taskService.create(this.model).subscribe(
                 data => {
                   this.task=new Task();
                    console.log('Task created - Service!');
                     this.alertService.success("Task saved!");
-                    //this.taskService.getAllByActivityId(id).subscribe(tasks=>this.tasks=tasks);
                      this.task=data;
                      this.taskChanged.next(this.task);
 
