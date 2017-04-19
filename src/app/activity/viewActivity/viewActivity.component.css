@@ -16,7 +16,7 @@
 }
 
 .left {
-    width: 150px;
+    width: 120px;
     float: left;
 }
 
@@ -54,7 +54,6 @@
 .clt ul,
 .clt li {
     position: relative;
-    font-size: large;
 }
 
 .clt ul {
