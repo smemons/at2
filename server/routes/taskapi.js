@@ -6,10 +6,11 @@ const uf = require('../functions/task');
 
 
 var tasks = express.Router();
-tasks.get('/', uf.getTask);
+tasks.get('/all', uf.getAll);
+tasks.get('/:id', uf.getTask);
 tasks.post('/', uf.saveTask);
 
-tasks.get('/all', uf.getAll);
+tasks.put('/', uf.updateTask);
 tasks.get('/allByActivity/:id', uf.getAllByActivity);
 tasks.get('/:id', function(req, res) {});
 tasks.patch('/:id', function(req, res) {});

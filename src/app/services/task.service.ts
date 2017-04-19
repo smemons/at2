@@ -19,6 +19,17 @@ create(task:Task)
       .post('/api/task', task)
       .map((response: Response) => response.json());
 }
+//task update
+updateTask(task:Task)
+{
+  task.updatedBy=this.authService.getCurrentUser();
+  task.updatedAt=new Date();
+   console.log('putting/updating Activity from service: ' + task);
+    return this
+      .http
+      .put('/api/task', task)
+      .map((response: Response) => response);
+}
 //get all Category
  getAll() {
     return this

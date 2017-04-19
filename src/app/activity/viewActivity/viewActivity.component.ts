@@ -7,9 +7,8 @@ import { ActivityService } from './../../services/activity.service';
 import { Activity } from './../../models/activity';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/filter';
 
+declare var moment: any;
 @Component({
   selector: 'app-viewActivity',
   templateUrl: './viewActivity.component.html',
@@ -17,16 +16,18 @@ import 'rxjs/add/operator/filter';
 })
 export class ViewActivityComponent implements OnInit {
 
-  taskDialog:Boolean=false;
+  taskDialog:boolean=false;
+  taskUpdateDialog:boolean;
   activity:Activity;
   isChild:boolean;
   childrenActivities:Activity[];
   parentActivity:Activity;
   model: any = {};
   tasks:Task[];
+  task:Task=new Task();
   loading = false;
   category:string;
-
+  percentage:number;
   status:string;
 
   focus:string;
@@ -65,6 +66,8 @@ export class ViewActivityComponent implements OnInit {
         this.activityService.getActivity(id).subscribe(act=>{
         this.activity=act;
 
+        this.percentage=act.percentage;
+
          //get kpi
          if(act.kpiId!=null)
          {
@@ -99,7 +102,7 @@ export class ViewActivityComponent implements OnInit {
       //get all depts
        if(act.deptId!=null)
         {
-debugger;
+         this.dept=[];
          this.utilityService.getAllDepts().subscribe(dept=>{
          //there may more then one dept
             let dptId=act.deptId;
@@ -113,19 +116,12 @@ debugger;
 
 
 
-        //   this.utilityService.getDeptById(act.deptId).subscribe(dept=>{
-        //     //there could be mulitple department
-        //     dept.forEach(dpt=>{
-        //         this.dept.push(dpt.title);
-        //     });
-
-        //  });
-      //  }
 
 
     //get all visibilities
       if(act.visId!=null)
         {
+          this.visibility=[];
            this.utilityService.getAllVisibilities().subscribe(vis=>{
             let visIds=act.visId;
             visIds.forEach(avis => {
@@ -133,11 +129,6 @@ debugger;
           });
        });
 
-        //   this.utilityService.getVisById(act.visId).subscribe(vis=>{
-        //   vis.forEach(vs=>{
-        //         this.visibility.push(vs.title);
-        //     });
-        //  });
         }
 
      //get phase
@@ -149,7 +140,25 @@ debugger;
         }
 ///======================================================================================
           //get all tasks associated with this activity
-        this.taskService.getAllByActivityId(id).subscribe(tasks=>this.tasks=tasks);
+          this.tasks=[];
+        this.taskService.getAllByActivityId(id).subscribe(tasks=>{
+          tasks.forEach(task => {
+            debugger;
+
+            let time = new Date().getTime() -  moment(task.createdAt).toDate().getTime();
+            time=time/1000/60/60;
+            if(time<8)
+              {
+                task.editable=true;
+              }
+              else
+              {
+                task.editable=false;
+              }
+             this.tasks.push(task);
+          });
+          //this.tasks=tasks;
+        });
 
         //get all children activities associated with this activity
         this.activityService.getAllChildrenById(id).subscribe(act=>{
@@ -188,6 +197,7 @@ debugger;
   close()
   {
     this.taskDialog=false;
+    this.taskUpdateDialog=false;
   }
   saveTask(id:string)
   {
@@ -200,8 +210,6 @@ debugger;
                     this.alertService.success("Task saved!");
                     //this.taskService.getAllByActivityId(id).subscribe(tasks=>this.tasks=tasks);
                     this.tasks.push(data);
-
-
                 },
                 error => {
 
@@ -228,8 +236,13 @@ debugger;
   //task created event passed form component
   taskCreated(task)
   {
-
+    let act=new Activity();
+    act._id=task.activityId;
+    act.percentage=task.percentage;
+    this.activityService.updatePercentage(act).subscribe();
+    this.percentage=task.percentage;
     this.taskDialog=false;
+    task.editable=true;
     this.tasks.unshift(task);
 
   }
@@ -237,5 +250,27 @@ debugger;
   taskClosed(val)
   {
     this.taskDialog=false;
+  }
+  editTaskDialog(id)
+  {
+   this.utilityService.getTaskById(id).subscribe(task=>this.task=task);
+    this.taskUpdateDialog=true;
+  }
+  //update task
+  updateTask(task)
+  {
+
+     this.taskService.updateTask(task).subscribe(tsk=>
+     {
+       let act=new Activity();
+        act._id=task.activityId;
+        act.percentage=task.percentage;
+        this.alertService.success('Progress updated!');
+        this.activityService.updatePercentage(act).subscribe();
+        this.percentage=task.percentage;
+     });
+
+     this.taskUpdateDialog=false;
+     this.task=new Task();
   }
 }

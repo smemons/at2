@@ -143,6 +143,15 @@ getAllDepts() {
       .map((response : Response) => response.json());
   }
   ////////////////////////////////////////////////
+     //get  task by id
+   getTaskById(id:string) {
+    return this
+      .http
+      .get('/api/task/'+id)
+      .map((response : Response) => response.json());
+  }
+
+  ////////////////////////////////////////////////
 //return the typeahead portion of users for string completion
   getUsersTypeAhead(q:string)
   {

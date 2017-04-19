@@ -1,25 +1,45 @@
 var Task = require('../schema/task');
 // get single room
 var getTask = function(req, res, next) {
-    resp.send("GET");
-}
-
-// create single room
-var saveTask = function(req, res, next) {
-    console.log('creating Task now');
-    var task = new Task(req.body);
-
-    task.save(function(err) {
+    var id = req.params.id;
+    Task.findById(id, function(err, docs) {
         if (err) {
-
-            return next(err);
+            console.log('Got Task error :' + err);
+            next(err);
         } else {
-
-            return res.json(task);
+            res.json(docs);
         }
     });
 }
 
+// create single room
+var saveTask = function(req, res, next) {
+        console.log('creating Task now');
+        var task = new Task(req.body);
+
+        task.save(function(err) {
+            if (err) {
+
+                return next(err);
+            } else {
+
+                return res.json(task);
+            }
+        });
+    }
+    // update Task
+var updateTask = function(req, res, next) {
+
+    var task = new Task(req.body);
+    console.log('updating Task now' + task);
+    Task.findByIdAndUpdate(task._id, { $set: task }, function(err, result) {
+        if (err) {
+            console.log(err);
+        }
+        console.log("Task updated: " + result);
+        res.send('Done')
+    });
+}
 var getAll = function(req, res, next) {
     Task.find(function(err, task) {
         if (err) {
@@ -51,7 +71,9 @@ module.exports = {
     getTask: getTask,
     saveTask: saveTask,
     getAll: getAll,
-    getAllByActivity: getAllByActivity
+    getAllByActivity: getAllByActivity,
+    updateTask: updateTask
+
 
 
 }

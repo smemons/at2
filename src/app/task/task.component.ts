@@ -40,6 +40,7 @@ export class TaskComponent implements OnInit {
                   this.task=new Task();
                    console.log('Task created - Service!');
                     this.alertService.success("Task saved!");
+                    this.model={};
                      this.task=data;
                      this.taskChanged.next(this.task);
 

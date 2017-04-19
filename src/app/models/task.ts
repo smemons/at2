@@ -4,6 +4,7 @@ export class Task{
     desc: string;
     activityId: string;
     percentage:number;
+    editable:boolean;
     createdBy: string;
     createdAt:Date;
     updatedBy: string;

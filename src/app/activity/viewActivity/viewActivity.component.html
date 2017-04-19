@@ -1,12 +1,12 @@
 <div class="row">
 
-    <div class="col-lg-3 pull-left act-pad {">
+    <div class="col-lg-3 pull-left act-pad">
 
         <div class="act-box">
 
             <br/>
             <br/>
-            <button class="btn btn-block btn-lg btn-info" (click)="createSubActivity(activity)" role="button"> Create Subactivity <span class="glyphicon glyphicon-tasks"></span></button>
+            <button class="btn btn-block btn-lg btn-success" (click)="createSubActivity(activity)" role="button"> Create Subactivity <span class="glyphicon glyphicon-tasks"></span></button>
 
             <div class="clear"></div>
             <br/>
@@ -14,53 +14,7 @@
             <button class="btn btn-block btn-lg btn-warning" (click)="showTaskDialog()" role="button">Progress Update <span class="glyphicon glyphicon-check"></span> </button>
             <div class="clear"></div>
         </div>
-        <!--<div class="ui-grid-row act-aligned">
-            <div *ngIf="childrenActivities.length > 0" class="ui-grid-col-12">
-                <div class="panel-group">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse1" class="collapsed">Related Sub Activities</a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li *ngFor="let anAct of childrenActivities" class="list-group-item list-group-item-success"><a style="cursor: pointer" (click)="viewActivity(anAct._id)">{{anAct.title}}</a></li>
 
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <div class="ui-grid-row act-aligned">
-
-            <div *ngIf="parentActivity!=null" class="ui-grid-col-12">
-                <div class="panel-group">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" href="#collapse2" class="collapsed">Parent Activity</a>
-                            </h4>
-                        </div>
-                        <div id="collapse2" class="panel-collapse collapse in">
-                            <div class="panel-body">
-
-                                <ul class="list-group">
-                                    <li class="list-group-item list-group-item-warning"> <a style="cursor: pointer" (click)="viewActivity(parentActivity._id)">{{parentActivity.title}}</a></li>
-
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 
     <div class="col-lg-6 act-pad ">
@@ -73,15 +27,15 @@
                         <!--department -->
                         <ul *ngIf="parentActivity!=null">
                             <li>
-                                {{parentActivity.title}}
+                                <a [routerLink]="['/viewActivity',parentActivity._id]">{{parentActivity.title}}</a>
                                 <!--Parent-->
                                 <ul>
                                     <li>
                                         <!--self -->
-                                        {{activity.title}}
+                                        <a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>
                                         <ul *ngIf="childrenActivities.length > 0">
                                             <li *ngFor="let item of childrenActivities">
-                                                {{item.title}}
+                                                <a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -94,10 +48,10 @@
 
                             <li>
                                 <!--self -->
-                                {{activity.title}}
+                                <a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>
                                 <ul *ngIf="childrenActivities.length > 0">
                                     <li *ngFor="let item of childrenActivities">
-                                        {{item.title}}
+                                        <a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -163,7 +117,7 @@
 
         <div class="left act-hd act-ct">Completion (%) </div>
         <div class="right act-ct">
-            {{activity.percentage}}
+            {{percentage}}
         </div>
         <div class="clear"></div>
 
@@ -262,13 +216,15 @@
 
     </div>
     <div *ngIf="tasks.length > 0" class="col-lg-3 pull-right act-pad {">
-        <div class="panel panel-warning" style="max-height: 900px;overflow-y: auto;">
+        <div class="panel panel-success" style="max-height: 900px;overflow-y: auto;">
             <div class="panel-heading">Progress Updates</div>
             <div class="panel-body">
                 <div *ngFor="let task of tasks">
 
                     <p>{{task.desc}}</p>
                     <span class="act-sm">{{task.createdBy}}, {{task.createdAt|date:'short'}} </span><span class="act-bs"> {{task.percentage}}% completed</span>
+                    <br/>
+                    <button *ngIf="task.editable" type="button" (click)="editTaskDialog(task._id)" class="btn btn-success btn-sm">Edit <span class="glyphicon glyphicon-pencil"></span></button>
                     <hr/>
                 </div>
             </div>
@@ -281,5 +237,29 @@
 
 
 <p-dialog #aDialog header="Add Progress Update" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
-    <app-task [activityId]="activity._id" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
+    <app-task [(percentage)]="percentage" [activityId]="activity._id" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
+</p-dialog>
+
+
+<p-dialog header="Update Progress Update" [(visible)]="taskUpdateDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="400">
+
+    <form name="form" autocomplete="off" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+
+        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !desc.valid }">
+            <label for="desc">Progress update</label>
+            <textarea rows="4" cols="60" class="form-control" name="desc" [(ngModel)]="task.desc" #desc="ngModel" required></textarea>
+            <div *ngIf="f.submitted && !desc.valid" class="help-block"> Progress update is required</div>
+        </div>
+        <div class="form-group">
+            <label for="percentage">Completion (%)</label>
+            <input id="percentage" name="percentage" type="text" pInputText [(ngModel)]="task.percentage" style="width:200px" />
+            <p-slider name="percentage" [(ngModel)]="task.percentage" [style]="{'width':'200px'}"></p-slider>
+        </div>
+        <div class="form-group">
+            <button [disabled]="loading" (click)="updateTask(task)" [disabled]="!f.form.valid" class="btn btn-primary">Update</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <button (click)="close()" class="btn btn-link">Cancel</button>
+        </div>
+    </form>
 </p-dialog>
