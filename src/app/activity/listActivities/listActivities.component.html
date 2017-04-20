@@ -3,7 +3,7 @@
     <div class="col-lg-6 col-md-6">
         <p-panel header="Activities created By me" [toggleable]="true">
             <div class="at-sm-panel">
-                <p-dataTable [value]="created" [rows]="10" [paginator]="true">
+                <p-dataTable [value]="created" [rows]="9" [paginator]="true">
 
                     <p-column field="title" header="Title" [style]="{'width':'180px'}">
                         <template let-col let-act="rowData" pTemplate="body">
@@ -48,7 +48,7 @@
     <div class="col-lg-6 col-md-6">
         <p-panel header="Activities assigned to me" [toggleable]="true">
             <div class="at-sm-panel">
-                <p-dataTable [value]="assigned" [rows]="10" [paginator]="true">
+                <p-dataTable [value]="assigned" [rows]="9" [paginator]="true">
 
                     <p-column field="title" header="Title" [style]="{'width':'180px'}">
                         <template let-col let-act="rowData" pTemplate="body">
