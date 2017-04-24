@@ -17,9 +17,7 @@ acts.get('/allAssigned/:id', uf.getAllAssigned);
 acts.get('/allCreated/:id', uf.getAllCreated);
 acts.get('/byLevel/:level', uf.getAllByLevel);
 acts.get('/allByParentId/:id', uf.getAllByParentId);
-acts.get('/:id', function(req, res) {});
-acts.patch('/:id', function(req, res) {});
-acts.delete('/:id', function(req, res) {});
+
 
 
 

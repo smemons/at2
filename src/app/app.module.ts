@@ -1,3 +1,4 @@
+import { AnalyticsService } from './services/analytics.service';
 import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
 import { AddKpiComponent } from './kpi/addKpi/addKpi.component';
 import { KpiService } from './services/kpi.service';
@@ -54,9 +55,9 @@ import {GrowlModule,ListboxModule,CalendarModule,PanelModule,DataTableModule,
   InputTextareaModule,InputTextModule,DialogModule,InputSwitchModule,
   ConfirmDialogModule,ConfirmationService,AutoCompleteModule,
   SelectButtonModule,SliderModule,MultiSelectModule,DropdownModule,
-  FileUploadModule,TabViewModule,TreeModule} from 'primeng/primeng';
+  FileUploadModule,TabViewModule,TreeModule,ChartModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
-
+import { AnalyticsComponent } from './analytics/analytics.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,9 +88,9 @@ import { AppComponent } from './app.component';
     TaskComponent,
     TruncatePipe,
     AddKpiComponent,
-    ListKpiComponent
-
-  ],
+    ListKpiComponent,
+    AnalyticsComponent
+],
   imports: [
      BrowserModule,
     FormsModule,
@@ -103,7 +104,6 @@ import { AppComponent } from './app.component';
     InputTextModule,
     DialogModule,
     InputSwitchModule,
-
     ConfirmDialogModule,
     AutoCompleteModule,
     SelectButtonModule,
@@ -113,8 +113,8 @@ import { AppComponent } from './app.component';
     FileUploadModule,
     TabViewModule,
     TreeModule,
+    ChartModule,
     BrowserAnimationsModule,
-
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
@@ -135,7 +135,8 @@ import { AppComponent } from './app.component';
     TreeBuilderService,
     TruncatePipe,
     CacheStoreService,
-    KpiService
+    KpiService,
+    AnalyticsService
   ],
   bootstrap: [AppComponent]
 })

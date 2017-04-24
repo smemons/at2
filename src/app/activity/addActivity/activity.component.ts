@@ -48,6 +48,9 @@ export class ActivityComponent implements OnInit,AfterViewInit {
       minDate:Date;
       maxDate:Date;
 
+      level:number=0;
+      phaseDisable:boolean;
+
   constructor(
               private utilityService:UtilityService,
               private alertService:AlertService,
@@ -69,21 +72,34 @@ ngAfterViewInit()
    this.isChild=false;
    if(parentUrl==='/addChildActivity')
    {
-      this.model=this.utilityService.getPassedActivity();
-      this.model.startDate = moment(this.model.startDate).toDate();
-      this.model.endDate = moment(this.model.endDate).toDate();
-      this.model.parentId=this.model._id;
-      this.parentTitle =  this.model.title;
+      let act=this.utilityService.getPassedActivity();
+      debugger;
+      this.model.startDate = moment(act.startDate).toDate();
+      this.model.endDate = moment(act.endDate).toDate();
+      this.model.parentId=act._id;
+      this.parentTitle =  act.title;
       this.model.title="";
       this.model.desc="";
       this.isChild=true;
       this.model._id=undefined;
-      this.model.level=this.model.level+1;
+      this.model.level=act.level+1;
+      this.level=this.model.level;
       //set min max date
       this.minDate=this.model.startDate;
       this.maxDate=this.model.endDate;
+      if(this.level>1)
+      {
+        this.model.phaseId=act.phaseId;
+        this.phaseDisable=true;
+      }
+      this.model.deptId=act.deptId;
+      this.model.assignee=act.assignee;
+      this.model.catId=act.catId;
+      this.model.statusId=act.statusId;
+      this.model.percentage=act.percentage;
    }
    this.cache.populateAll();
+   this.loadUsers();
 
     // //get users
     // this.utilityService.getAllUsers().subscribe(users=>{
@@ -167,4 +183,19 @@ get phases():SelectItem[] {
 get kpis():SelectItem[] {
   return this.cache.kpis;
 }
+
+private loadUsers() {
+
+       // //get users
+    if(this.foundUsers==null || this.foundUsers.length==0)
+    {
+        this.foundUsers=[];
+        this.utilityService.getAllUsers().subscribe(users=>{
+        users.forEach(usr => {
+          this.foundUsers.push({label:usr.username, value:usr.username});
+        });
+
+        });
+    }
+    }
 }

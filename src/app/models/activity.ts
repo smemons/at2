@@ -5,10 +5,12 @@ title:string;
 desc:string;
 benefit:string;
 cost:number;
+costSaving:number;
 startDate:Date;
 endDate:Date;
 sponsor:[string];
 assignee:[string];
+buAssignee:[string];
 kpiId:string;
 percentage: number;//percentage of completion
 catId:string; //category Id
