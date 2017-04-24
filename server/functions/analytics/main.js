@@ -13,6 +13,15 @@ var lookup = {
         as: "dept"
     }
 };
+var lookup2 = {
+    $lookup: {
+        from: "phases",
+        localField: "phaseId",
+        foreignField: "_id",
+        as: "phase"
+    }
+
+}
 var project1 = {
     $project: {
         _id: 0,
@@ -22,6 +31,8 @@ var project1 = {
         //startDate:1,
         deptName: "$dept.title",
         deptId: "$dept._id",
+        phase: "$phase.title",
+
         //status:"$status.title",
         totalDays: { $divide: [{ $subtract: ["$endDate", "$startDate"] }, 86400000] },
         consumedDays: { $divide: [{ $subtract: [new Date(), "$startDate"] }, 86400000] },
@@ -38,8 +49,9 @@ var project1 = {
 var project2 = {
     $project: {
         _id: 0,
-        deptName: 1,
+        deptName: { $arrayElemAt: ["$deptName", 0] },
         deptId: 1,
+        phase: { $arrayElemAt: ["$phase", 0] },
         // field:"$$ROOT",
         "score": {
             $switch: {
@@ -81,9 +93,33 @@ var project2 = {
 var group = {
     $group: {
         _id: { depName: "$deptName", deptId: "$deptId" },
-        // _id: "$deptName",
-        // "deptName": { $addToSet: "$deptName" },
-        // "deptId": { $addToSet: "$deptId" },
+        "Scoping": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Scoping"] },
+                    1,
+                    0
+                ]
+            }
+        },
+        "Design": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Design"] },
+                    1,
+                    0
+                ]
+            }
+        },
+        "Implementation": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Implementation"] },
+                    1,
+                    0
+                ]
+            }
+        },
         "OverDue": {
             "$sum": {
                 "$cond": [
@@ -125,6 +161,7 @@ var group = {
 module.exports = {
         unwind: unwind,
         lookup: lookup,
+        lookup2: lookup2,
         project1: project1,
         project2: project2,
         group: group

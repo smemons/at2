@@ -66,6 +66,11 @@ updatePercentage(activity:Activity)
       .map((response: Response) => response.json());
   }
 
+
+/**
+ *
+ * @param id
+ */
 //get all Category
  getAllByUserId(id:String) {
     return this

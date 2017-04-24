@@ -1,3 +1,5 @@
+import { Activity } from './../models/activity';
+import { ActivityService } from './../services/activity.service';
 import { AnalyticsService } from './../services/analytics.service';
 import { Component, OnInit } from '@angular/core';
 @Component({
@@ -6,36 +8,66 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./analytics.component.css']
 })
 export class AnalyticsComponent implements OnInit {
-constructor(private anService:AnalyticsService){}
+constructor(private anService:AnalyticsService,private activytService:ActivityService){}
     data:any;
+    pieData:any;
     options: any;
+    pieOptions:any;
     depts = [];
     overDue=[];
     needAtt=[];
     inProg=[];
     complete=[];
     dataSet=[];
+    pieDataSet=[];
+    tScoping:number=0;
+    tDesign:number=0;
+    tImpl:number=0;
+    acts:Activity[]=[];
   ngOnInit() {
-     let color=['#42A543','#af2364','#11237c','#f9de0e'];
+    //get all activities which are not closed  and percentage
+    this.activytService.getAll().subscribe(act=>{
+     this.acts=act;
+    });
+
+     let color=['#FF3333','#FFCC33','#00CCFF','#33FF66'];
     this.anService.getDeptProgress().subscribe(data=>{
 
        data.forEach(el=> {
-         this.depts.push(el._id.depName[0]);
-
+         this.depts.push(el._id.depName);
          this.overDue.push(el.OverDue);
          this.needAtt.push(el.NeedAttention);
          this.inProg.push(el.InProgress);
          this.complete.push(el.Completed);
-         //over due
-        //  this.dataSet.push({
-        //  label:"Over Due",
-        //  backgroundColor:color[0],
-        //  borderColor: '#1E88E5',
-        //  data:[el.OverDue]
-        // });
+         this.tScoping+=el.Scoping;
+         this.tDesign+=el.Design;
+         this.tImpl+=el.Implementation;
 
        });
+       this.pieDataSet.push(this.tScoping);
+       this.pieDataSet.push(this.tDesign);
+       this.pieDataSet.push(this.tImpl);
     });
+
+    //pie data
+     this.pieData = {
+            labels: ['Scoping','Design','Implementation'],
+            datasets: [
+                {
+                    data: this.pieDataSet,
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+            };
+
 
     //over due
          this.dataSet.push({
@@ -65,25 +97,12 @@ constructor(private anService:AnalyticsService){}
          borderColor: '#1E88E5',
          data:this.complete
         });
-//  var datasetValue = [];
-// var count = 4;
-// for (var j=0; j<count; j++) {
-//   let dt=[];
-//   for(let x=0;x<5;x++)
-//   {
-//     dt.push(Math.round(Math.random() * 100));
-//   }
-//     datasetValue[j] = {
-//         backgroundColor: color[j],
-//         borderColor: color[count-j],
-//         label :'item '+j,
-//         data : dt
-//     }
-// }
+
     this.data = {
             labels: this.depts,
             datasets:  this.dataSet
         }
+
         this.options = {
              scales: {
             xAxes: [{
@@ -94,6 +113,23 @@ constructor(private anService:AnalyticsService){}
                 stacked: true,
                 gridLines: { display: false }
             }]
+        },
+        legend:{
+          position:'top',
+           labels:{
+             boxWidth:10
+
+           }
+        }
+      };
+
+      this.pieOptions = {
+
+        legend:{
+          position:'top',
+            labels: {
+                usePointStyle:true
+            }
         }
         };
   }

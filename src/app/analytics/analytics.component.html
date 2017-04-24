@@ -1,8 +1,46 @@
 <div class="row">
-    <div class="col-sm-4" style="min-height: 400px;">
-        <p-chart type="horizontalBar" [data]="data" [height]="400" [options]="options" (onDataSelect)="selectData($event)">
-        </p-chart>
+    <div class="col-lg-3 at-panel">
+        <p-panel header="Activities Progress" [toggleable]="true">
+            <div class="em-sm-panel">
+
+                <p-chart type="horizontalBar" [data]="data" [height]="300" [options]="options" (onDataSelect)="selectData($event)">
+                </p-chart>
+            </div>
+
+        </p-panel>
+        <p-panel header="Activities " [toggleable]="true" [collapsed]="true">
+            <div class="em-sm-panel">
+
+                Work in Progress
+
+            </div>
+        </p-panel>
+
     </div>
-    <div class="col-sm-4">.col-sm-4</div>
-    <div class="col-sm-4">.col-sm-4</div>
+    <div class="col-lg-6 at-panel">
+        <p-panel header="Details" [toggleable]="true">
+            <div class="em-sm-panel">
+
+                Work in Progress
+
+            </div>
+        </p-panel>
+    </div>
+    <div class="col-lg-3 at-panel">
+        <p-panel header="Activities By Phases" [toggleable]="true">
+            <div class="em-sm-panel">
+
+                <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
+
+            </div>
+        </p-panel>
+        <p-panel header="Activities By Status" [toggleable]="true" [collapsed]="true">
+            <div class="em-sm-panel">
+
+                Work in Progress
+
+            </div>
+        </p-panel>
+
+    </div>
 </div>
