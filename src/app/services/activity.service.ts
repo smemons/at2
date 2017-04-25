@@ -66,6 +66,13 @@ updatePercentage(activity:Activity)
       .map((response: Response) => response.json());
   }
 
+//get all activity
+ getAllInProg(id:string) {
+    return this
+      .http
+      .get('/api/activity/allInProg/'+id)
+      .map((response: Response) => response.json());
+  }
 
 /**
  *
