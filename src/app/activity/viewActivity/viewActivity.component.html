@@ -27,15 +27,18 @@
                         <!--department -->
                         <ul *ngIf="parentActivity!=null">
                             <li>
-                                <a [routerLink]="['/viewActivity',parentActivity._id]">{{parentActivity.title}}</a>
+                                <span class='link' (click)="viewActivity(parentActivity._id)">{{parentActivity.title}}</span>
+                                <!--<a [routerLink]="['/viewActivity',parentActivity._id]">{{parentActivity.title}}</a>-->
                                 <!--Parent-->
                                 <ul>
                                     <li>
                                         <!--self -->
-                                        <a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>
+                                        <!--<a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>-->
+                                        <span class='link selected' (click)="viewActivity(activity._id)">{{activity.title}}</span>
                                         <ul *ngIf="childrenActivities.length > 0">
                                             <li *ngFor="let item of childrenActivities">
-                                                <a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>
+                                                <span class='link' (click)="viewActivity(item._id)">{{item.title}}</span>
+                                                <!--<a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>-->
                                             </li>
                                         </ul>
                                     </li>
@@ -48,10 +51,12 @@
 
                             <li>
                                 <!--self -->
-                                <a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>
+                                <span class='link selected' (click)="viewActivity(activity._id)">{{activity.title}}</span>
+                                <!--<a class="selected" [routerLink]="['/viewActivity',activity._id]"> {{activity.title}}</a>-->
                                 <ul *ngIf="childrenActivities.length > 0">
                                     <li *ngFor="let item of childrenActivities">
-                                        <a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>
+                                        <!--<a [routerLink]="['/viewActivity',item._id]"> {{item.title}}</a>-->
+                                        <span class='link' (click)="viewActivity(item._id)">{{item.title}}</span>
                                     </li>
                                 </ul>
                             </li>

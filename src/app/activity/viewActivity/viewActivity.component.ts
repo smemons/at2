@@ -1,3 +1,4 @@
+import { OnChanges } from '@angular/core/core';
 import { UtilityService } from './../../services/utility.service';
 import { SelectItem } from 'primeng/primeng';
 import { Task } from './../../models/task';
@@ -7,15 +8,13 @@ import { ActivityService } from './../../services/activity.service';
 import { Activity } from './../../models/activity';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
 declare var moment: any;
 @Component({
   selector: 'app-viewActivity',
   templateUrl: './viewActivity.component.html',
   styleUrls: ['./viewActivity.component.css']
 })
-export class ViewActivityComponent implements OnInit {
-
+export class ViewActivityComponent implements OnInit,OnChanges {
   taskDialog:boolean=false;
   taskUpdateDialog:boolean;
   activity:Activity;
@@ -29,45 +28,36 @@ export class ViewActivityComponent implements OnInit {
   category:string;
   percentage:number;
   status:string;
-
   focus:string;
-
   dept:string[]=[];
-
   phase:string;
-
   visibility:string[]=[];
-
   kpi:string;
-
   constructor(private route: ActivatedRoute,private router: Router,
               private taskService:TaskService,
               private alertService:AlertService,
               private activityService:ActivityService,
               private utilityService:UtilityService
               ) { }
-
+  ngOnChanges(){
+    console.log('ng on change');
+  }
   ngOnInit() {
-
+    this.loadActivity();
+  }
+private loadActivity() {
 
       this.tasks=[];
-
       this.childrenActivities=[];
       this.activity=new Activity();
       let id:string;
      this.route.params.subscribe(params => {
-
        id = params['id'];
-
-
        this.parentActivity=null;
-
       //let id=this.route.snapshot.params['id'];
         this.activityService.getActivity(id).subscribe(act=>{
         this.activity=act;
-
         this.percentage=act.percentage;
-
          //get kpi
          if(act.kpiId!=null)
          {
@@ -82,7 +72,6 @@ export class ViewActivityComponent implements OnInit {
           this.category=cat.title;
          });
         }
-
        //get status
           if(act.statusId!=null)
         {
@@ -90,7 +79,6 @@ export class ViewActivityComponent implements OnInit {
           this.status=st.title;
          });
         }
-
        //get focus
         if(act.focusId!=null)
         {
@@ -98,7 +86,6 @@ export class ViewActivityComponent implements OnInit {
           this.focus=fc.title;
          });
         }
-
       //get all depts
        if(act.deptId!=null)
         {
@@ -111,13 +98,6 @@ export class ViewActivityComponent implements OnInit {
              });
        });
         }
-
-
-
-
-
-
-
     //get all visibilities
       if(act.visId!=null)
         {
@@ -128,9 +108,7 @@ export class ViewActivityComponent implements OnInit {
               this.visibility.push(this.utilityService.getTitleById(avis,vis));
           });
        });
-
         }
-
      //get phase
      if(act.phaseId!=null)
         {
@@ -144,7 +122,6 @@ export class ViewActivityComponent implements OnInit {
         this.taskService.getAllByActivityId(id).subscribe(tasks=>{
           tasks.forEach(task => {
             debugger;
-
             let time = new Date().getTime() -  moment(task.createdAt).toDate().getTime();
             time=time/1000/60/60;
             if(time<8)
@@ -159,28 +136,19 @@ export class ViewActivityComponent implements OnInit {
           });
           //this.tasks=tasks;
         });
-
         //get all children activities associated with this activity
         this.activityService.getAllChildrenById(id).subscribe(act=>{
-
           this.childrenActivities=act
         });
-
         //if parentid exist
         if(this.activity.parentId!=null)
         {
           this.isChild=true;
           this.activityService.getActivity(this.activity.parentId).subscribe(el=>this.parentActivity=el);
         }
-
       });
     });
-
-
-
-
-  }
-
+}
   goback()
   {
      this.router.navigate(['/dashboard']);
@@ -188,10 +156,8 @@ export class ViewActivityComponent implements OnInit {
     // this.router.navigateByUrl(this.previousUrl);
     // this.utilityService.back();
   }
-
   showTaskDialog()
   {
-
     this.taskDialog=true;
   }
   close()
@@ -212,12 +178,10 @@ export class ViewActivityComponent implements OnInit {
                     this.tasks.push(data);
                 },
                 error => {
-
                     console.log(error);
                     this.alertService.error(error._body);
                     this.loading = false;
                 });
-
       this.taskDialog = false;
       this.loading=false;
   }
@@ -226,13 +190,13 @@ export class ViewActivityComponent implements OnInit {
   {
     this.utilityService.setPassedActivity(act);
     this.utilityService.addChildActivity();
-
   }
  //viewActivity(act)
   viewActivity(id){
+    debugger;
+
      this.router.navigate(['/viewActivity', id],{ skipLocationChange: true });
   }
-
   //task created event passed form component
   taskCreated(task)
   {
@@ -244,7 +208,6 @@ export class ViewActivityComponent implements OnInit {
     this.taskDialog=false;
     task.editable=true;
     this.tasks.unshift(task);
-
   }
   //again through injection
   taskClosed(val)
@@ -259,7 +222,6 @@ export class ViewActivityComponent implements OnInit {
   //update task
   updateTask(task)
   {
-
      this.taskService.updateTask(task).subscribe(tsk=>
      {
        let act=new Activity();
@@ -269,7 +231,6 @@ export class ViewActivityComponent implements OnInit {
         this.activityService.updatePercentage(act).subscribe();
         this.percentage=task.percentage;
      });
-
      this.taskUpdateDialog=false;
      this.task=new Task();
   }

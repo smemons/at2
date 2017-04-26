@@ -2,10 +2,13 @@
  * this file will hold analytics about the getting all the departments and there accumulated performance by
  * Over Due, Need Attention, In Progress and Complete
  */
-var unwind = {
+var matchLevel0 = {
+    $match: { level: 0 }
+}
+var unwindDept = {
     $unwind: "$deptId"
 };
-var lookup = {
+var lookupDept = {
     $lookup: {
         from: "depts",
         localField: "deptId",
@@ -13,16 +16,15 @@ var lookup = {
         as: "dept"
     }
 };
-var lookup2 = {
+var lookupPhase = {
     $lookup: {
         from: "phases",
         localField: "phaseId",
         foreignField: "_id",
         as: "phase"
     }
-
-}
-var project1 = {
+};
+var projectDept1 = {
     $project: {
         _id: 0,
         // projId:"$_id",
@@ -31,8 +33,7 @@ var project1 = {
         //startDate:1,
         deptName: "$dept.title",
         deptId: "$dept._id",
-        phase: "$phase.title",
-
+        // phase: "$phase.title",
         //status:"$status.title",
         totalDays: { $divide: [{ $subtract: ["$endDate", "$startDate"] }, 86400000] },
         consumedDays: { $divide: [{ $subtract: [new Date(), "$startDate"] }, 86400000] },
@@ -46,7 +47,7 @@ var project1 = {
         }
     }
 };
-var project2 = {
+var projectDept2 = {
     $project: {
         _id: 0,
         deptName: { $arrayElemAt: ["$deptName", 0] },
@@ -90,36 +91,9 @@ var project2 = {
         }
     }
 };
-var group = {
+var groupDept = {
     $group: {
         _id: { depName: "$deptName", deptId: "$deptId" },
-        "Scoping": {
-            "$sum": {
-                "$cond": [
-                    { "$eq": ["$phase", "Scoping"] },
-                    1,
-                    0
-                ]
-            }
-        },
-        "Design": {
-            "$sum": {
-                "$cond": [
-                    { "$eq": ["$phase", "Design"] },
-                    1,
-                    0
-                ]
-            }
-        },
-        "Implementation": {
-            "$sum": {
-                "$cond": [
-                    { "$eq": ["$phase", "Implementation"] },
-                    1,
-                    0
-                ]
-            }
-        },
         "OverDue": {
             "$sum": {
                 "$cond": [
@@ -158,12 +132,145 @@ var group = {
         }
     }
 };
+//phase related things
+var projectPhase1 = {
+    $project: {
+        _id: 0,
+        deptName: "$dept.title",
+        deptId: "$dept._id",
+        phase: "$phase.title",
+    }
+};
+var projectPhase2 = {
+    $project: {
+        _id: 0,
+        deptName: { $arrayElemAt: ["$deptName", 0] },
+        deptId: 1,
+        phase: { $arrayElemAt: ["$phase", 0] },
+    }
+};
+var groupPhase = {
+    $group: {
+        _id: { depName: "$deptName", deptId: "$deptId" },
+        "Scoping": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Scoping"] },
+                    1,
+                    0
+                ]
+            }
+        },
+        "Design": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Design"] },
+                    1,
+                    0
+                ]
+            }
+        },
+        "Implementation": {
+            "$sum": {
+                "$cond": [
+                    { "$eq": ["$phase", "Implementation"] },
+                    1,
+                    0
+                ]
+            }
+        },
+    }
+};
+//get list of project and children
+// {
+//         $unwind: "$deptId"
+//    },
+// {
+//   $lookup: {
+//   from: "depts",
+//   localField: "deptId",
+//   foreignField: "_id",
+//   as: "dept"}
+// } ,
+var lookupStatus = {
+    $lookup: {
+        from: "status",
+        localField: "statusId",
+        foreignField: "_id",
+        as: "status"
+    }
+};
+//   {
+//     $lookup: {
+//     from: "phases",
+//     localField: "phaseId",
+//     foreignField: "_id",
+//     as: "phase"}
+//   }
+//  ,
+var lookupFocus = {
+    $lookup: {
+        from: "focus",
+        localField: "focusId",
+        foreignField: "_id",
+        as: "focus"
+    }
+};
+var selfActLookup = {
+    $lookup: {
+        from: "activities",
+        localField: "_id",
+        foreignField: "parentId",
+        as: "firstChild"
+    }
+};
+var actGraphLookup = {
+    $graphLookup: {
+        from: "activities",
+        startWith: "$_id",
+        connectFromField: "_id",
+        connectToField: "parentId",
+        as: "children"
+    }
+};
+// {
+//    $match:{level:0}
+// }
+var actProject = {
+    $project: {
+        _id: "$_id",
+        percentage: 1,
+        endDate: 1,
+        startDate: 1,
+        cost: 1,
+        assignee: 1,
+        deptName: "$dept.title",
+        focus: "$focus.title",
+        phase: "$phase.title",
+        status: "$status.title",
+        firstChild: 1,
+        children: 1,
+
+    }
+};
+// {
+//    $match:{deptName:"SBAD"}
+// }
 module.exports = {
-        unwind: unwind,
-        lookup: lookup,
-        lookup2: lookup2,
-        project1: project1,
-        project2: project2,
-        group: group
+        matchLevel0: matchLevel0,
+        unwindDept: unwindDept,
+        lookupDept: lookupDept,
+        lookupPhase: lookupPhase,
+        projectDept1: projectDept1,
+        projectDept2: projectDept2,
+        groupDept: groupDept,
+        projectPhase1: projectPhase1,
+        projectPhase2: projectPhase2,
+        groupPhase: groupPhase,
+        actProject: actProject,
+        actGraphLookup: actGraphLookup,
+        lookupFocus: lookupFocus,
+        lookupStatus: lookupStatus,
+        selfActLookup: selfActLookup
     }
     //db.getCollection('activities').aggregate([unwind, lookup, project1, project2, group]);

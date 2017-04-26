@@ -12,4 +12,11 @@ getDeptProgress()
 {
    return this.http.get('/api/analytics/allDepts').map((response: Response) => response.json());
 }
+/**
+ *
+ */
+getDeptPhaseProgress()
+{
+   return this.http.get('/api/analytics/allDeptPhase').map((response: Response) => response.json());
+}
 }

@@ -75,10 +75,11 @@ var getAllInProgress = function(req, res, next) {
         // deptName = ObjectId(deptName);
         query = { deptName: deptName };
     }
-    Activity.aggregate([{
+    Activity.aggregate([
+        { $match: { level: 0 } },
+        {
             $unwind: "$deptId"
         },
-
         {
             $lookup: {
                 from: "depts",
@@ -99,7 +100,6 @@ var getAllInProgress = function(req, res, next) {
         },
         { $match: query },
         { $sort: { percentage: 1 } }
-
     ], function(err, docs) {
         if (err) {
             next(err);
@@ -107,14 +107,9 @@ var getAllInProgress = function(req, res, next) {
             res.json(docs);
         }
     });
-    // Activity.find(query, { title: 1, percentage: 1 }, function(err, docs) {
-    //     if (err) {
-    //         next(err);
-    //     } else {
-    //         res.json(docs);
-    //     }
-    // }).sort({ percentage: 1 });
 }
+
+
 var getAllByParentId = function(req, res, next) {
         var id = req.params.id;
         Activity.find({ 'parentId': id }, function(err, docs) {

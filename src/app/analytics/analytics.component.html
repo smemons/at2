@@ -1,23 +1,18 @@
 <div class="row">
     <div class="col-lg-3 at-panel">
         <p-panel header="Activities Progress" [toggleable]="true">
-            <div class="em-sm-panel">
-                <p-chart type="horizontalBar" [data]="data" [height]="300" [options]="options" (onDataSelect)="selectData($event)">
-                </p-chart>
-            </div>
+            <p-chart *ngIf="isDataAvailable" type="horizontalBar" [data]="data" [height]="300" [options]="options" (onDataSelect)="selectData($event)">
+            </p-chart>
         </p-panel>
         <p-panel header="Activities " [toggleable]="true" [collapsed]="expand">
-
-            <p-dataTable [value]="acts" [rows]="4" [paginator]="true">
+            <p-dataTable [value]="acts" [rows]="5" [paginator]="true">
                 <p-column field="title" header="Title">
                     <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:20 }}
                         </template>
                 </p-column>
                 <p-column field="assignee" header="Led by">
-
                 </p-column>
-
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}">
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">
@@ -25,31 +20,26 @@
                             <i class="fa fa-cogs"></i>
                         </template>
                     <template let-act="rowData" pTemplate="body">
-                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActivity(act._id)" pButton  icon="fa-eye"></button>
-
+                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act._id)" pButton  icon="fa-eye"></button>
                         </template>
                 </p-column>
             </p-dataTable>
-
         </p-panel>
     </div>
-    <div class="col-lg-6 at-panel">
-        <p-panel header="Details" [toggleable]="true">
-            <div class="em-sm-panel">
-                Work in Progress
+    <div class="col-lg-7 at-panel">
+        <p-panel header="Details" [toggleable]="true" [style]="{'max-height':'740px'}">
+            <div *ngIf="!showDetail" style="width:670px;height: 670px; margin: 0 auto;">
+                <p-chart *ngIf="isDataAvailable" type="pie" [data]="deptPieData" [options]="DeptPieOptions"></p-chart>
+            </div>
+            <div *ngIf="showDetail">
+                show detail now
             </div>
         </p-panel>
     </div>
-    <div class="col-lg-3 at-panel">
+    <div class="col-lg-2 at-panel">
         <p-panel header="Activities By Phases" [toggleable]="true">
-            <div class="em-sm-panel">
-                <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
-            </div>
+            <p-chart *ngIf="isPhaseDataAvailable" type="pie" [data]="phasePieData" [options]="phasePieOptions"></p-chart>
         </p-panel>
-        <!--<p-panel header="Activities By Status" [toggleable]="true" [collapsed]="true">
-            <div class="em-sm-panel">
-                Work in Progress
-            </div>
-        </p-panel>-->
+
     </div>
 </div>
