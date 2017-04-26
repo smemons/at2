@@ -31,6 +31,9 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
     isDataAvailable:boolean;
     isPhaseDataAvailable:boolean;
     showDetail:boolean;
+    selectedActivity={};
+    detailHeading:string="Detail";
+    selectedDept:string="";
   ngOnInit() {
     this.deptColor=['#FF3333','#FFCC33','#00CCFF','#459E00'];
     //get all activities which are not closed  and percentage
@@ -157,6 +160,8 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
   {
   debugger;
   let deptName=evt.element._model.label;
+  this.selectedDept=deptName;
+
   this.activytService.getAllInProg(deptName).subscribe(act=>{
      this.acts=act;
     });
@@ -171,9 +176,10 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
        this.initPhasesData();
      }
     });
-
-    if(!this.showDetail)//if chart is visibel
-    {
+      this.showDetail=false;
+      this.detailHeading=deptName +" Detail";
+    // if(!this.showDetail)//if chart is visible
+    // {
       //iterate over the main list and update the pie chart for depts
       this.deptPieDataSet=[];
       this.deptsList.forEach(el => {
@@ -186,7 +192,7 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
         this.initDeptPieData();
       }
       });
-    }
+    //}
   this.expand=false;
 }
 //set pie data for phases
@@ -226,6 +232,13 @@ private initDeptPieData() {
  */
 viewActDetail(id:string){
     this.showDetail=true;
+    this.anService.getActivityHrchyById(id,this.selectedDept).subscribe(data=>{
+      this.selectedActivity=data[0];
+      this.detailHeading=data[0].title;
+
+      console.log(data);
+
+    });
 
 }
 }

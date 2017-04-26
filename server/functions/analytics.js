@@ -27,10 +27,15 @@ var getAllDeptPhase = function(req, res, next) {
      * @param {*} next
      */
 var getActivityHchy = function(req, res, next) {
-    var deptName = req.params.id;
+
+    var actId = req.params.id;
+    var deptName = req.params.deptName;
+
     var query = { $match: {} };
-    if (deptName != null && deptName != 'all') {
-        query = { $match: { deptName: deptName } };
+    if (actId != null && actId != 'all') {
+        ObjectId = require('mongodb').ObjectID;
+        actId = ObjectId(actId);
+        query = { $match: { $and: [{ _id: actId }, { deptName: deptName }] } };
     }
     Activity.aggregate([an.unwindDept, an.lookupDept, an.lookupPhase, an.lookupStatus, an.lookupFocus, an.selfActLookup,
         an.actGraphLookup, an.matchLevel0, an.actProject, query

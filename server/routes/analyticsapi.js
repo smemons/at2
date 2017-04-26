@@ -8,7 +8,7 @@ const uf = require('../functions/analytics');
 var acts = express.Router();
 acts.get('/allDepts', uf.getAllDept);
 acts.get('/allDeptPhase', uf.getAllDeptPhase)
-acts.get('/allActHrchy/:id', uf.getActivityHchy)
+acts.get('/allActHrchy/:id/:deptName', uf.getActivityHchy)
     // acts.get('/:id', uf.getActivity);
     // acts.post('/', uf.saveActivity);
     // acts.put('/percent', uf.updateActivityPercent);

@@ -1,12 +1,12 @@
 <div class="row">
     <div class="col-lg-3 at-panel">
-        <p-panel header="Activities Progress" [toggleable]="true">
+        <p-panel header=" Activities Progress" [toggleable]="true">
             <p-chart *ngIf="isDataAvailable" type="horizontalBar" [data]="data" [height]="300" [options]="options" (onDataSelect)="selectData($event)">
             </p-chart>
         </p-panel>
-        <p-panel header="Activities " [toggleable]="true" [collapsed]="expand">
+        <p-panel header="{{selectedDept}} Activities " [toggleable]="true" [collapsed]="expand">
             <p-dataTable [value]="acts" [rows]="5" [paginator]="true">
-                <p-column field="title" header="Title">
+                <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                     <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:20 }}
                         </template>
@@ -26,20 +26,103 @@
             </p-dataTable>
         </p-panel>
     </div>
-    <div class="col-lg-7 at-panel">
-        <p-panel header="Details" [toggleable]="true" [style]="{'max-height':'740px'}">
-            <div *ngIf="!showDetail" style="width:670px;height: 670px; margin: 0 auto;">
+    <div class="col-lg-6 at-panel">
+        <p-panel header="{{detailHeading}}" [toggleable]="true" [style]="{'max-height':'740px'}">
+            <div *ngIf="!showDetail" style="width:500px;height: 500px; margin: 0 auto;">
                 <p-chart *ngIf="isDataAvailable" type="pie" [data]="deptPieData" [options]="DeptPieOptions"></p-chart>
             </div>
             <div *ngIf="showDetail">
-                show detail now
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-2 act-hd">
+                            Champion
+                        </div>
+                        <div class="col-sm-4 ">
+                            <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last">{{chmp}}{{isLast ? '' : ', '}}</span>
+                        </div>
+                        <div class="col-sm-2 act-hd">
+                            Backup
+                        </div>
+                        <div class="col-sm-4 ">
+                            0
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 act-hd">
+                            Start Date
+                        </div>
+                        <div class="col-sm-2 ">
+                            {{selectedActivity.startDate|date:'shortDate'}}
+                        </div>
+                        <div class="col-sm-2 act-hd">
+                            End Date
+                        </div>
+                        <div class="col-sm-2 ">
+                            {{selectedActivity.endDate|date:'shortDate'}}
+                        </div>
+                        <div class="col-sm-2 act-hd">
+                            Completion
+                        </div>
+                        <div class="col-sm-2">
+                            {{selectedActivity.percentage}}%
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 act-hd">
+                            Focus Area
+                        </div>
+                        <div class="col-sm-4 ">
+                            {{selectedActivity.focus}}
+                        </div>
+                        <div class="col-sm-2 act-hd">
+                            Status
+                        </div>
+                        <div class="col-sm-4 ">
+                            {{selectedActivity.status}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 act-hd">
+                            Implementation Cost
+                        </div>
+                        <div class="col-sm-2 ">
+                            {{selectedActivity.cost==null?0:selectedActivity.cost}}
+                        </div>
+                        <div class="col-sm-4 act-hd">
+                            Potentital Cost Saving
+                        </div>
+                        <div class="col-sm-2 ">
+                            0
+                        </div>
+                    </div>
+                </div>
             </div>
         </p-panel>
     </div>
-    <div class="col-lg-2 at-panel">
+    <div class="col-lg-3 at-panel">
         <p-panel header="Activities By Phases" [toggleable]="true">
             <p-chart *ngIf="isPhaseDataAvailable" type="pie" [data]="phasePieData" [options]="phasePieOptions"></p-chart>
         </p-panel>
-
+        <p-panel header="{{selectedDept}} Activities " [toggleable]="true" [collapsed]="expand">
+            <p-dataTable [value]="acts" [rows]="5" [paginator]="true">
+                <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                    <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|truncate:20 }}
+                        </template>
+                </p-column>
+                <p-column field="assignee" header="Led by">
+                </p-column>
+                <p-column field="percentage" header="%" [style]="{'width':'40px'}">
+                </p-column>
+                <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                    <template pTemplate="header">
+                            <i class="fa fa-cogs"></i>
+                        </template>
+                    <template let-act="rowData" pTemplate="body">
+                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act._id)" pButton  icon="fa-eye"></button>
+                        </template>
+                </p-column>
+            </p-dataTable>
+        </p-panel>
     </div>
 </div>

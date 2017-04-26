@@ -155,9 +155,9 @@ var getAllAssigned = function(req, res, next) {
     }).sort({ 'createdAt': -1 });
 }
 var getActivityByName = function(req, res, next) {
-        // console.log('getting a room' + JSON.stringify(req.body));
+
         var inc = req.params.incName;
-        //console.log('Looking by roomName: ' + roomn);
+
         Activity.findOne({ "title": inc }, function(err, rooms) {
             if (err) {
                 next(err);

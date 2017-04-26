@@ -19,4 +19,12 @@ getDeptPhaseProgress()
 {
    return this.http.get('/api/analytics/allDeptPhase').map((response: Response) => response.json());
 }
+
+/**
+ * get activity and its hierarchy by activity id
+ */
+getActivityHrchyById(id:string,deptName:string)
+{
+   return this.http.get('/api/analytics/allActHrchy/'+id+"/"+deptName).map((response: Response) => response.json());
+}
 }
