@@ -3,13 +3,11 @@ import { Activity } from './../models/activity';
 import { ActivityService } from './../services/activity.service';
 import { AnalyticsService } from './../services/analytics.service';
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css']
 })
-
 export class AnalyticsComponent implements OnInit {
 constructor(private anService:AnalyticsService,private activytService:ActivityService,private utilityService:UtilityService){}
     data:any=[];
@@ -70,7 +68,6 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
         this.isDataAvailable=true;
         this.initDeptPieData()
     });
-
     //get phase analytics
     this.anService.getDeptPhaseProgress().subscribe(data=>{
         this.phasesList=data;
@@ -88,7 +85,6 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
        this.initPhasesData();
        this.isPhaseDataAvailable=true;
     });
-
    //get all phases as a refrence for lookup
      this.utilityService.getAllPhases().subscribe(data=>{
        this.utilityService.phaseKeyValues=new Map();
@@ -96,7 +92,6 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
         this.utilityService.phaseKeyValues.set(el._id,el.title);
        });
      });
-
     //over due
          this.deptDataSet.push({
          label:"Over Due",
@@ -155,7 +150,6 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
             }
         }
       };
-
        this.deptPieOptions = {
         legend:{
           position:'top',
@@ -171,7 +165,6 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
   }
   selectData(evt)
   {
-  debugger;
   let deptName=evt.element._model.label;
   this.selectedDept=deptName;
   let progress=evt.element._model.datasetLabel;
@@ -252,8 +245,6 @@ private initDeptPieData() {
  * @param id
  */
 viewActDetail(id:string){
-    debugger;
-
     this.showDetail=true;
     this.anService.getActivityHrchyById(id,this.selectedDept).subscribe(data=>{
       this.selectedActivity=data[0];
@@ -262,16 +253,19 @@ viewActDetail(id:string){
       {
       //sort array of children
        this.actChildren=this.selectedActivity.children.slice(0);
-
        this.actChildren.sort((leftSide,rightSide):number=>{
          if(leftSide.level> rightSide.level) return 1;
          if(leftSide.level <  rightSide.level) return -1;
          return 0;
        });
-
       }
       this.selectedActivity.firstChild=[];
       this.selectedActivity.children=[];
+      //set status of all the children
+      this.actChildren.forEach(el => {
+         let status=this.utilityService.getComputedStatus(el.startDate,el.endDate,el.percentage);
+         el.status=status.replace(" ", "");
+      });
       console.log(this.actChildren);
     });
 }
@@ -286,5 +280,9 @@ getPhaseTitleById(id:string)
       return this.utilityService.phaseKeyValues.get(id);
   }
   return id;
+}
+
+lookupRowStyleClass(rowData) {
+  return rowData.status;
 }
 }

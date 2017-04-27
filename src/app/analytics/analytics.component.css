@@ -26,3 +26,19 @@
     vertical-align: baseline;
     border-radius: .25em;*/
 }
+
+.OverDue {
+    color: #FF3333 !important;
+}
+
+.NeedAttention {
+    color: #FFCC33 !important;
+}
+
+.Completed {
+    color: #66CC66 !important;
+}
+
+.InProgress {
+    color: #00CCFF !important;
+}
