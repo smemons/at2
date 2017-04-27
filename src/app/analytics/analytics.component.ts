@@ -245,6 +245,7 @@ private initDeptPieData() {
  * @param id
  */
 viewActDetail(id:string){
+  debugger;
     this.showDetail=true;
     this.anService.getActivityHrchyById(id,this.selectedDept).subscribe(data=>{
       this.selectedActivity=data[0];
