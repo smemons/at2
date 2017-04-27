@@ -32,6 +32,7 @@ isActivityChanged: Subject<any> = new BehaviorSubject(Activity);
       assigned:MiniActivity[]=[];
       created:MiniActivity[]=[];
 
+
 constructor(private utilityService:UtilityService,private activityService:ActivityService) {
 this.isDataCreated.subscribe(data=>{
   let wrapper:Wrapper=data;

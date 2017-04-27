@@ -6,8 +6,23 @@
     font-weight: bold;
     text-align: right;
     padding-right: 10px;
+    color: #711111;
 }
 
 .row>div {
     border: 1px solid #DCDCDC;
+}
+
+.label {
+    /*display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;*/
+    color: #711111;
+    font-weight: bold;
+    /*text-align: right;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;*/
 }

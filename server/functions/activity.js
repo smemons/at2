@@ -94,6 +94,8 @@ var getAllInProgress = function(req, res, next) {
                 percentage: 1,
                 title: 1,
                 assignee: 1,
+                startDate: 1,
+                endDate: 1,
                 deptName: "$dept.title",
                 deptId: "$dept._id"
             }

@@ -8,7 +8,7 @@ import { User } from './../models/user';
 import { Http, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
-
+declare var moment: any;
 
 @Injectable()
 export class UtilityService {
@@ -16,6 +16,8 @@ export class UtilityService {
 
 passedActivity:Activity;
 previousUrl:string;
+
+phaseKeyValues:Map<string,string>;
 constructor(private http:Http,private location:Location,private router:Router) {
 
 
@@ -230,5 +232,33 @@ getAllDepts() {
         usr = JSON.parse(sessionStorage.getItem('currentUser')).username;
      }
      return usr;
+  }
+  /**
+   * get status based on time -
+   * return values: overdue, need attention, in progress and completed
+   * param: startdate, enddate, completPerc
+   */
+  getComputedStatus(startDate:Date,endDate:Date,perc:number=0):string
+  {
+    let status="";
+
+
+let start         =moment(startDate);
+let end           =moment(endDate);
+let today         =moment();
+let totalDays     =end.diff(start,'days');
+let consumedDays  =today.diff(start,'days');
+let remainDays    =end.diff(today,'days');
+
+let actual=(consumedDays/totalDays)*100;
+
+if(actual>=perc && remainDays <= 0) status="Over Due";
+else
+if(actual>perc && remainDays >  0) status="Need Attention";
+else
+if(actual<=perc && remainDays >  0 && remainDays < 100) status="In Progress";
+else
+if(perc==100) status="Completed";
+    return status;
   }
 }

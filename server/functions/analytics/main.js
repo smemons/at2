@@ -181,17 +181,7 @@ var groupPhase = {
         },
     }
 };
-//get list of project and children
-// {
-//         $unwind: "$deptId"
-//    },
-// {
-//   $lookup: {
-//   from: "depts",
-//   localField: "deptId",
-//   foreignField: "_id",
-//   as: "dept"}
-// } ,
+
 var lookupStatus = {
     $lookup: {
         from: "status",
@@ -200,14 +190,7 @@ var lookupStatus = {
         as: "status"
     }
 };
-//   {
-//     $lookup: {
-//     from: "phases",
-//     localField: "phaseId",
-//     foreignField: "_id",
-//     as: "phase"}
-//   }
-//  ,
+
 var lookupFocus = {
     $lookup: {
         from: "focus",
@@ -243,6 +226,7 @@ var actProject = {
         endDate: 1,
         startDate: 1,
         cost: 1,
+        title: 1,
         assignee: 1,
         deptName: "$dept.title",
         focus: "$focus.title",
@@ -250,7 +234,6 @@ var actProject = {
         status: "$status.title",
         firstChild: 1,
         children: 1,
-
     }
 };
 // {

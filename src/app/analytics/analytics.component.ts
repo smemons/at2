@@ -1,14 +1,17 @@
+import { UtilityService } from '../services/utility.service';
 import { Activity } from './../models/activity';
 import { ActivityService } from './../services/activity.service';
 import { AnalyticsService } from './../services/analytics.service';
 import { Component, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css']
 })
+
 export class AnalyticsComponent implements OnInit {
-constructor(private anService:AnalyticsService,private activytService:ActivityService){}
+constructor(private anService:AnalyticsService,private activytService:ActivityService,private utilityService:UtilityService){}
     data:any=[];
     phasePieData:any=[];
     deptPieData:any=[];
@@ -24,6 +27,7 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
     phaseDataSet=[];
     deptPieDataSet=[];
     acts:Activity[]=[];
+    filteredActs:Activity[]=[];
     expand:boolean=true;
     phasesList=[];
     deptsList=[];
@@ -31,11 +35,13 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
     isDataAvailable:boolean;
     isPhaseDataAvailable:boolean;
     showDetail:boolean;
-    selectedActivity={};
+    selectedActivity:any={};
     detailHeading:string="Detail";
+    progressStatus="";
     selectedDept:string="";
+    actChildren=[];
   ngOnInit() {
-    this.deptColor=['#FF3333','#FFCC33','#00CCFF','#459E00'];
+    this.deptColor=['#FF3333','#FFCC33','#00CCFF','#66CC66'];
     //get all activities which are not closed  and percentage
     this.activytService.getAllInProg('all').subscribe(act=>{
      this.acts=act;
@@ -82,7 +88,14 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
        this.initPhasesData();
        this.isPhaseDataAvailable=true;
     });
-    //pie data
+
+   //get all phases as a refrence for lookup
+     this.utilityService.getAllPhases().subscribe(data=>{
+       this.utilityService.phaseKeyValues=new Map();
+       data.forEach(el => {
+        this.utilityService.phaseKeyValues.set(el._id,el.title);
+       });
+     });
 
     //over due
          this.deptDataSet.push({
@@ -161,9 +174,17 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
   debugger;
   let deptName=evt.element._model.label;
   this.selectedDept=deptName;
-
+  let progress=evt.element._model.datasetLabel;
+  this.progressStatus=" - "+progress;
   this.activytService.getAllInProg(deptName).subscribe(act=>{
      this.acts=act;
+     this.acts.forEach(el => {
+        let status=this.utilityService.getComputedStatus(el.startDate,el.endDate,el.percentage);
+        if(status==progress)
+        {
+          this.filteredActs.push(el);
+        }
+     });
     });
     //iterate over the main list and update the pie chart for phases
     this.phaseDataSet=[];
@@ -231,14 +252,39 @@ private initDeptPieData() {
  * @param id
  */
 viewActDetail(id:string){
+    debugger;
+
     this.showDetail=true;
     this.anService.getActivityHrchyById(id,this.selectedDept).subscribe(data=>{
       this.selectedActivity=data[0];
       this.detailHeading=data[0].title;
+      if(this.selectedActivity.firstChild!=null && this.selectedActivity.firstChild.length>0)
+      {
+      //sort array of children
+       this.actChildren=this.selectedActivity.children.slice(0);
 
-      console.log(data);
+       this.actChildren.sort((leftSide,rightSide):number=>{
+         if(leftSide.level> rightSide.level) return 1;
+         if(leftSide.level <  rightSide.level) return -1;
+         return 0;
+       });
 
+      }
+      this.selectedActivity.firstChild=[];
+      this.selectedActivity.children=[];
+      console.log(this.actChildren);
     });
-
+}
+/**
+ * get the key value pair for phases as  lookup
+ * @param id
+ */
+getPhaseTitleById(id:string)
+{
+  if(this.utilityService.phaseKeyValues!=null)
+  {
+      return this.utilityService.phaseKeyValues.get(id);
+  }
+  return id;
 }
 }
