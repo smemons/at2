@@ -57,7 +57,7 @@ import {GrowlModule,ListboxModule,CalendarModule,PanelModule,DataTableModule,
   SelectButtonModule,SliderModule,MultiSelectModule,DropdownModule,
   FileUploadModule,TabViewModule,TreeModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
+
 import { Analytics2Component } from './analytics2/analytics2.component';
 @NgModule({
   declarations: [
@@ -90,7 +90,7 @@ import { Analytics2Component } from './analytics2/analytics2.component';
     TruncatePipe,
     AddKpiComponent,
     ListKpiComponent,
-    AnalyticsComponent,
+
     Analytics2Component,
 
 ],
