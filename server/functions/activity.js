@@ -55,7 +55,71 @@ var updateActivityPercent = function(req, res, next) {
     });
 }
 var getAll = function(req, res, next) {
-        Activity.find(function(err, docs) {
+    Activity.find(function(err, docs) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(docs);
+        }
+    });
+}
+var OLDgetActivitiesByCatId = function(req, res, next) {
+        var catId = req.params.id;
+
+        if (catId != null) {
+            ObjectId = require('mongodb').ObjectID;
+            catId = ObjectId(catId);
+            query = { catId: catId };
+
+            Activity.find(query, { _id: 1, title: 1, percentage: 1 }, function(err, docs) {
+                if (err) {
+                    next(err);
+                } else {
+                    res.json(docs);
+                }
+            });
+        }
+    }
+    /**
+     *
+     * get all activity by deptName or all of them just title and percentage for now
+     */
+var getAllInProgress = function(req, res, next) {
+        var deptName = req.params.id;
+        var query = {};
+        if (deptName != null && deptName != 'all') {
+            // ObjectId = require('mongodb').ObjectID;
+            // deptName = ObjectId(deptName);
+            query = { deptName: deptName };
+        }
+        Activity.aggregate([
+            { $match: { level: 0 } },
+            {
+                $unwind: "$deptId"
+            },
+            {
+                $lookup: {
+                    from: "depts",
+                    localField: "deptId",
+                    foreignField: "_id",
+                    as: "dept"
+                }
+            },
+            {
+                $project: {
+                    _id: "$_id",
+                    percentage: 1,
+                    title: 1,
+                    assignee: 1,
+                    startDate: 1,
+                    endDate: 1,
+                    deptName: "$dept.title",
+                    deptId: "$dept._id"
+                }
+            },
+            { $match: query },
+            { $sort: { percentage: 1 } }
+        ], function(err, docs) {
             if (err) {
                 next(err);
             } else {
@@ -64,53 +128,65 @@ var getAll = function(req, res, next) {
         });
     }
     /**
-     *
-     * get all activity by deptName or all of them just title and percentage for now
+     * get all activities by catId
      */
-var getAllInProgress = function(req, res, next) {
-    var deptName = req.params.id;
-    var query = {};
-    if (deptName != null && deptName != 'all') {
-        // ObjectId = require('mongodb').ObjectID;
-        // deptName = ObjectId(deptName);
-        query = { deptName: deptName };
+var getActivitiesByCatId = function(req, res, next) {
+
+    var catId = req.params.id;
+    if (catId != null) {
+        var query = {};
+        ObjectId = require('mongodb').ObjectID;
+        catId = ObjectId(catId);
+        query = { $match: { catId: catId } };
+
+        Activity.aggregate([
+            query,
+            {
+                $unwind: "$deptId"
+            },
+
+            {
+                $lookup: {
+                    from: "depts",
+                    localField: "deptId",
+                    foreignField: "_id",
+                    as: "dept"
+                }
+
+            },
+            {
+                $project: {
+                    _id: "$_id",
+                    catId: 1,
+                    title: 1,
+                    percentage: 1,
+                    deptName: "$dept.title",
+                    deptId: "$dept._id",
+                    startDate: 1,
+                    endDate: 1,
+                    level: 1
+
+                }
+            },
+            {
+                $sort: { percentage: 1 }
+            }
+
+
+        ], function(err, docs) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(docs);
+            }
+        });
     }
-    Activity.aggregate([
-        { $match: { level: 0 } },
-        {
-            $unwind: "$deptId"
-        },
-        {
-            $lookup: {
-                from: "depts",
-                localField: "deptId",
-                foreignField: "_id",
-                as: "dept"
-            }
-        },
-        {
-            $project: {
-                _id: "$_id",
-                percentage: 1,
-                title: 1,
-                assignee: 1,
-                startDate: 1,
-                endDate: 1,
-                deptName: "$dept.title",
-                deptId: "$dept._id"
-            }
-        },
-        { $match: query },
-        { $sort: { percentage: 1 } }
-    ], function(err, docs) {
-        if (err) {
-            next(err);
-        } else {
-            res.json(docs);
-        }
-    });
 }
 
+/**
+ *
+ *
+ */
 
 var getAllByParentId = function(req, res, next) {
         var id = req.params.id;
@@ -190,5 +266,6 @@ module.exports = {
     getAllByUserId: getAllByUserId,
     getAllByLevel: getAllByLevel,
     getAllByParentId: getAllByParentId,
-    getAllInProgress: getAllInProgress
+    getAllInProgress: getAllInProgress,
+    getActivitiesByCatId: getActivitiesByCatId
 }

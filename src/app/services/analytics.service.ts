@@ -23,8 +23,15 @@ getDeptPhaseProgress()
 /**
  * get activity and its hierarchy by activity id
  */
-getActivityHrchyById(id:string,deptName:string)
+getActivityHrchyById(id:string,deptId:string)
 {
-   return this.http.get('/api/analytics/allActHrchy/'+id+"/"+deptName).map((response: Response) => response.json());
+   return this.http.get('/api/analytics/allActHrchy/'+id+"/"+deptId).map((response: Response) => response.json());
+}
+/**
+ * get all status with its overdue,need attention, in progress and complete values
+ */
+getStatusByRef()
+{
+  return this.http.get('/api/analytics/allStatusByRef').map((response: Response) => response.json());
 }
 }

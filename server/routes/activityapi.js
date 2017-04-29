@@ -14,4 +14,6 @@ acts.get('/allAssigned/:id', uf.getAllAssigned);
 acts.get('/allCreated/:id', uf.getAllCreated);
 acts.get('/byLevel/:level', uf.getAllByLevel);
 acts.get('/allByParentId/:id', uf.getAllByParentId);
+acts.get('/allByCatId/:id', uf.getActivitiesByCatId);
+acts.get('/allByCatId/:id', uf.getActivitiesByCatId);
 module.exports = acts;

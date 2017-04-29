@@ -3,7 +3,7 @@ var Activity = require('../schema/activity');
 var an = require('./analytics/main');
 // get single room
 var getAllDept = function(req, res, next) {
-    Activity.aggregate([an.matchLevel0, an.unwindDept, an.lookupDept, an.projectDept1, an.projectDept2, an.groupDept], function(err, result) {
+    Activity.aggregate([an.unwindDept, an.lookupDept, an.projectDept1, an.projectDept2, an.groupDept], function(err, result) {
         if (err) {
             next(err);
         } else {
@@ -28,18 +28,32 @@ var getAllDeptPhase = function(req, res, next) {
      */
 var getActivityHchy = function(req, res, next) {
 
-    var actId = req.params.id;
-    var deptName = req.params.deptName;
+        var actId = req.params.id;
+        var deptId = req.params.deptId;
 
-    var query = { $match: {} };
-    if (actId != null && actId != 'all') {
-        ObjectId = require('mongodb').ObjectID;
-        actId = ObjectId(actId);
-        query = { $match: { $and: [{ _id: actId }, { deptName: deptName }] } };
+        var query = { $match: {} };
+        if (actId != null && deptId != null) {
+            ObjectId = require('mongodb').ObjectID;
+            actId = ObjectId(actId);
+            deptId = ObjectId(deptId);
+
+            query = { $match: { $and: [{ _id: actId }, { deptId: deptId }] } };
+        }
+        Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupPhase, an.lookupStatus, an.lookupFocus, an.selfActLookup,
+            an.actGraphLookup, an.actProject
+        ], function(err, result) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(result);
+            }
+        });
     }
-    Activity.aggregate([an.unwindDept, an.lookupDept, an.lookupPhase, an.lookupStatus, an.lookupFocus, an.selfActLookup,
-        an.actGraphLookup, an.matchLevel0, an.actProject, query
-    ], function(err, result) {
+    /**
+     * get  status  by reference of all activities
+     */
+var getStatusByRef = function(req, res, next) {
+    Activity.aggregate(an.refStatusQuery, function(err, result) {
         if (err) {
             next(err);
         } else {
@@ -50,5 +64,6 @@ var getActivityHchy = function(req, res, next) {
 module.exports = {
     getAllDept: getAllDept,
     getAllDeptPhase: getAllDeptPhase,
-    getActivityHchy: getActivityHchy
+    getActivityHchy: getActivityHchy,
+    getStatusByRef: getStatusByRef
 }

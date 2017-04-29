@@ -181,7 +181,6 @@ var groupPhase = {
         },
     }
 };
-
 var lookupStatus = {
     $lookup: {
         from: "status",
@@ -190,7 +189,6 @@ var lookupStatus = {
         as: "status"
     }
 };
-
 var lookupFocus = {
     $lookup: {
         from: "focus",
@@ -236,9 +234,121 @@ var actProject = {
         children: 1,
     }
 };
-// {
-//    $match:{deptName:"SBAD"}
-// }
+var refStatusQuery = [{
+        $unwind: "$deptId"
+    },
+    {
+        $lookup: {
+            from: "categories",
+            localField: "catId",
+            foreignField: "_id",
+            as: "cat"
+        }
+    }, {
+        $project: {
+            _id: 0,
+            projId: "$_id",
+            complete: "$percentage",
+            endDate: 1,
+            startDate: 1,
+            catName: "$cat.title",
+            catId: "$cat._id",
+            //status:"$status.title",
+            totalDays: { $divide: [{ $subtract: ["$endDate", "$startDate"] }, 86400000] },
+            consumedDays: { $divide: [{ $subtract: [new Date(), "$startDate"] }, 86400000] },
+            remainDays: { $divide: [{ $subtract: ["$endDate", new Date()] }, 86400000] },
+            actual: {
+                $multiply: [{
+                    $divide: [{ $divide: [{ $subtract: [new Date(), "$startDate"] }, 86400000] },
+                        { $divide: [{ $subtract: ["$endDate", "$startDate"] }, 86400000] }
+                    ]
+                }, 100]
+            }
+        }
+    }, {
+        $project: {
+            _id: 0,
+            catName: { $arrayElemAt: ["$catName", 0] },
+            catId: 1,
+            "score": {
+                $switch: {
+                    branches: [{
+                            case: {
+                                $and: [{ $gte: ["$actual", "$complete"] },
+                                    { $lte: ["$remainDays", 0] }
+                                ]
+                            },
+                            then: "OverDue"
+                        },
+                        {
+                            case: {
+                                $and: [{ $gt: ["$actual", "$complete"] },
+                                    { $gt: ["$remainDays", 0] }
+                                ]
+                            },
+                            then: "NeedAttention"
+                        },
+                        {
+                            case: {
+                                $and: [{ $lte: ["$actual", "$complete"] },
+                                    { $gt: ["$remainDays", 0] },
+                                    { $lt: ["$complete", 100] }
+                                ]
+                            },
+                            then: "InProgress"
+                        },
+                        {
+                            case: { $eq: ["$complete", 100] },
+                            then: "Completed"
+                        }
+                    ],
+                    default: "No scores found."
+                }
+            }
+        }
+    }, {
+        $group: {
+            _id: { catName: "$catName", catId: "$catId" },
+            "OverDue": {
+                "$sum": {
+                    "$cond": [
+                        { "$eq": ["$score", "OverDue"] },
+                        1,
+                        0
+                    ]
+                }
+            },
+            "NeedAttention": {
+                "$sum": {
+                    "$cond": [
+                        { "$eq": ["$score", "NeedAttention"] },
+                        1,
+                        0
+                    ]
+                }
+            },
+            "InProgress": {
+                "$sum": {
+                    "$cond": [
+                        { "$eq": ["$score", "InProgress"] },
+                        1,
+                        0
+                    ]
+                }
+            },
+            "Completed": {
+                "$sum": {
+                    "$cond": [
+                        { "$eq": ["$score", "Completed"] },
+                        1,
+                        0
+                    ]
+                }
+            }
+        }
+    }
+];
+
 module.exports = {
         matchLevel0: matchLevel0,
         unwindDept: unwindDept,
@@ -254,6 +364,8 @@ module.exports = {
         actGraphLookup: actGraphLookup,
         lookupFocus: lookupFocus,
         lookupStatus: lookupStatus,
-        selfActLookup: selfActLookup
+        selfActLookup: selfActLookup,
+        refStatusQuery: refStatusQuery,
+
     }
     //db.getCollection('activities').aggregate([unwind, lookup, project1, project2, group]);

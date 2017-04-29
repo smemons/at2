@@ -38,6 +38,7 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
     progressStatus="";
     selectedDept:string="";
     actChildren=[];
+    activityRefreshed:boolean;
   ngOnInit() {
     this.deptColor=['#FF3333','#FFCC33','#00CCFF','#66CC66'];
     //get all activities which are not closed  and percentage
@@ -165,6 +166,7 @@ constructor(private anService:AnalyticsService,private activytService:ActivitySe
   }
   selectData(evt)
   {
+  this.activityRefreshed=false;
   let deptName=evt.element._model.label;
   this.selectedDept=deptName;
   let progress=evt.element._model.datasetLabel;
@@ -245,9 +247,10 @@ private initDeptPieData() {
  * @param id
  */
 viewActDetail(id:string){
-  debugger;
+debugger;
     this.showDetail=true;
     this.anService.getActivityHrchyById(id,this.selectedDept).subscribe(data=>{
+    try{
       this.selectedActivity=data[0];
       this.detailHeading=data[0].title;
       if(this.selectedActivity.firstChild!=null && this.selectedActivity.firstChild.length>0)
@@ -267,7 +270,14 @@ viewActDetail(id:string){
          let status=this.utilityService.getComputedStatus(el.startDate,el.endDate,el.percentage);
          el.status=status.replace(" ", "");
       });
+        this.activityRefreshed=true;
       console.log(this.actChildren);
+    }
+      catch(ex)
+      {
+        console.error(ex);
+      }
+
     });
 }
 /**

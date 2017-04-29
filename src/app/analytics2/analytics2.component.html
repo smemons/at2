@@ -1,26 +1,28 @@
 <div class="row">
     <div class="col-lg-3 at-panel">
-        <p-panel header=" Activities Progress" [toggleable]="true">
-            <p-chart *ngIf="isDataAvailable" type="horizontalBar" [data]="data" [height]="300" [options]="options" (onDataSelect)="selectData($event)">
-            </p-chart>
+        <p-panel header="{{refSelectTitle}}" [toggleable]="true" [collapsed]="refSelectExpand">
+            <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
         </p-panel>
-        <p-panel header="{{selectedDept}}{{progressStatus}} Activities " [toggleable]="true" [collapsed]="expand">
-            <p-dataTable [value]="filteredActs" [rows]="5" [paginator]="true">
+        <p-panel header="Activities " [toggleable]="true" [collapsed]="refActExpand">
+            <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple">
                 <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                     <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|truncate:20 }}
+                            {{act[col.field]|truncate:40 }}
                         </template>
                 </p-column>
-                <p-column field="assignee" header="Led by">
+                <p-column field="deptName" header="Dept" [style]="{'width':'50px'}" [sortable]="true">
                 </p-column>
-                <p-column styleClass="OverDue" field="percentage" header="%" [style]="{'width':'40px'}">
+
+                <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                </p-column>
+                <p-column field="status" header="Status" [style]="{'width':'60px'}" [sortable]="true">
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">
                     <template pTemplate="header">
                             <i class="fa fa-cogs"></i>
                         </template>
                     <template let-act="rowData" pTemplate="body">
-                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act._id)" pButton  icon="fa-eye"></button>
+                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act)" pButton  icon="fa-eye"></button>
                         </template>
                 </p-column>
             </p-dataTable>
@@ -28,11 +30,38 @@
     </div>
     <div class="col-lg-6 at-panel">
         <p-panel header="{{detailHeading}}" [toggleable]="true" [style]="{'max-height':'740px'}">
-            <div *ngIf="!showDetail" style="width:500px;height: 500px; margin: 0 auto;">
-                <p-chart *ngIf="isDataAvailable" type="pie" [data]="deptPieData" [options]="DeptPieOptions"></p-chart>
+            <div *ngIf="!showDetail">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <table class="st-table table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="tabco1 ">Referenes</th>
+                                    <th class="tabco2"> Over Due</th>
+                                    <th class="tabco3">Need Attention</th>
+                                    <th class="tabco4">In Progress</th>
+                                    <th class="tabco5">Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of statusData" (click)="setRefRow(item)">
+                                    <td class="tabco1">{{item._id.catName}}</td>
+                                    <td class="tabco2">{{item.OverDue}}</td>
+                                    <td class="tabco3">{{item.NeedAttention}}
+                                    </td>
+                                    <td class="tabco4">{{item.InProgress}}
+                                    </td>
+                                    <td class="tabco5">{{item.Completed}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--row-->
             </div>
             <div *ngIf="showDetail">
-                <div *ngIf="activityRefreshed">
+                <div *ngIf="actDataAvailable">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-2 act-hd">
@@ -97,7 +126,7 @@
                             </div>
                         </div>
 
-                        <!--All sub levels starting from to the rest-->
+
 
                         <p-dataTable [value]="actChildren" expandableRows="true">
                             <p-column expander="true" styleClass="col-icon" [style]="{'width':'40px'}"></p-column>
@@ -143,17 +172,14 @@
                                                         <span *ngFor="let chmp of act.assignee ; let isLast=last">{{chmp}}{{isLast ? '' : ', '}}</span>
                                                     </div>
                                                 </div>
-                                                <!--<div class="ui-grid-row">
-                                                <div class="ui-grid-col-2 label">Color: </div>
-                                                <div class="ui-grid-col-10">{{car.color}}</div>
-                                            </div>-->
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </ng-template>
                         </p-dataTable>
-                        <!--All sub levels starting from to the rest-->
+
 
                     </div>
                 </div>
@@ -161,29 +187,24 @@
         </p-panel>
     </div>
     <div class="col-lg-3 at-panel">
-        <p-panel header="Activities By Phases" [toggleable]="true">
-            <p-chart *ngIf="isPhaseDataAvailable" type="pie" [data]="phasePieData" [options]="phasePieOptions"></p-chart>
-        </p-panel>
-        <p-panel header="{{selectedDept}} All Activities " [toggleable]="true" [collapsed]="expand">
-            <p-dataTable [value]="acts" [rows]="5" [paginator]="true">
-                <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
-                    <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|truncate:20 }}
-                        </template>
-                </p-column>
-                <p-column field="assignee" header="Led by">
-                </p-column>
-                <p-column field="percentage" header="%" [style]="{'width':'40px'}">
-                </p-column>
-                <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                    <template pTemplate="header">
-                            <i class="fa fa-cogs"></i>
-                        </template>
-                    <template let-act="rowData" pTemplate="body">
-                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act._id)" pButton  icon="fa-eye"></button>
-                        </template>
-                </p-column>
-            </p-dataTable>
-        </p-panel>
+        <div *ngIf="tasks.length > 0" class=" act-pad ">
+            <p-panel header="Progress updates" [toggleable]="true" [collapsed]="false">
+                <p-dataTable [value]="tasks" [rows]="7" [paginator]="true">
+                    <p-column field="desc" header="Updates" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+                        <ng-template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]}}
+                            <br/>
+                            <span class="act-sm">{{act.createdBy}}, {{act.createdAt|date:'short'}} </span><span class="act-bs"> {{act.percentage}}% completed</span>
+
+                        </ng-template>
+
+
+
+
+
+                    </p-column>
+                </p-dataTable>
+            </p-panel>
+        </div>
     </div>
 </div>

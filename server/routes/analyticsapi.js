@@ -7,12 +7,13 @@ const uf = require('../functions/analytics');
 
 var acts = express.Router();
 acts.get('/allDepts', uf.getAllDept);
-acts.get('/allDeptPhase', uf.getAllDeptPhase)
-acts.get('/allActHrchy/:id/:deptName', uf.getActivityHchy)
-    // acts.get('/:id', uf.getActivity);
-    // acts.post('/', uf.saveActivity);
-    // acts.put('/percent', uf.updateActivityPercent);
-    // acts.put('/', uf.updateActivity);
+acts.get('/allDeptPhase', uf.getAllDeptPhase);
+acts.get('/allActHrchy/:id/:deptId', uf.getActivityHchy);
+acts.get('/allStatusByRef', uf.getStatusByRef);
+// acts.get('/:id', uf.getActivity);
+// acts.post('/', uf.saveActivity);
+// acts.put('/percent', uf.updateActivityPercent);
+// acts.put('/', uf.updateActivity);
 
 // acts.get('/allByUserId/:id', uf.getAllByUserId);
 // acts.get('/allAssigned/:id', uf.getAllAssigned);

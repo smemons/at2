@@ -108,5 +108,12 @@ updatePercentage(activity:Activity)
       .get('/api/activity/allByParentId/'+id)
       .map((response: Response) => response.json());
   }
-
+//get activities by cat id
+getAllByCatId(id)
+{
+  return this
+      .http
+      .get('/api/activity/allByCatId/'+id)
+      .map((response: Response) => response.json());
+}
 }

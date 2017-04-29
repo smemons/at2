@@ -55,9 +55,10 @@ import {GrowlModule,ListboxModule,CalendarModule,PanelModule,DataTableModule,
   InputTextareaModule,InputTextModule,DialogModule,InputSwitchModule,
   ConfirmDialogModule,ConfirmationService,AutoCompleteModule,
   SelectButtonModule,SliderModule,MultiSelectModule,DropdownModule,
-  FileUploadModule,TabViewModule,TreeModule,ChartModule} from 'primeng/primeng';
+  FileUploadModule,TabViewModule,TreeModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
+import { Analytics2Component } from './analytics2/analytics2.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,7 +90,9 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     TruncatePipe,
     AddKpiComponent,
     ListKpiComponent,
-    AnalyticsComponent
+    AnalyticsComponent,
+    Analytics2Component,
+
 ],
   imports: [
      BrowserModule,
@@ -113,7 +116,6 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     FileUploadModule,
     TabViewModule,
     TreeModule,
-    ChartModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(ROUTES)
   ],

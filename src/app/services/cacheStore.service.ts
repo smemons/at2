@@ -142,7 +142,7 @@ populateAllActivities()
 
 
 }
-private getCategories() {
+ getCategories() {
   if(this.categories.length==0){
       this.utilityService.getAllCategories().subscribe(cat=>{
        this.categories = this.utilityService.getSelectItemPublished(cat,"Reference");

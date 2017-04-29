@@ -1,9 +1,6 @@
 import { MiniActivity } from './../../models/miniActivity';
 import { CacheStoreService } from '../../services/cacheStore.service';
 import { StatusService } from './../../services/status.service';
-
-
-
 import { Status } from './../../models/status';
 import { UtilityService } from './../../services/utility.service';
 import { ActivityService } from './../../services/activity.service';
@@ -20,7 +17,6 @@ declare var moment: any;
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css']
-
 })
 export class ActivityComponent implements OnInit,AfterViewInit {
       model : any = {};
@@ -33,24 +29,18 @@ export class ActivityComponent implements OnInit,AfterViewInit {
      // categories : SelectItem[]=[];
       status : string;
      // statuses : SelectItem[]=[];
-
       focus : string;
       //focuses : SelectItem[];
-
       dept : string[];
       //depts : SelectItem[];
-
       phase : string;
       //phases : SelectItem[];
-
       visibility : string[];
       //visibilities : SelectItem[];
       minDate:Date;
       maxDate:Date;
-
       level:number=0;
       phaseDisable:boolean;
-
   constructor(
               private utilityService:UtilityService,
               private alertService:AlertService,
@@ -58,16 +48,11 @@ export class ActivityComponent implements OnInit,AfterViewInit {
               private cache:CacheStoreService,
               private router:Router,
              ) { }
-
 ngAfterViewInit()
 {
-
 }
   ngOnInit() {
-
-
    //check if request is coming for a child activity to be created
-
    let parentUrl=this.router.url;
    this.isChild=false;
    if(parentUrl==='/addChildActivity')
@@ -100,25 +85,25 @@ ngAfterViewInit()
    }
    this.cache.populateAll();
    this.loadUsers();
-
     // //get users
     // this.utilityService.getAllUsers().subscribe(users=>{
-
     //  users.forEach(usr => {
     //    this.foundUsers.push({label:usr.username, value:usr.username});
     //  });
-
     // });
-
-
   }
   createActivity(){
-
+   //validate that date is correctly entered.
+   let startDate=moment(this.model.startDate);
+   let endDate=moment(this.model.endDate);
+  if(startDate>=endDate)
+  {
+    this.alertService.error('Invalid Date');
+    return false;
+  }
         this.loading = true;
-
          this.activityService.create(this.model)
             .subscribe(
-
                 data => {
                    this.alertService.success('Activty created!');
                    let mini=new MiniActivity();
@@ -139,9 +124,7 @@ ngAfterViewInit()
                     this.alertService.error(error._body);
                     this.loading = false;
                 });
-
   }
-
 //typeahead feature needed by input box
 //for searching of users
   searchTypeAheadUsers(event)
@@ -155,7 +138,6 @@ ngAfterViewInit()
     console.log(error);
   });
 }
-
 //viewActivity
 viewActivity(id:String)
 {
@@ -183,9 +165,7 @@ get phases():SelectItem[] {
 get kpis():SelectItem[] {
   return this.cache.kpis;
 }
-
 private loadUsers() {
-
        // //get users
     if(this.foundUsers==null || this.foundUsers.length==0)
     {
@@ -194,7 +174,6 @@ private loadUsers() {
         users.forEach(usr => {
           this.foundUsers.push({label:usr.username, value:usr.username});
         });
-
         });
     }
     }
