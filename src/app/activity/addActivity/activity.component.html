@@ -93,15 +93,15 @@
 
 
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
-                        <label for="dept">Department</label>
+                        <label for="dept">Organization</label>
                         <!--<p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" [style]="{'width':'100%'}" #dept="ngModel" required></p-multiSelect>-->
                         <p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
                         </p-multiSelect>
 
-                        <div *ngIf="f.submitted && !dept.valid" class="help-block"> Department required</div>
+                        <div *ngIf="f.submitted && !dept.valid" class="help-block"> Organization required</div>
                     </div>
                     <div *ngIf="isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
-                        <label for="dept">Department</label>
+                        <label for="dept">Organization</label>
                         <!--<p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" [style]="{'width':'100%'}" #dept="ngModel" required></p-multiSelect>-->
                         <p-listbox name="dept" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
                         </p-listbox>

@@ -155,6 +155,15 @@ var getActivitiesByCatId = function(req, res, next) {
 
             },
             {
+                $lookup: {
+                    from: "categories",
+                    localField: "catId",
+                    foreignField: "_id",
+                    as: "cat"
+                }
+
+            },
+            {
                 $project: {
                     _id: "$_id",
                     catId: 1,
@@ -162,6 +171,7 @@ var getActivitiesByCatId = function(req, res, next) {
                     percentage: 1,
                     deptName: "$dept.title",
                     deptId: "$dept._id",
+                    catName: "$cat.title",
                     startDate: 1,
                     endDate: 1,
                     level: 1

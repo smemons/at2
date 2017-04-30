@@ -37,7 +37,7 @@
                         <template let-act="rowData" pTemplate="body">
                              <button type="button" class="pull-left" title="Activity Detail" (click)="viewActivity(act._id)" pButton  icon="fa-eye"></button>
                              <button type="button" class="pull-left" title="Activity Edit" pButton (click)="editAct(act._id)" icon="fa-pencil"></button>
-                             <button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>
+                             <!--<button type="button" class="pull-left" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>-->
 
                         </template>
                     </p-column>
@@ -82,7 +82,7 @@
 
                         <template let-act="rowData" pTemplate="body">
                             <button title="Activity Detail" type="button" pButton (click)="viewActivity(act._id)" icon="fa-eye"></button>
-                            <button type="button" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>
+                            <!--<button type="button" title="Create Task" pButton (click)="createTask(act._id,act.percentage)" icon="fa-check-square-o"></button>-->
 
                         </template>
                     </p-column>
@@ -166,7 +166,7 @@
             <button type="button" pButton icon="fa-close" (click)="closeActivityDialog()" label="Cancel"></button>
             <button type="button" class="pull-left btn-primary btn-lg" (click)="viewActivity(activity._id)" label="Detail">Detail</button>
             <div class="clearfix"></div>
-            <button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity._id,activity.percentage)" label="Detail">Create Task</button>
+            <!--<button type="button" class="pull-right btn-info btn-lg" style="margin-right: 10px;" (click)="createTask(activity._id,activity.percentage)" label="Detail">Create Task</button>-->
 
         </div>
     </p-footer>

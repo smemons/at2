@@ -120,10 +120,10 @@ th.tabco4 {
     text-transform: uppercase;
 }
 
-.table tr:hover {
-    background: grey !important;
+.table tr:hover td {
+    background: #f9f9f4 !important;
     cursor: pointer;
-    color: green;
+    color: black;
 }
 
 .act-sm {

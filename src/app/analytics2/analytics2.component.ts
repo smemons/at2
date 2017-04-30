@@ -60,13 +60,17 @@ this.getAllActivitiesByCatId(this.selectedRef);
 }
 refStatusChanged(evt)
 {
+  debugger;
   this.getAllActivitiesByCatId(evt.value);
+  //this.refSelectTitle=item._id.catName;
+  this.refSelectExpand=true;
 
 }
 private getAllActivitiesByCatId(id)
 {
   this.activityService.getAllByCatId(id).subscribe(data=>{
     this.refActivities=data;
+    this.refSelectTitle=data[0].catName;
     this.refActivities.forEach(el => {
          let status=this.utilityService.getComputedStatus(el.startDate,el.endDate,el.percentage);
          el.status=status.replace(" ", "");
@@ -132,6 +136,16 @@ getPhaseTitleById(id:string)
   if(this.utilityService.phaseKeyValues!=null)
   {
       return this.utilityService.phaseKeyValues.get(id);
+  }
+  else
+  {
+    this.utilityService.getAllPhases().subscribe(data=>{
+      this.utilityService.phaseKeyValues=new Map();
+      data.forEach(el => {
+        this.utilityService.phaseKeyValues.set(el._id,el.title);
+      });
+      return this.utilityService.phaseKeyValues.get(id);
+    });
   }
   return id;
 }
