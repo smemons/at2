@@ -7,6 +7,6 @@ acts.get('/allDepts', uf.getAllDept);
 acts.get('/allDeptPhase', uf.getAllDeptPhase);
 acts.get('/allActHrchy/:id/:deptId', uf.getActivityHchy);
 acts.get('/allStatusByRef', uf.getStatusByRef);
-acts.get('/allGrByDept/:id', uf.getAllActGroupedByDept);
+acts.get('/allGrByDept/:id/:by', uf.getAllActGroupedByDept);
 acts.get('/allGrByCat/:id', uf.getAllActGroupedByCat);
 module.exports = acts;

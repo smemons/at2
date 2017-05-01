@@ -120,7 +120,7 @@ refStatusChanged(evt)
 }
 private getAllActivitiesByDeptId(id,statsType?:string)
 {
-  this.anService.getActsGrByDept(id).subscribe(data=>{
+  this.anService.getActsGrByDept(id,"dept").subscribe(data=>{
     this.refActivities=[];
      data.forEach(el => {
       this.calcEachActivity(el);
@@ -263,7 +263,7 @@ private populateGrByDeptStats(catId?: string)
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
 
-   this.anService.getActsGrByDept(id).subscribe(data=>{
+   this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;

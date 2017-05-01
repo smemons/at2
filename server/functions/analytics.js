@@ -18,6 +18,8 @@ var getAllDeptPhase = function(req, res, next) {
             } else {
                 res.json(result);
             }
+
+
         });
     }
     /**
@@ -62,20 +64,27 @@ var getStatusByRef = function(req, res, next) {
     });
 };
 /**
- * get all activities grouped by dept find all or by catid
+ * get all activities grouped by dept find all or by catid or dept id based on given param
  *
  */
 var getAllActGroupedByDept = function(req, res, next) {
 
-    var catId = req.params.id;
+    var id = req.params.id;
+    var by = req.params.by;
 
 
     var query = { $match: { level: 0 } };
-    if (catId != null && catId != "all") {
+    if (id != null && id != "all") {
         ObjectId = require('mongodb').ObjectID;
-        catId = ObjectId(catId);
-        query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
+        id = ObjectId(id);
+        if (by == "cat")
+            query = { $match: { $and: [{ catId: id }, { level: 0 }] } };
+        else
+        if (by == "dept")
+            query = { $match: { $and: [{ deptId: id }, { level: 0 }] } };
+
     }
+
     Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupCategory,
         an.selfActLookup,
         an.actGraphLookup, an.grByCat_DeptProject, an.grByDept_Group

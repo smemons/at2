@@ -30,6 +30,8 @@ export class ListActivitiesComponent implements OnInit {
   categories:Category[];
   selectedCategory:string;
   listStatuses:SelectItem[];
+  assigned:any=[];
+  created:any=[];
 
   constructor(private authService:AuthService,
               private userService:Userservice,
@@ -47,26 +49,26 @@ export class ListActivitiesComponent implements OnInit {
     let loggedInUser=this.authService.getCurrentUser();
     this.cache.populateAllActivities();
     //get all assigned
-    //  this.activityService.getAllAssigned(loggedInUser).
-    //                       subscribe(act=>{
-    //                         act.forEach(element => {
-    //                           element.startDate=moment(element.startDate).toDate();
-    //                           element.endDate=moment(element.endDate).toDate();
-    //                         });
-    //                         this.assigned=act
-    //                       });
+     this.activityService.getAllAssigned(loggedInUser).
+                          subscribe(act=>{
+                            act.forEach(element => {
+                              element.startDate=moment(element.startDate).toDate();
+                              element.endDate=moment(element.endDate).toDate();
+                            });
+                            this.assigned=act
+                          });
 
-    //  //get all created
-    //                  this.activityService.getAllCreated(loggedInUser).
-    //                       subscribe(act=>{
+     //get all created
+                     this.activityService.getAllCreated(loggedInUser).
+                          subscribe(act=>{
 
-    //                         act.forEach(element => {
+                            act.forEach(element => {
 
-    //                           element.startDate=moment(element.startDate).toDate();
-    //                           element.endDate=moment(element.endDate).toDate();
-    //                         });
-    //                         this.created=act
-    //                       });
+                              element.startDate=moment(element.startDate).toDate();
+                              element.endDate=moment(element.endDate).toDate();
+                            });
+                            this.created=act
+                          });
 
                           //get all statuses for color
 
@@ -149,13 +151,13 @@ export class ListActivitiesComponent implements OnInit {
     this.taskDialog=false;
   }
 
-  get assigned():MiniActivity[]
-  {
-    return this.cache.assigned;
-  }
-  get created():MiniActivity[]
-  {
-    return this.cache.created;
-  }
+  // get assigned():MiniActivity[]
+  // {
+  //   return this.cache.assigned;
+  // }
+  // get created():MiniActivity[]
+  // {
+  //   return this.cache.created;
+  // }
 
 }

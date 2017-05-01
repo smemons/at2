@@ -35,11 +35,11 @@ getStatusByRef()
   return this.http.get('/api/analytics/allStatusByRef').map((response: Response) => response.json());
 }
 /**
- * get all acts group by dept
+ * get all acts group by dept by catid and type by=dept or cat
  */
-getActsGrByDept(id)
+getActsGrByDept(id,by)
 {
-  return this.http.get('/api/analytics/allGrByDept/'+id).map((response: Response) => response.json());
+  return this.http.get('/api/analytics/allGrByDept/'+id+"/"+by).map((response: Response) => response.json());
 }
 /**
  * get all acts group by category
