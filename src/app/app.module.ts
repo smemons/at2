@@ -55,7 +55,7 @@ import {GrowlModule,ListboxModule,CalendarModule,PanelModule,DataTableModule,
   InputTextareaModule,InputTextModule,DialogModule,InputSwitchModule,
   ConfirmDialogModule,ConfirmationService,AutoCompleteModule,
   SelectButtonModule,SliderModule,MultiSelectModule,DropdownModule,
-  FileUploadModule,TabViewModule,TreeModule} from 'primeng/primeng';
+  FileUploadModule,TabViewModule,TreeModule,AccordionModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 
 import { Analytics2Component } from './analytics2/analytics2.component';
@@ -117,6 +117,7 @@ import { Analytics2Component } from './analytics2/analytics2.component';
     TabViewModule,
     TreeModule,
     BrowserAnimationsModule,
+    AccordionModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [

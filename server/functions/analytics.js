@@ -60,10 +60,67 @@ var getStatusByRef = function(req, res, next) {
             res.json(result);
         }
     });
-}
+};
+/**
+ * get all activities grouped by dept
+ *
+ */
+var getAllActGroupedByDept = function(req, res, next) {
+
+    var deptId = req.params.id;
+
+
+    var query = { $match: { level: 0 } };
+    if (deptId != null && deptId != "all") {
+        ObjectId = require('mongodb').ObjectID;
+        deptId = ObjectId(deptId);
+        query = { $match: { $and: [{ deptId: deptId }, { level: 0 }] } };
+    }
+    Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupCategory,
+        an.selfActLookup,
+        an.actGraphLookup, an.grByCat_DeptProject, an.grByDept_Group
+    ], function(err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+};
+/**
+ * get all activities grouped by dept,
+ *
+ * add: optional param all is added.. in case we are looking to restrict by catId
+ *
+ */
+var getAllActGroupedByCat = function(req, res, next) {
+    var catId = req.params.id;
+
+
+    var query = { $match: { level: 0 } };
+    if (catId != null && catId != "all") {
+        ObjectId = require('mongodb').ObjectID;
+        catId = ObjectId(catId);
+
+
+        query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
+    }
+    Activity.aggregate([query, an.unwindDept, an.lookupDept, an.lookupCategory,
+        an.selfActLookup,
+        an.actGraphLookup, an.grByCat_DeptProject, an.grByCat_Group
+    ], function(err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+};
 module.exports = {
     getAllDept: getAllDept,
     getAllDeptPhase: getAllDeptPhase,
     getActivityHchy: getActivityHchy,
-    getStatusByRef: getStatusByRef
+    getStatusByRef: getStatusByRef,
+    getAllActGroupedByDept: getAllActGroupedByDept,
+    getAllActGroupedByCat: getAllActGroupedByCat
 }

@@ -197,6 +197,14 @@ var lookupFocus = {
         as: "focus"
     }
 };
+var lookupCategory = {
+    $lookup: {
+        from: "categories",
+        localField: "catId",
+        foreignField: "_id",
+        as: "cat"
+    }
+};
 var selfActLookup = {
     $lookup: {
         from: "activities",
@@ -214,9 +222,7 @@ var actGraphLookup = {
         as: "children"
     }
 };
-// {
-//    $match:{level:0}
-// }
+
 var actProject = {
     $project: {
         _id: "$_id",
@@ -226,12 +232,40 @@ var actProject = {
         cost: 1,
         title: 1,
         assignee: 1,
+        phaseId: 1,
         deptName: "$dept.title",
         focus: "$focus.title",
         phase: "$phase.title",
         status: "$status.title",
         firstChild: 1,
         children: 1,
+    }
+};
+var grByCat_DeptProject = {
+    $project: {
+        _id: 1,
+        title: 1,
+        catId: 1,
+        percentage: 1,
+        level: 1,
+        startDate: 1,
+        endDate: 1,
+        dept: { $arrayElemAt: ["$dept", 0] },
+        cat: { $arrayElemAt: ["$cat", 0] },
+        firstChild: 1,
+        children: 1
+    }
+};
+var grByDept_Group = {
+    $group: {
+        _id: { deptName: "$dept.title", deptId: "$dept._id" },
+        fields: { $addToSet: "$$ROOT" }
+    }
+};
+var grByCat_Group = {
+    $group: {
+        _id: { catName: "$cat.title", catId: "$cat._id" },
+        fields: { $addToSet: "$$ROOT" }
     }
 };
 var refStatusQuery = [{
@@ -364,8 +398,12 @@ module.exports = {
         actGraphLookup: actGraphLookup,
         lookupFocus: lookupFocus,
         lookupStatus: lookupStatus,
+        lookupCategory: lookupCategory,
         selfActLookup: selfActLookup,
         refStatusQuery: refStatusQuery,
+        grByCat_DeptProject: grByCat_DeptProject,
+        grByCat_Group: grByCat_Group,
+        grByDept_Group: grByDept_Group
 
     }
     //db.getCollection('activities').aggregate([unwind, lookup, project1, project2, group]);

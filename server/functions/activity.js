@@ -137,7 +137,7 @@ var getActivitiesByCatId = function(req, res, next) {
         var query = {};
         ObjectId = require('mongodb').ObjectID;
         catId = ObjectId(catId);
-        query = { $match: { catId: catId } };
+        query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
 
         Activity.aggregate([
             query,

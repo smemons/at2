@@ -3,6 +3,29 @@
         <p-panel header="{{refSelectTitle}}" [toggleable]="true" [collapsed]="refSelectExpand">
             <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
         </p-panel>
+        <p-panel header="{{deptSelectTitle}}" [toggleable]="true" [collapsed]="true">
+
+            <table class="table package-table">
+                <tbody>
+                    <tr>
+                        <th class="st-th"></th>
+                        <th>Over Due</th>
+                        <th>Need Att</th>
+                        <th>In Prog</th>
+                        <th>Complete</th>
+                    </tr>
+                    <tr *ngFor="let model of deptStatsModel">
+                        <td (click)="setActivitiesData(model, 'all','DPT')">{{model.deptName}}</td>
+                        <td (click)="setActivitiesData(model, 'OD','DPT')">{{model.overDue}}</td>
+                        <td (click)="setActivitiesData(model, 'NA','DPT')">{{model.needAtt}}</td>
+                        <td (click)="setActivitiesData(model, 'IP','DPT')">{{model.inProg}}</td>
+                        <td (click)="setActivitiesData(model, 'CP','DPT')">{{model.complete}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </p-panel>
         <p-panel header="Activities " [toggleable]="true" [collapsed]="refActExpand">
             <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple">
                 <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
@@ -12,10 +35,9 @@
                 </p-column>
                 <p-column field="deptName" header="Org" [style]="{'width':'50px'}" [sortable]="true">
                 </p-column>
-
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
-                <p-column field="status" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">
                     <template pTemplate="header">
@@ -36,7 +58,7 @@
                         <table class="st-table table table-condensed table-hover">
                             <thead>
                                 <tr>
-                                    <th class="tabco1 ">Referenes</th>
+                                    <th class="tabco1 ">Reference</th>
                                     <th class="tabco2"> Over Due</th>
                                     <th class="tabco3">Need Attention</th>
                                     <th class="tabco4">In Progress</th>
@@ -44,14 +66,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of statusData" (click)="setRefRow(item)">
-                                    <td class="tabco1">{{item._id.catName}}</td>
-                                    <td class="tabco2">{{item.OverDue}}</td>
-                                    <td class="tabco3">{{item.NeedAttention}}
+                                <tr *ngFor="let item of catStatsModel">
+                                    <td class="tabco1 " (click)="setActivitiesData(item, 'all','CAT')">{{item.catName}}</td>
+                                    <td class="tabco2 " (click)="setActivitiesData(item, 'OD','CAT') ">{{item.overDue}}</td>
+                                    <td class="tabco3 " (click)="setActivitiesData(item, 'NA','CAT') ">{{item.needAtt}}
                                     </td>
-                                    <td class="tabco4">{{item.InProgress}}
+                                    <td class=" tabco4 " (click)="setActivitiesData(item, 'IP','CAT') ">{{item.inProg}}
                                     </td>
-                                    <td class="tabco5">{{item.Completed}}
+                                    <td class="tabco5 " (click)="setActivitiesData(item, 'CP','CAT') ">{{item.complete}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,75 +82,89 @@
                 </div>
                 <!--row-->
             </div>
-            <div *ngIf="showDetail">
-                <div *ngIf="actDataAvailable">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-2 act-hd">
+            <div *ngIf=" showDetail ">
+                <div *ngIf="actDataAvailable ">
+                    <div class="container-fluid ">
+                        <div class="row ">
+                            <div class="col-sm-2 act-hd ">
                                 Champion
                             </div>
                             <div class="col-sm-4 ">
-                                <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last">{{chmp}}{{isLast ? '' : ', '}}</span>
+                                <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last ">{{chmp}}{{isLast ? '' : ', '}}</span>
                             </div>
-                            <div class="col-sm-2 act-hd">
+                            <div class="col-sm-2 act-hd ">
                                 Backup
                             </div>
                             <div class="col-sm-4 ">
                                 0
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-2 act-hd">
+                        <div class="row ">
+                            <div class="col-sm-2 act-hd ">
                                 Start Date
                             </div>
                             <div class="col-sm-2 ">
                                 {{selectedActivity.startDate|date:'shortDate'}}
                             </div>
-                            <div class="col-sm-2 act-hd">
+                            <div class="col-sm-2 act-hd ">
                                 End Date
                             </div>
                             <div class="col-sm-2 ">
                                 {{selectedActivity.endDate|date:'shortDate'}}
                             </div>
-                            <div class="col-sm-2 act-hd">
+                            <div class="col-sm-2 act-hd ">
                                 Completion
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2 ">
                                 {{selectedActivity.percentage}}%
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-2 act-hd">
+                        <div class="row ">
+                            <div class="col-sm-2 act-hd ">
                                 Focus Area
                             </div>
                             <div class="col-sm-4 ">
                                 {{selectedActivity.focus}}
                             </div>
-                            <div class="col-sm-2 act-hd">
+                            <div class="col-sm-2 act-hd ">
                                 Status
                             </div>
                             <div class="col-sm-4 ">
                                 {{selectedActivity.status}}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-4 act-hd">
+                        <div class="row ">
+                            <div class="col-sm-4 act-hd ">
                                 Implementation Cost
                             </div>
                             <div class="col-sm-2 ">
                                 {{selectedActivity.cost==null?0:selectedActivity.cost}}
                             </div>
-                            <div class="col-sm-4 act-hd">
+                            <div class="col-sm-4 act-hd ">
                                 Potentital Cost Saving
                             </div>
                             <div class="col-sm-2 ">
                                 0
                             </div>
                         </div>
-
-
-
-                        <p-dataTable [value]="actChildren" expandableRows="true">
+                        <p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">
+                            <p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">
+                                <div *ngFor="let item of scopingBucket">
+                                    {{item.title}}
+                                </div>
+                            </p-accordionTab>
+                            <p-accordionTab *ngIf="designBucket.length>0" header="Design">
+                                <div *ngFor="let item of designBucket">
+                                    {{item.title}}
+                                </div>
+                            </p-accordionTab>
+                            <p-accordionTab *ngIf="implementBucket.length>0" header="Implementation">
+                                <div *ngFor="let item of implementBucket">
+                                    {{item.title}}
+                                </div>
+                            </p-accordionTab>
+                        </p-accordion>
+                        <!--<p-dataTable [value]="actChildren" expandableRows="true">
                             <p-column expander="true" styleClass="col-icon" [style]="{'width':'40px'}"></p-column>
                             <p-column field="phaseId" header="Phase">
                                 <ng-template let-col let-act="rowData" pTemplate="body">
@@ -155,7 +191,6 @@
                             <ng-template let-act pTemplate="rowexpansion">
                                 <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px">
                                     <div class="ui-grid-row">
-
                                         <div class="ui-grid-col-9">
                                             <div class="ui-grid ui-grid-responsive ui-grid-pad">
                                                 <div class="ui-grid-row">
@@ -172,15 +207,12 @@
                                                         <span *ngFor="let chmp of act.assignee ; let isLast=last">{{chmp}}{{isLast ? '' : ', '}}</span>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </ng-template>
-                        </p-dataTable>
-
-
+                        </p-dataTable>-->
                     </div>
                 </div>
             </div>
@@ -195,13 +227,7 @@
                             {{act[col.field]}}
                             <br/>
                             <span class="act-sm">{{act.createdBy}}, {{act.createdAt|date:'short'}} </span><span class="act-bs"> {{act.percentage}}% completed</span>
-
                         </ng-template>
-
-
-
-
-
                     </p-column>
                 </p-dataTable>
             </p-panel>

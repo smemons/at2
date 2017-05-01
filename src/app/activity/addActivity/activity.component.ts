@@ -41,6 +41,7 @@ export class ActivityComponent implements OnInit,AfterViewInit {
       maxDate:Date;
       level:number=0;
       phaseDisable:boolean;
+      catDisable:boolean;
   constructor(
               private utilityService:UtilityService,
               private alertService:AlertService,
@@ -72,6 +73,7 @@ ngAfterViewInit()
       //set min max date
       this.minDate=this.model.startDate;
       this.maxDate=this.model.endDate;
+      this.catDisable=true;
       if(this.level>1)
       {
         this.model.phaseId=act.phaseId;

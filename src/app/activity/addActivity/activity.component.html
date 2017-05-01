@@ -34,7 +34,7 @@
                         <!--<select class="form-control" id="category" name="category" [(ngModel)]="model.catId" #category="ngModel" required>
               <option *ngFor="let cat of categories" [ngValue]="cat._id">{{cat.title}}</option>
             </select>-->
-                        <p-dropdown name="category" [options]="categories" [(ngModel)]="model.catId" [style]="{'width':'100%'}" #category="ngModel" required></p-dropdown>
+                        <p-dropdown [disabled]="catDisable" name="category" [options]="categories" [(ngModel)]="model.catId" [style]="{'width':'100%'}" #category="ngModel" required></p-dropdown>
 
                         <div *ngIf="f.submitted && !category.valid" class="help-block"> Reference is required</div>
                     </div>

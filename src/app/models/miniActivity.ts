@@ -6,4 +6,7 @@ export class MiniActivity {
   assignee:[string];
   percentage:number;
   createdBy:string;
+  stats:string;
+  deptName:string;
+  deptId:string;
 }

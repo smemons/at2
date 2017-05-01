@@ -50,6 +50,11 @@
     border-radius: 25px;
 }
 
+.st-table td {
+    border-top: 1px solid #ECE8DA !important;
+    border-right: 1px solid #ECE8DA !important;
+}
+
 .st-table>td {
     font-size: 18px;
 }
@@ -69,9 +74,9 @@ th.tabco1 {
 }
 
 .tabco2 {
-    background: #EF5350;
+    /*background: #EF5350;*/
     text-align: center;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 th.tabco2 {
@@ -82,9 +87,9 @@ th.tabco2 {
 }
 
 .tabco3 {
-    background: #c7d600;
+    /*background: #c7d600;*/
     text-align: center;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 th.tabco3 {
@@ -95,9 +100,9 @@ th.tabco3 {
 }
 
 .tabco5 {
-    background: #00C853;
+    /*background: #00C853;*/
     text-align: center;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 th.tabco5 {
@@ -108,9 +113,9 @@ th.tabco5 {
 }
 
 .tabco4 {
-    background: #039BE5;
+    /*background: #039BE5;*/
     text-align: center;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 th.tabco4 {
@@ -120,11 +125,18 @@ th.tabco4 {
     text-transform: uppercase;
 }
 
-.table tr:hover td {
-    background: #f9f9f4 !important;
+td:hover {
+    background-color: #b9f7f7;
+    color: #000000;
     cursor: pointer;
-    color: black;
 }
+
+
+/*.table-hover tr:hover td {
+    background: grey !important;
+    cursor: pointer;
+    color: green;
+}*/
 
 .act-sm {
     font-size: smaller;
@@ -138,4 +150,98 @@ th.tabco4 {
 
 .act-pad {
     padding: 5px;
+}
+
+.package-table tbody tr:nth-child(odd) {
+    background: #FAFAFA;
+}
+
+.package-table th {
+    font-size: x-small;
+}
+
+.package-table td {
+    border-top: 0px !important;
+    border-right: 1px solid #fff !important;
+    text-align: right;
+}
+
+.package-table tbody tr:nth-child(even) {
+    background: #DFDFDF;
+}
+
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+table tr {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+}
+
+table th,
+table td {
+    padding: .625em;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+    table caption {
+        font-size: 1.3em;
+    }
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        text-align: right;
+    }
+    table td:before {
+        /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    table td:last-child {
+        border-bottom: 0;
+    }
 }
