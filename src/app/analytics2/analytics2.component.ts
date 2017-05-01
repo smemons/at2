@@ -111,9 +111,12 @@ setActivitiesData(item,statsType?:string,actionType?:string)
 refStatusChanged(evt)
 {
   debugger;
-  this.getAllActivitiesByCatId(evt.value);
-  //this.refSelectTitle=item._id.catName;
+  this.getAllActivitiesByCatId(evt.value,"all");
+
   this.refSelectExpand=true;
+
+  //change the stats by orgs panel
+  this.populateGrByDeptStats(evt.value);
 }
 private getAllActivitiesByDeptId(id,statsType?:string)
 {
@@ -258,7 +261,9 @@ getPhaseTitleById(id:string)
 private populateGrByDeptStats(catId?: string)
 {
   this.deptStatsModel=[];
-   this.anService.getActsGrByDept('all').subscribe(data=>{
+  let id=catId==null?"all":catId;
+
+   this.anService.getActsGrByDept(id).subscribe(data=>{
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;

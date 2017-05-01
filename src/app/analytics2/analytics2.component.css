@@ -204,6 +204,10 @@ table th {
     text-transform: uppercase;
 }
 
+.Over {
+    color: #FF3333 !important;
+}
+
 @media screen and (max-width: 600px) {
     table {
         border: 0;
@@ -244,4 +248,14 @@ table th {
     table td:last-child {
         border-bottom: 0;
     }
+}
+
+.Over,
+.OD {
+    color: #FF3333 !important;
+}
+
+.Need,
+.NA {
+    color: yellow !important;
 }

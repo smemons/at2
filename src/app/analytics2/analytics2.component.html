@@ -38,14 +38,17 @@
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
                 <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                    <ng-template let-col let-act="rowData" pTemplate="body">
+                        <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                    </ng-template>
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                    <template pTemplate="header">
-                            <i class="fa fa-cogs"></i>
-                        </template>
-                    <template let-act="rowData" pTemplate="body">
-                             <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act)" pButton  icon="fa-eye"></button>
-                        </template>
+                    <ng-template pTemplate="header">
+                        <i class="fa fa-cogs"></i>
+                    </ng-template>
+                    <ng-template let-act="rowData" pTemplate="body">
+                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act)" pButton icon="fa-eye"></button>
+                    </ng-template>
                 </p-column>
             </p-dataTable>
         </p-panel>
@@ -152,22 +155,28 @@
                                 <p-dataTable [value]="scopingBucket" [rows]="5" [paginator]="true" sortMode="multiple">
                                     <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                                         <template let-col let-act="rowData" pTemplate="body">
-                                            {{act[col.field]|truncate:40 }}
+                                           <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
                                             </template>
                                     </p-column>
                                     <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date:'shortDate' }}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date :'shortDate'}}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column styleClass="col-button" [style]="{'width':'40px'}">
                                         <template pTemplate="header">
@@ -183,30 +192,36 @@
                                 <p-dataTable [value]="designBucket" [rows]="5" [paginator]="true" sortMode="multiple">
                                     <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                                         <template let-col let-act="rowData" pTemplate="body">
-                                            {{act[col.field]|truncate:40 }}
+                                           <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
                                             </template>
                                     </p-column>
                                     <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date:'shortDate' }}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date :'shortDate'}}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                                        <template pTemplate="header">
-                                                <i class="fa fa-cogs"></i>
-                                            </template>
-                                        <template let-act="rowData" pTemplate="body">
-                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
-                                             </template>
+                                        <ng-template pTemplate="header">
+                                            <i class="fa fa-cogs"></i>
+                                        </ng-template>
+                                        <ng-template let-act="rowData" pTemplate="body">
+                                            <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
+                                        </ng-template>
                                     </p-column>
                                 </p-dataTable>
                             </p-accordionTab>
@@ -214,30 +229,36 @@
                                 <p-dataTable [value]="implementBucket" [rows]="5" [paginator]="true" sortMode="multiple">
                                     <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                                         <template let-col let-act="rowData" pTemplate="body">
-                                            {{act[col.field]|truncate:40 }}
+                                           <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
                                             </template>
                                     </p-column>
                                     <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date:'shortDate' }}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
-                                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date :'shortDate'}}
-                        </template>
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                        <ng-template let-col let-act="rowData" pTemplate="body">
+                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                        </ng-template>
                                     </p-column>
                                     <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                                        <template pTemplate="header">
-                                                <i class="fa fa-cogs"></i>
-                                            </template>
-                                        <template let-act="rowData" pTemplate="body">
-                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
-                                             </template>
+                                        <ng-template pTemplate="header">
+                                            <i class="fa fa-cogs"></i>
+                                        </ng-template>
+                                        <ng-template let-act="rowData" pTemplate="body">
+                                            <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
+                                        </ng-template>
                                     </p-column>
                                 </p-dataTable>
                             </p-accordionTab>
