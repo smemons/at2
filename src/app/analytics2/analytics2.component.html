@@ -149,19 +149,97 @@
                         </div>
                         <p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">
                             <p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">
-                                <div *ngFor="let item of scopingBucket">
-                                    {{item.title}}
-                                </div>
+                                <p-dataTable [value]="scopingBucket" [rows]="5" [paginator]="true" sortMode="multiple">
+                                    <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                                            {{act[col.field]|truncate:40 }}
+                                            </template>
+                                    </p-column>
+                                    <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date:'shortDate' }}
+                        </template>
+                                    </p-column>
+                                    <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date :'shortDate'}}
+                        </template>
+                                    </p-column>
+                                    <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                                        <template pTemplate="header">
+                                                <i class="fa fa-cogs"></i>
+                                            </template>
+                                        <template let-act="rowData" pTemplate="body">
+                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
+                                             </template>
+                                    </p-column>
+                                </p-dataTable>
                             </p-accordionTab>
                             <p-accordionTab *ngIf="designBucket.length>0" header="Design">
-                                <div *ngFor="let item of designBucket">
-                                    {{item.title}}
-                                </div>
+                                <p-dataTable [value]="designBucket" [rows]="5" [paginator]="true" sortMode="multiple">
+                                    <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                                            {{act[col.field]|truncate:40 }}
+                                            </template>
+                                    </p-column>
+                                    <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date:'shortDate' }}
+                        </template>
+                                    </p-column>
+                                    <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date :'shortDate'}}
+                        </template>
+                                    </p-column>
+                                    <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                                        <template pTemplate="header">
+                                                <i class="fa fa-cogs"></i>
+                                            </template>
+                                        <template let-act="rowData" pTemplate="body">
+                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
+                                             </template>
+                                    </p-column>
+                                </p-dataTable>
                             </p-accordionTab>
                             <p-accordionTab *ngIf="implementBucket.length>0" header="Implementation">
-                                <div *ngFor="let item of implementBucket">
-                                    {{item.title}}
-                                </div>
+                                <p-dataTable [value]="implementBucket" [rows]="5" [paginator]="true" sortMode="multiple">
+                                    <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                                            {{act[col.field]|truncate:40 }}
+                                            </template>
+                                    </p-column>
+                                    <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date:'shortDate' }}
+                        </template>
+                                    </p-column>
+                                    <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
+                                        <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|date :'shortDate'}}
+                        </template>
+                                    </p-column>
+                                    <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                                    </p-column>
+                                    <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                                        <template pTemplate="header">
+                                                <i class="fa fa-cogs"></i>
+                                            </template>
+                                        <template let-act="rowData" pTemplate="body">
+                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
+                                             </template>
+                                    </p-column>
+                                </p-dataTable>
                             </p-accordionTab>
                         </p-accordion>
                         <!--<p-dataTable [value]="actChildren" expandableRows="true">

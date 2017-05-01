@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MiniActivity } from './../models/miniActivity';
 import { statsModel } from './../models/statsModel';
@@ -23,6 +24,7 @@ deptSelectTitle="By Organization"
 refSelectExpand:boolean;
 refActExpand:boolean=true;
 refActivities:any=[];
+
 showDetail:boolean;
 detailHeading:string="Detail";
 tasks:any=[];
@@ -58,18 +60,26 @@ private activityListChanged = new BehaviorSubject<string>("");
     this.populateGrByDeptStats();
      //populate stats panel with group by cat and calculate all children for overdue, needatt etc
     this.populateGrByCatStats();
-
     this.activityListChanged.subscribe(data=>{
       this.filterStatsFromActRes(data);
-      console.log('new activities fetched'+data);
-
     });
   }
- private  filterStatsFromActRes(data)
+ private  filterStatsFromActRes(stats)
  {
+
    if(this.refActivities.length>0)
    {
-     let tempArray=this.refActivities.slice(0);
+        if(stats!="all")
+        {
+          let tempArray:any=[];
+          this.refActivities.forEach(el => {
+            if(el.stats==stats)
+            {
+              tempArray.push(el);
+            }
+          });
+          this.refActivities=tempArray;
+        }
    }
  }
   //get all drop down from cache service
@@ -161,16 +171,17 @@ private calcEachActivity(el)
              model.inProg+=tempModel.inProg>0?1:0;
              model.complete+=tempModel.complete>0?1:0;
              // TODO temporary logic
-             if(model.overDue>0)act.stats="Over Due";
+             if(model.overDue>0)act.stats="OD";
              else
-             if(model.needAtt>0)act.stats="Need Attention";
+             if(model.needAtt>0)act.stats="NA";
              else
-             if(model.inProg>0)act.stats="In Progress";
+             if(model.inProg>0)act.stats="IP";
              else
-             if(model.complete>0)act.stats="Complete";
+             if(model.complete>0)act.stats="CP";
           this.refActivities.push(act);
 
-          });
+        });
+
 }
 /**
  * to display detail of the this activity and its  chidren
@@ -226,10 +237,8 @@ viewActDetail(act){
       {
         console.error(ex);
       }
-       this.tasks=[];
-        this.taskService.getAllByActivityId(act._id).subscribe(tasks=>{
-          this.tasks=tasks;
-        });
+      this.viewTask(act._id);
+
         this.actDataAvailable=true;
       }
     });
@@ -312,5 +321,12 @@ private placeInBucket(child:any)
     this.implementBucket.push(child);
   }
 
+}
+viewTask(id)
+{
+  this.tasks=[];
+        this.taskService.getAllByActivityId(id).subscribe(tasks=>{
+          this.tasks=tasks;
+        });
 }
 }
