@@ -62,19 +62,19 @@ var getStatusByRef = function(req, res, next) {
     });
 };
 /**
- * get all activities grouped by dept
+ * get all activities grouped by dept find all or by catid
  *
  */
 var getAllActGroupedByDept = function(req, res, next) {
 
-    var deptId = req.params.id;
+    var catId = req.params.id;
 
 
     var query = { $match: { level: 0 } };
-    if (deptId != null && deptId != "all") {
+    if (catId != null && catId != "all") {
         ObjectId = require('mongodb').ObjectID;
-        deptId = ObjectId(deptId);
-        query = { $match: { $and: [{ deptId: deptId }, { level: 0 }] } };
+        catId = ObjectId(catId);
+        query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
     }
     Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupCategory,
         an.selfActLookup,
