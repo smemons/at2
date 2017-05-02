@@ -24,7 +24,6 @@ deptSelectTitle="By Organization"
 refSelectExpand:boolean;
 refActExpand:boolean=true;
 refActivities:any=[];
-
 showDetail:boolean;
 detailHeading:string="Detail";
 tasks:any=[];
@@ -41,7 +40,6 @@ private activityListChanged = new BehaviorSubject<string>("");
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
   ngOnInit() {
    this.utilityService.getAllPhases().subscribe(data=>{
-     debugger;
       this.utilityService.phaseKeyValues=new Map();
       data.forEach(el => {
         this.utilityService.phaseKeyValues.set(el._id,el.title);
@@ -66,7 +64,6 @@ private activityListChanged = new BehaviorSubject<string>("");
   }
  private  filterStatsFromActRes(stats)
  {
-
    if(this.refActivities.length>0)
    {
         if(stats!="all")
@@ -92,38 +89,61 @@ get refList():SelectItem[] {
  */
 setActivitiesData(item,statsType?:string,actionType?:string)
 {
-  debugger;
+   debugger;
+   let actIds=[];
+    if(statsType=="OD")//if over due
+    {
+      actIds=item.ODactId;
+    }
+     if(statsType=="NA")//if over due
+    {
+      actIds=item.NAactId;
+
+    }
+     if(statsType=="IP")//if over due
+    {
+      actIds=item.IPactId;
+
+    }
+     if(statsType=="CP")//if over due
+    {
+      actIds=item.CPactId;
+
+    }
+    if(actIds==null || actIds.length==0)
+    {
+      this.refActivities=[];
+      return false;//dont do any thing jut return empty handed.
+    }
+
+    this.refSelectExpand=true;
   if(actionType=="CAT")
   {
     this.selectedRef=item.catId;
     this.refSelectTitle=item.catName;
-    this.refSelectExpand=true;
-    this.getAllActivitiesByCatId(this.selectedRef,statsType);
+    this.getAllActivitiesByCatId(this.selectedRef,actIds,statsType);
   }
   if(actionType=="DPT")
   {
     let deptId=item.deptId;
     this.deptSelectTitle=item.deptName;
-    this.refSelectExpand=true;
-    this.getAllActivitiesByDeptId(deptId,statsType);
+    this.getAllActivitiesByDeptId(deptId,actIds,statsType);
   }
 }
 refStatusChanged(evt)
 {
-  debugger;
+
   this.getAllActivitiesByCatId(evt.value,"all");
-
   this.refSelectExpand=true;
-
   //change the stats by orgs panel
   this.populateGrByDeptStats(evt.value);
 }
-private getAllActivitiesByDeptId(id,statsType?:string)
+private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
 {
   this.anService.getActsGrByDept(id,"dept").subscribe(data=>{
     this.refActivities=[];
      data.forEach(el => {
-      this.calcEachActivity(el);
+       this.calcEachActivity(el,actIds);
      });
      this.activityListChanged.next(statsType);
     this.refActExpand=false;
@@ -135,12 +155,16 @@ private getAllActivitiesByDeptId(id,statsType?:string)
  * @param id
  * @param statsType
  */
-private getAllActivitiesByCatId(id,statsType?:string)
+private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
 {
   this.anService.getActsGrByCat(id).subscribe(data=>{
     this.refActivities=[];
+
      data.forEach(el => {
-      this.calcEachActivity(el);
+
+          this.calcEachActivity(el,actIds);
+
+
      });
     this.refActExpand=false;
     this.activityListChanged.next(statsType);
@@ -150,8 +174,9 @@ private getAllActivitiesByCatId(id,statsType?:string)
  * this method is used to set a line in activity panel.
  * @param el
  */
-private calcEachActivity(el)
+private calcEachActivity(el,actIds?:any)
 {
+
    let model:statsModel={};
        model.inProg=0;
        model.needAtt=0;
@@ -159,6 +184,8 @@ private calcEachActivity(el)
        model.complete=0;
           //now go through field array
            el.fields.forEach(field => {
+        if(actIds.indexOf(field._id)>=0)
+        {
            let act:MiniActivity=new MiniActivity();
            act._id=field._id;
            act.title=field.title;
@@ -181,17 +208,17 @@ private calcEachActivity(el)
              if(model.inProg>0)act.stats="IP";
              else
              if(model.complete>0)act.stats="CP";
-          this.refActivities.push(act);
 
+             this.refActivities.push(act);
+        }
         });
-
 }
 /**
  * to display detail of the this activity and its  chidren
  * @param id
  */
 viewActDetail(act){
-  debugger;
+
     this.scopingBucket=[];
     this.implementBucket=[];
     this.designBucket=[];
@@ -241,7 +268,6 @@ viewActDetail(act){
         console.error(ex);
       }
       this.viewTask(act._id);
-
         this.actDataAvailable=true;
       }
     });
@@ -260,9 +286,9 @@ getPhaseTitleById(id:string)
 }
 private populateGrByDeptStats(catId?: string)
 {
+
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
-
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
      data.forEach(el => {
        let model:statsModel={};
@@ -270,16 +296,36 @@ private populateGrByDeptStats(catId?: string)
        model.needAtt=0;
        model.overDue=0;
        model.complete=0;
+       model.CPactId=[];
+       model.IPactId=[];
+       model.NAactId=[];
+       model.ODactId=[];
        model.deptId=el._id.deptId;
        model.deptName=el._id.deptName;
           //now go through field array
           el.fields.forEach(field => {
               //each field item may have many activities under and each may have childen
              let tempModel=this.utilityService.findStatsInChildren(field);
-             model.overDue+=tempModel.overDue>0?1:0;
-             model.needAtt+=tempModel.needAtt>0?1:0;
-             model.inProg+=tempModel.inProg>0?1:0;
-             model.complete+=tempModel.complete>0?1:0;
+             if(tempModel.overDue>0)
+             {
+              model.overDue++;
+              model.ODactId.push(tempModel.actId);
+             }
+             if(tempModel.needAtt>0)
+             {
+              model.needAtt++;
+              model.NAactId.push(tempModel.actId);
+             }
+             if(tempModel.inProg>0)
+             {
+              model.inProg++;
+              model.IPactId.push(tempModel.actId);
+             }
+             if(tempModel.complete>0)
+             {
+              model.complete++;
+              model.CPactId.push(tempModel.actId);
+             }
           });
       this.deptStatsModel.push(model);
      });
@@ -289,6 +335,7 @@ private populateGrByCatStats()
 {
    this.catStatsModel=[];
    this.anService.getActsGrByCat("all").subscribe(data=>{
+
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -297,14 +344,34 @@ private populateGrByCatStats()
        model.complete=0;
        model.catId=el._id.catId;
        model.catName=el._id.catName;
+       model.CPactId=[];
+       model.IPactId=[];
+       model.NAactId=[];
+       model.ODactId=[];
           //now go through field array
           el.fields.forEach(field => {
               //each field item may have many activities under and each may have childen
              let tempModel=this.utilityService.findStatsInChildren(field);
-             model.overDue+=tempModel.overDue>0?1:0;
-             model.needAtt+=tempModel.needAtt>0?1:0;
-             model.inProg+=tempModel.inProg>0?1:0;
-             model.complete+=tempModel.complete>0?1:0;
+             if(tempModel.overDue>0)
+             {
+              model.overDue++;
+              model.ODactId.push(tempModel.actId);
+             }
+             if(tempModel.needAtt>0)
+             {
+              model.needAtt++;
+              model.NAactId.push(tempModel.actId);
+             }
+             if(tempModel.inProg>0)
+             {
+              model.inProg++;
+              model.IPactId.push(tempModel.actId);
+             }
+             if(tempModel.complete>0)
+             {
+              model.complete++;
+              model.CPactId.push(tempModel.actId);
+             }
           });
       this.catStatsModel.push(model);
      });
@@ -325,7 +392,6 @@ private placeInBucket(child:any)
   {
     this.implementBucket.push(child);
   }
-
 }
 viewTask(id)
 {

@@ -1,4 +1,5 @@
 export interface statsModel {
+
   deptName?,
   deptId?,
   catId?,
@@ -6,5 +7,11 @@ export interface statsModel {
   overDue?,
   needAtt?,
   inProg?,
-  complete?
+  complete?,
+  actId?,
+  ODactId?,
+  NAactId?,
+  IPactId?,
+  CPactId?
+
 }

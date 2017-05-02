@@ -230,13 +230,15 @@ getAllDepts() {
     let consumedDays  =today.diff(start,'days');
     let remainDays    =end.diff(today,'days');
     let actual=(consumedDays/totalDays)*100;
-    if(actual>=perc && remainDays <= 0) status="Over Due";
-    else
-    if(actual>perc && remainDays >  0) status="Need Attention";
-    else
-    if(actual<=perc && remainDays >  0 && remainDays < 100) status="In Progress";
-    else
     if(perc==100) status="Completed";
+    else
+    if(perc < 100 && remainDays < 0) status="Over Due";
+    else
+    if(actual>perc && remainDays >=  0) status="Need Attention";
+    else
+    if(actual<=perc && remainDays >=  0 ) status="In Progress";
+
+
         return status;
   }
 /**
@@ -246,10 +248,12 @@ getAllDepts() {
   findStatsInChildren(el:any)
   {
     let model:statsModel={};
+    model.actId=[];
     model.overDue=0;
     model.complete=0;
     model.needAtt=0;
     model.inProg=0;
+    model.actId=el._id;
     let ret=this.getComputedStatus(el.startDate,el.endDate,el.percentage);
         if(ret=="Over Due")model.overDue++;
         if(ret=="Need Attention")model.needAtt++;

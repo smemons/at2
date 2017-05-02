@@ -35,9 +35,10 @@
     color: #FFCC33 !important;
 }
 
-.Completed {
+
+/*.Completed {
     color: #66CC66 !important;
-}
+}*/
 
 .InProgress {
     color: #00CCFF !important;
