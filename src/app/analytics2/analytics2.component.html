@@ -162,48 +162,60 @@
                                 0
                             </div>
                         </div>
-                        <p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">
-                            <p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">
-                                <p-dataTable [value]="scopingBucket" [rows]="5" [paginator]="true" sortMode="multiple">
-                                    <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
-                                        <template let-col let-act="rowData" pTemplate="body">
+                        <div style="margin: 0 auto;text-align: center;">
+                            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt,'all')" > All</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                        </div>
+                        <!--<p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">-->
+                        <!--<p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">-->
+                        <p-dataTable [value]="phasesBucket" [rows]="15" [paginator]="true" sortMode="multiple" #dt>
+                            <p-column field="phase" header="Phase" [sortable]="true">
+                                <template let-col let-act="rowData" pTemplate="body">
+                                           <span class="{{act.stats}}"> {{act[col.field] }} </span>
+                                            </template>
+                            </p-column>
+                            <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                                <template let-col let-act="rowData" pTemplate="body">
                                            <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
                                             </template>
-                                    </p-column>
-                                    <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
-                                        <ng-template let-col let-act="rowData" pTemplate="body">
-                                            <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
-                                        </ng-template>
-                                    </p-column>
-                                    <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
-                                        <ng-template let-col let-act="rowData" pTemplate="body">
-                                            <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
-                                        </ng-template>
-                                    </p-column>
-                                    <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
-                                        <ng-template let-col let-act="rowData" pTemplate="body">
-                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
-                                        </ng-template>
-                                    </p-column>
+                            </p-column>
+                            <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
+                                <ng-template let-col let-act="rowData" pTemplate="body">
+                                    <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                                </ng-template>
+                            </p-column>
+                            <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
+                                <ng-template let-col let-act="rowData" pTemplate="body">
+                                    <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                                </ng-template>
+                            </p-column>
+                            <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                                <ng-template let-col let-act="rowData" pTemplate="body">
+                                    <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                </ng-template>
+                            </p-column>
 
-                                    <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
-                                        <template pTemplate="header">
-                                                <i class="fa fa-flag"></i>
-                                            </template>
-                                        <ng-template let-col let-act="rowData" pTemplate="body">
-                                            <span class="{{act.stats}}">      {{act[col.field]}} </span>
-                                        </ng-template>
-                                    </p-column>
-                                    <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                                        <template pTemplate="header">
-                                                <i class="fa fa-cogs"></i>
-                                            </template>
-                                        <template let-act="rowData" pTemplate="body">
-                                                        <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton  icon="fa-eye"></button>
-                                             </template>
-                                    </p-column>
-                                </p-dataTable>
-                            </p-accordionTab>
+                            <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
+                                <ng-template pTemplate="header">
+                                    <i class="fa fa-flag"></i>
+                                </ng-template>
+                                <ng-template let-col let-act="rowData" pTemplate="body">
+                                    <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
+                                </ng-template>
+                            </p-column>
+                            <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                                <ng-template pTemplate="header">
+                                    <i class="fa fa-cogs"></i>
+                                </ng-template>
+                                <ng-template let-act="rowData" pTemplate="body">
+                                    <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
+                                </ng-template>
+                            </p-column>
+                        </p-dataTable>
+                        <!--</p-accordionTab>
                             <p-accordionTab *ngIf="designBucket.length>0" header="Design">
                                 <p-dataTable [value]="designBucket" [rows]="5" [paginator]="true" sortMode="multiple">
                                     <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
@@ -278,7 +290,7 @@
                                     </p-column>
                                 </p-dataTable>
                             </p-accordionTab>
-                        </p-accordion>
+                        </p-accordion>-->
                         <!--<p-dataTable [value]="actChildren" expandableRows="true">
                             <p-column expander="true" styleClass="col-icon" [style]="{'width':'40px'}"></p-column>
                             <p-column field="phaseId" header="Phase">

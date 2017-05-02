@@ -35,6 +35,7 @@ catStatsModel:statsModel[]=[];
 scopingBucket:any=[];
 designBucket:any=[];
 implementBucket:any=[];
+phasesBucket:any=[];
 private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
@@ -269,7 +270,9 @@ viewActDetail(act){
         console.error(ex);
       }
       this.viewTask(act._id);
-        this.actDataAvailable=true;
+      this.actDataAvailable=true;
+      this.phasesBucket=this.scopingBucket.concat(this.designBucket,this.implementBucket);
+      console.log(this.phasesBucket);
       }
     });
 }
@@ -287,7 +290,6 @@ getPhaseTitleById(id:string)
 }
 private populateGrByDeptStats(catId?: string)
 {
-
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
@@ -336,7 +338,6 @@ private populateGrByCatStats()
 {
    this.catStatsModel=[];
    this.anService.getActsGrByCat("all").subscribe(data=>{
-
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -383,14 +384,18 @@ private placeInBucket(child:any)
   let phase=this.getPhaseTitleById(child.phaseId);
   if(phase=="Scoping")
   {
+    child.phase=phase;
      this.scopingBucket.push(child);
   }
   if(phase=="Design")
   {
+      child.phase=phase;
     this.designBucket.push(child);
+
   }
   if(phase=="Implementation")
   {
+    child.phase=phase;
     this.implementBucket.push(child);
   }
 }
@@ -404,5 +409,22 @@ viewTask(id)
 changeDetailView()
 {
   this.showDetail=false;
+}
+
+setStats(dt,el,type)
+{
+
+debugger;
+dt.filter(type,"stats","equals");
+// dt.filter("Over Due","stats","equals");
+// dt.filter("Over Due","stats","equals");
+// dt.filter("Over Due","stats","equals");
+//($event.value,col.field,col.filterMatchMode)
+  // if(this.phasesBucket.length>0)
+  // {
+  //   this.phasesBucket.forEach(e => {
+
+  //   });
+  // }
 }
 }
