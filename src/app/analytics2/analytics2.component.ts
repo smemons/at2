@@ -401,4 +401,8 @@ viewTask(id)
           this.tasks=tasks;
         });
 }
+changeDetailView()
+{
+  this.showDetail=false;
+}
 }

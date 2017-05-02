@@ -7,7 +7,7 @@
 
             <table class="table package-table">
                 <tbody>
-                    <tr>
+                    <tr *ngIf="deptStatsModel.length>0">
                         <th class="st-th"></th>
                         <th>Over Due</th>
                         <th>Need Att</th>
@@ -21,6 +21,10 @@
                         <td (click)="setActivitiesData(model, 'IP','DPT')">{{model.inProg}}</td>
                         <td (click)="setActivitiesData(model, 'CP','DPT')">{{model.complete}}</td>
                     </tr>
+                    <tr *ngIf="deptStatsModel.length==0">
+                        <td style="text-align: left" colspan="5">No records found</td>
+                    </tr>
+
                 </tbody>
             </table>
 
@@ -37,9 +41,13 @@
                 </p-column>
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
-                <p-column field="stats" header="Status" [style]="{'width':'50px'}">
+
+                <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
+                    <template pTemplate="header">
+                                                <i class="fa fa-flag"></i>
+                                            </template>
                     <ng-template let-col let-act="rowData" pTemplate="body">
-                        <!--<span class="{{act.stats}}">      {{act[col.field]}} </span>--><i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
+                        <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                     </ng-template>
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">
@@ -54,7 +62,11 @@
         </p-panel>
     </div>
     <div class="col-lg-6 at-panel">
-        <p-panel header="{{detailHeading}}" [toggleable]="true" [style]="{'max-height':'740px'}">
+        <p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
+            <p-header>
+                {{detailHeading}}
+                <button type="button" *ngIf="showDetail" class="pull-right" (click)="changeDetailView()" title="Over View" pButton icon="fa-tasks"></button>
+            </p-header>
             <div *ngIf="!showDetail">
                 <div class="row">
                     <div class="panel panel-default">
@@ -173,7 +185,11 @@
                                             <span class="{{act.stats}}">      {{act[col.field]}} </span>
                                         </ng-template>
                                     </p-column>
-                                    <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+
+                                    <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
+                                        <template pTemplate="header">
+                                                <i class="fa fa-flag"></i>
+                                            </template>
                                         <ng-template let-col let-act="rowData" pTemplate="body">
                                             <span class="{{act.stats}}">      {{act[col.field]}} </span>
                                         </ng-template>
