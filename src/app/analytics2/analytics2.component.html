@@ -37,9 +37,9 @@
                 </p-column>
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
-                <p-column field="stats" header="Status" [style]="{'width':'60px'}" [sortable]="true">
+                <p-column field="stats" header="Status" [style]="{'width':'50px'}">
                     <ng-template let-col let-act="rowData" pTemplate="body">
-                        <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                        <!--<span class="{{act.stats}}">      {{act[col.field]}} </span>--><i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                     </ng-template>
                 </p-column>
                 <p-column styleClass="col-button" [style]="{'width':'40px'}">

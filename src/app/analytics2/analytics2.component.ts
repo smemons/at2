@@ -64,6 +64,7 @@ private activityListChanged = new BehaviorSubject<string>("");
   }
  private  filterStatsFromActRes(stats)
  {
+   debugger;
    if(this.refActivities.length>0)
    {
         if(stats!="all")
@@ -145,7 +146,7 @@ private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
      data.forEach(el => {
        this.calcEachActivity(el,actIds);
      });
-     this.activityListChanged.next(statsType);
+    // this.activityListChanged.next(statsType);
     this.refActExpand=false;
   });
 }
@@ -164,10 +165,9 @@ private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
 
           this.calcEachActivity(el,actIds);
 
-
      });
     this.refActExpand=false;
-    this.activityListChanged.next(statsType);
+   // this.activityListChanged.next(statsType);
   });
 }
 /**
@@ -210,6 +210,7 @@ private calcEachActivity(el,actIds?:any)
              if(model.complete>0)act.stats="CP";
 
              this.refActivities.push(act);
+
         }
         });
 }

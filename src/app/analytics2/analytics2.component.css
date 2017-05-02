@@ -260,3 +260,8 @@ table th {
 .NA {
     color: #bf9715 !important;
 }
+
+.Progress,
+.IP {
+    color: blue !important;
+}
