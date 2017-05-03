@@ -29,11 +29,11 @@
 
         <p-panel header="Activities {{selectedAct}} {{selectedDept}}" [toggleable]="true" [collapsed]="refActExpand">
             <div style="margin: 0 auto;text-align: center;">
-                <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
-                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
-                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'NA')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
-                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'IA')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
-                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input  type="radio" pTooltip="Display All" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
+                <label class="radio-inline"><input type="radio" pTooltip="Over Due"  name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt2,'NA')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt2,'IA')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
             </div>
             <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple" #dt2>
                 <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
@@ -168,11 +168,11 @@
                             </div>
                         </div>
                         <div style="margin: 0 auto;text-align: center;">
-                            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
-                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
+                            <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                            <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
                         </div>
                         <!--<p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">-->
                         <!--<p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">-->
