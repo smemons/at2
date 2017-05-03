@@ -37,6 +37,8 @@ scopingBucket:any=[];
 designBucket:any=[];
 implementBucket:any=[];
 phasesBucket:any=[];
+selectedAct:string="";
+selectedDept:string="";
 private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
@@ -60,28 +62,28 @@ private activityListChanged = new BehaviorSubject<string>("");
     this.populateGrByDeptStats();
      //populate stats panel with group by cat and calculate all children for overdue, needatt etc
     this.populateGrByCatStats();
-    this.activityListChanged.subscribe(data=>{
-      this.filterStatsFromActRes(data);
-    });
+    // this.activityListChanged.subscribe(data=>{
+    //   this.filterStatsFromActRes(data);
+    // });
   }
- private  filterStatsFromActRes(stats)
- {
-   debugger;
-   if(this.refActivities.length>0)
-   {
-        if(stats!="all")
-        {
-          let tempArray:any=[];
-          this.refActivities.forEach(el => {
-            if(el.stats==stats)
-            {
-              tempArray.push(el);
-            }
-          });
-          this.refActivities=tempArray;
-        }
-   }
- }
+//  private  filterStatsFromActRes(stats)
+//  {
+
+//    if(this.refActivities.length>0)
+//    {
+//         if(stats!="all")
+//         {
+//           let tempArray:any=[];
+//           this.refActivities.forEach(el => {
+//             if(el.stats==stats)
+//             {
+//               tempArray.push(el);
+//             }
+//           });
+//           this.refActivities=tempArray;
+//         }
+//    }
+//  }
   //get all drop down from cache service
 get refList():SelectItem[] {
   return this.cache.categories;
@@ -94,6 +96,7 @@ setActivitiesData(item,statsType?:string,actionType?:string)
 {
    debugger;
    let actIds=[];
+
     if(statsType=="OD")//if over due
     {
       actIds=item.ODactId;
@@ -124,12 +127,15 @@ setActivitiesData(item,statsType?:string,actionType?:string)
   {
     this.selectedRef=item.catId;
     this.refSelectTitle=item.catName;
+    this.selectedAct=" - "+item.catName;
+    this.selectedDept="";
     this.getAllActivitiesByCatId(this.selectedRef,actIds,statsType);
   }
   if(actionType=="DPT")
   {
     let deptId=item.deptId;
     this.deptSelectTitle=item.deptName;
+    this.selectedDept=" - "+item.deptName;
     this.getAllActivitiesByDeptId(deptId,actIds,statsType);
   }
 }
@@ -138,6 +144,7 @@ refStatusChanged(evt)
 
   this.getAllActivitiesByCatId(evt.value,"all");
   this.refSelectExpand=true;
+
   //change the stats by orgs panel
   this.populateGrByDeptStats(evt.value);
 }
@@ -146,7 +153,11 @@ private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
   this.anService.getActsGrByDept(id,"dept").subscribe(data=>{
     this.refActivities=[];
      data.forEach(el => {
-       this.calcEachActivity(el,actIds);
+       if(statsType!="all")
+          this.calcEachActivity(el,actIds);
+        else
+          this.calcEachActivity(el);
+
      });
     // this.activityListChanged.next(statsType);
     this.refActExpand=false;
@@ -164,7 +175,7 @@ private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
     this.refActivities=[];
 
      data.forEach(el => {
-        if(id=="all")
+        if(id!="all")
           this.calcEachActivity(el,actIds);
         else
           this.calcEachActivity(el);
@@ -188,7 +199,7 @@ private calcEachActivity(el,actIds?:any)
        model.complete=0;
           //now go through field array
            el.fields.forEach(field => {
-         if(actIds==null)
+         if(actIds==null || actIds.length==0)
          {
            this.calcEach(field, model);
          }
@@ -216,13 +227,13 @@ calcEach(field,model)
              model.inProg+=tempModel.inProg>0?1:0;
              model.complete+=tempModel.complete>0?1:0;
              // TODO temporary logic
-             if(model.overDue>0)act.stats="OD";
+             if(tempModel.overDue>0)act.stats="OD";
              else
-             if(model.needAtt>0)act.stats="NA";
+             if(tempModel.needAtt>0)act.stats="NA";
              else
-             if(model.inProg>0)act.stats="IP";
+             if(tempModel.inProg>0)act.stats="IP";
              else
-             if(model.complete>0)act.stats="CP";
+             if(tempModel.complete>0)act.stats="CP";
 
              this.refActivities.push(act);
 }

@@ -6,7 +6,7 @@
     font-weight: bold;
     text-align: right;
     padding-right: 10px;
-    color: #711111;
+    color: black;
 }
 
 .row>div {
@@ -45,10 +45,10 @@
 }
 
 .st-table {
-    max-width: 800px;
-    margin: 10 auto;
-    box-shadow: 10px 10pxpx 10 px 0px red;
-    border-radius: 25px;
+    /*max-width: 800px;
+    margin: 10 auto;*/
+    /*box-shadow: 10px 10pxpx 10 px 0px red;*/
+    border-radius: 20px;
 }
 
 .st-table td {
@@ -62,13 +62,13 @@
 
 .tabco1 {
     background: #fff;
-    width: 40%;
+    /*width: 40%;*/
     padding: 10px !important;
 }
 
 th.tabco1 {
     background: #fff;
-    padding: 32px 10px !important;
+    /*padding: 32px 10px !important;*/
     font-size: 18px;
     text-transform: uppercase;
     color: #000;
@@ -264,10 +264,4 @@ table th {
 .Progress,
 .IP {
     color: blue !important;
-}
-
-.ui-widget-content {
-    border: 1px solid #879887 !important;
-    background: #f5f3e5;
-    color: #312e25;
 }
