@@ -104,14 +104,10 @@ var getAllActGroupedByDept = function(req, res, next) {
  */
 var getAllActGroupedByCat = function(req, res, next) {
     var catId = req.params.id;
-
-
     var query = { $match: { level: 0 } };
     if (catId != null && catId != "all") {
         ObjectId = require('mongodb').ObjectID;
         catId = ObjectId(catId);
-
-
         query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
     }
     Activity.aggregate([query, an.unwindDept, an.lookupDept, an.lookupCategory,

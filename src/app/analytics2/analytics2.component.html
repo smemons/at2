@@ -4,7 +4,6 @@
             <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
         </p-panel>
         <p-panel header="{{deptSelectTitle}}" [toggleable]="true" [collapsed]="true">
-
             <table class="table package-table">
                 <tbody>
                     <tr *ngIf="deptStatsModel.length>0">
@@ -24,14 +23,18 @@
                     <tr *ngIf="deptStatsModel.length==0">
                         <td style="text-align: left" colspan="5">No records found</td>
                     </tr>
-
                 </tbody>
             </table>
-
-
         </p-panel>
+        <div style="margin: 0 auto;text-align: center;">
+            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
+            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'NA')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'IA')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+        </div>
         <p-panel header="Activities " [toggleable]="true" [collapsed]="refActExpand">
-            <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple">
+            <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple" #dt2>
                 <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                     <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:40 }}
@@ -41,7 +44,6 @@
                 </p-column>
                 <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
-
                 <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
                     <template pTemplate="header">
                                                 <i class="fa fa-flag"></i>
@@ -163,7 +165,7 @@
                             </div>
                         </div>
                         <div style="margin: 0 auto;text-align: center;">
-                            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt,'all')" > All</label>
+                            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
                             <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
                             <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
                             <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
@@ -197,7 +199,6 @@
                                     <span class="{{act.stats}}">      {{act[col.field]}} </span>
                                 </ng-template>
                             </p-column>
-
                             <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
                                 <ng-template pTemplate="header">
                                     <i class="fa fa-flag"></i>

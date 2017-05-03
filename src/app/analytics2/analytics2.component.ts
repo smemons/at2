@@ -1,3 +1,4 @@
+
 import { element } from 'protractor';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MiniActivity } from './../models/miniActivity';
@@ -112,10 +113,10 @@ setActivitiesData(item,statsType?:string,actionType?:string)
       actIds=item.CPactId;
 
     }
-    if(actIds==null || actIds.length==0)
+    if(statsType!="all" && (actIds==null || actIds.length==0))
     {
       this.refActivities=[];
-      return false;//dont do any thing jut return empty handed.
+      return false;//dont do any thing just return empty handed.
     }
 
     this.refSelectExpand=true;
@@ -163,8 +164,10 @@ private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
     this.refActivities=[];
 
      data.forEach(el => {
-
+        if(id=="all")
           this.calcEachActivity(el,actIds);
+        else
+          this.calcEachActivity(el);
 
      });
     this.refActExpand=false;
@@ -185,9 +188,20 @@ private calcEachActivity(el,actIds?:any)
        model.complete=0;
           //now go through field array
            el.fields.forEach(field => {
+         if(actIds==null)
+         {
+           this.calcEach(field, model);
+         }
+         else
         if(actIds.indexOf(field._id)>=0)
         {
-           let act:MiniActivity=new MiniActivity();
+          this.calcEach(field, model);
+        }
+        });
+}
+calcEach(field,model)
+{
+  let act:MiniActivity=new MiniActivity();
            act._id=field._id;
            act.title=field.title;
            act.startDate=field.startDate;
@@ -211,9 +225,6 @@ private calcEachActivity(el,actIds?:any)
              if(model.complete>0)act.stats="CP";
 
              this.refActivities.push(act);
-
-        }
-        });
 }
 /**
  * to display detail of the this activity and its  chidren
@@ -314,16 +325,19 @@ private populateGrByDeptStats(catId?: string)
               model.overDue++;
               model.ODactId.push(tempModel.actId);
              }
+             else
              if(tempModel.needAtt>0)
              {
               model.needAtt++;
               model.NAactId.push(tempModel.actId);
              }
+             else
              if(tempModel.inProg>0)
              {
               model.inProg++;
               model.IPactId.push(tempModel.actId);
              }
+             else
              if(tempModel.complete>0)
              {
               model.complete++;
@@ -338,6 +352,7 @@ private populateGrByCatStats()
 {
    this.catStatsModel=[];
    this.anService.getActsGrByCat("all").subscribe(data=>{
+     debugger;
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -359,16 +374,19 @@ private populateGrByCatStats()
               model.overDue++;
               model.ODactId.push(tempModel.actId);
              }
+             else
              if(tempModel.needAtt>0)
              {
               model.needAtt++;
               model.NAactId.push(tempModel.actId);
              }
+             else
              if(tempModel.inProg>0)
              {
               model.inProg++;
               model.IPactId.push(tempModel.actId);
              }
+             else
              if(tempModel.complete>0)
              {
               model.complete++;
@@ -411,20 +429,8 @@ changeDetailView()
   this.showDetail=false;
 }
 
-setStats(dt,el,type)
+setStats(dt,type)
 {
-
-debugger;
-dt.filter(type,"stats","equals");
-// dt.filter("Over Due","stats","equals");
-// dt.filter("Over Due","stats","equals");
-// dt.filter("Over Due","stats","equals");
-//($event.value,col.field,col.filterMatchMode)
-  // if(this.phasesBucket.length>0)
-  // {
-  //   this.phasesBucket.forEach(e => {
-
-  //   });
-  // }
+  dt.filter(type,"stats","equals");
 }
 }
