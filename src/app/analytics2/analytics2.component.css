@@ -265,3 +265,9 @@ table th {
 .IP {
     color: blue !important;
 }
+
+.ui-widget-content {
+    border: 1px solid #879887 !important;
+    background: #f5f3e5;
+    color: #312e25;
+}

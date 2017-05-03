@@ -26,14 +26,15 @@
                 </tbody>
             </table>
         </p-panel>
-        <div style="margin: 0 auto;text-align: center;">
-            <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
-            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
-            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'NA')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
-            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'IA')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
-            <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
-        </div>
+
         <p-panel header="Activities " [toggleable]="true" [collapsed]="refActExpand">
+            <div style="margin: 0 auto;text-align: center;">
+                <label class="radio-inline"><input type="radio" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'NA')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'IA')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                <label class="radio-inline"><input type="radio" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+            </div>
             <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple" #dt2>
                 <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                     <template let-col let-act="rowData" pTemplate="body">
