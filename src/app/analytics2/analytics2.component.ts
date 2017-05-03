@@ -294,7 +294,7 @@ viewActDetail(act){
       this.viewTask(act._id);
       this.actDataAvailable=true;
       this.phasesBucket=this.scopingBucket.concat(this.designBucket,this.implementBucket);
-      console.log(this.phasesBucket);
+
       }
     });
 }
