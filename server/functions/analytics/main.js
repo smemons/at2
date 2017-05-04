@@ -268,6 +268,25 @@ var grByCat_Group = {
         fields: { $addToSet: "$$ROOT" }
     }
 };
+var allActProject = {
+    $project: {
+        _id: 0,
+        title: 1,
+        percentage: 1,
+        level: 1,
+        startDate: 1,
+        endDate: 1,
+        dept: { $arrayElemAt: ["$dept", 0] },
+        firstChild: 1,
+        children: 1
+    }
+};
+var allActProject2 = {
+    $project: {
+        _id: 0,
+        fields: "$$ROOT"
+    }
+};
 var refStatusQuery = [{
         $unwind: "$deptId"
     },
@@ -403,7 +422,9 @@ module.exports = {
         refStatusQuery: refStatusQuery,
         grByCat_DeptProject: grByCat_DeptProject,
         grByCat_Group: grByCat_Group,
-        grByDept_Group: grByDept_Group
+        grByDept_Group: grByDept_Group,
+        allActProject: allActProject,
+        allActProject2: allActProject2
 
     }
     //db.getCollection('activities').aggregate([unwind, lookup, project1, project2, group]);

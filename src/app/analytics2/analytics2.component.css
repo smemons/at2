@@ -28,20 +28,19 @@
 }
 
 .OverDue {
-    color: #FF3333 !important;
+    background: #edba6f !important;
 }
 
 .NeedAttention {
-    color: #FFCC33 !important;
+    background: #dfe569 !important;
 }
 
-
-/*.Completed {
-    color: #66CC66 !important;
-}*/
+.Completed {
+    background: #97f4bb !important;
+}
 
 .InProgress {
-    color: #00CCFF !important;
+    background: #a4e0fc !important;
 }
 
 .st-table {
@@ -77,13 +76,13 @@ th.tabco1 {
 }
 
 .tabco2 {
-    /*background: #EF5350;*/
+    color: #EF5350;
     text-align: center;
-    /*color: #fff;*/
 }
 
 th.tabco2 {
-    background: #f97c7c;
+    background: #edba6f;
+    color: black;
     padding: 20px 5px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -91,13 +90,14 @@ th.tabco2 {
 }
 
 .tabco3 {
-    /*background: #c7d600;*/
+    color: #8e913d;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco3 {
-    background: #919b01;
+    background: #dfe569;
+    color: black;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -105,13 +105,14 @@ th.tabco3 {
 }
 
 .tabco5 {
-    /*background: #00C853;*/
+    color: #018234;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco5 {
-    background: #018234;
+    background: #97f4bb;
+    color: black;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -119,13 +120,14 @@ th.tabco5 {
 }
 
 .tabco4 {
-    /*background: #039BE5;*/
+    color: #006391;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco4 {
-    background: #006391;
+    background: #a4e0fc;
+    color: black;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -134,6 +136,12 @@ th.tabco4 {
 
 td:hover {
     background-color: #b9f7f7;
+    color: #000000;
+    cursor: pointer;
+}
+
+th:hover {
+    background-color: #fcd6d6;
     color: #000000;
     cursor: pointer;
 }

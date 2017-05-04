@@ -8,11 +8,11 @@
 }*/
 
 .navbar-default {
-    background-color: #6B9901;
+    background-color: #99D36B;
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: white;
+    color: black;
 }
 
 .navbar-default .navbar-nav>li>a:hover {
@@ -32,7 +32,8 @@
 .navbar-default .navbar-nav>.open>a,
 .navbar-default .navbar-nav>.open>a:hover,
 .navbar-default .navbar-nav>.open>a:focus {
-    background-color: #5b7c0c;
+    /*background-color: #5b7c0c;*/
+    background-color: #99D36B;
     color: white;
 }
 

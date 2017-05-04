@@ -9,4 +9,5 @@ acts.get('/allActHrchy/:id/:deptId', uf.getActivityHchy);
 acts.get('/allStatusByRef', uf.getStatusByRef);
 acts.get('/allGrByDept/:id/:by', uf.getAllActGroupedByDept);
 acts.get('/allGrByCat/:id', uf.getAllActGroupedByCat);
+acts.get('/allActAggregated', uf.getAllActAggregated);
 module.exports = acts;

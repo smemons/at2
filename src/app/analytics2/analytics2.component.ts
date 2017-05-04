@@ -1,4 +1,6 @@
 
+import { DataTable } from 'primeng/primeng';
+import { forEach } from '@angular/router/src/utils/collection';
 import { element } from 'protractor';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MiniActivity } from './../models/miniActivity';
@@ -10,7 +12,7 @@ import { ActivityService } from './../services/activity.service';
 import { CacheStoreService } from './../services/cacheStore.service';
 import { SelectItem } from 'primeng/primeng';
 import { AnalyticsService } from './../services/analytics.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 @Component({
   selector: 'app-analytics2',
   templateUrl: './analytics2.component.html',
@@ -28,6 +30,7 @@ refActivities:any=[];
 showDetail:boolean;
 detailHeading:string="Detail";
 tasks:any=[];
+allActivitiesStore:any=[];
 selectedActivity:any;
 actChildren:any;
 actDataAvailable:boolean;
@@ -42,6 +45,7 @@ selectedDept:string="";
 private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
+  @ViewChild('dt2') actTable: DataTable;
   ngOnInit() {
    this.utilityService.getAllPhases().subscribe(data=>{
       this.utilityService.phaseKeyValues=new Map();
@@ -62,28 +66,28 @@ private activityListChanged = new BehaviorSubject<string>("");
     this.populateGrByDeptStats();
      //populate stats panel with group by cat and calculate all children for overdue, needatt etc
     this.populateGrByCatStats();
-    // this.activityListChanged.subscribe(data=>{
-    //   this.filterStatsFromActRes(data);
-    // });
+   this.poupulateInitialActList();
   }
-//  private  filterStatsFromActRes(stats)
-//  {
-
-//    if(this.refActivities.length>0)
-//    {
-//         if(stats!="all")
-//         {
-//           let tempArray:any=[];
-//           this.refActivities.forEach(el => {
-//             if(el.stats==stats)
-//             {
-//               tempArray.push(el);
-//             }
-//           });
-//           this.refActivities=tempArray;
-//         }
-//    }
-//  }
+/**
+ * populateInitialActList initialize the activity panel with list of all  0 level projects and its status
+ */
+private poupulateInitialActList()
+{
+  this.refActivities=[];
+   this.anService.getAllActAggregated().subscribe(data=>{
+     debugger;
+     data.forEach(el => {
+       let model:statsModel={};
+       model.inProg=0;
+       model.needAtt=0;
+       model.overDue=0;
+       model.complete=0;
+       this.calcEach(el,model);
+     });
+     this.allActivitiesStore=this.refActivities;
+    this.refActExpand=false;
+   });
+}
   //get all drop down from cache service
 get refList():SelectItem[] {
   return this.cache.categories;
@@ -94,9 +98,9 @@ get refList():SelectItem[] {
  */
 setActivitiesData(item,statsType?:string,actionType?:string)
 {
-   debugger;
+debugger;
+    this.actTable.reset();
    let actIds=[];
-
     if(statsType=="OD")//if over due
     {
       actIds=item.ODactId;
@@ -104,24 +108,20 @@ setActivitiesData(item,statsType?:string,actionType?:string)
      if(statsType=="NA")//if over due
     {
       actIds=item.NAactId;
-
     }
      if(statsType=="IP")//if over due
     {
       actIds=item.IPactId;
-
     }
      if(statsType=="CP")//if over due
     {
       actIds=item.CPactId;
-
     }
     if(statsType!="all" && (actIds==null || actIds.length==0))
     {
       this.refActivities=[];
       return false;//dont do any thing just return empty handed.
     }
-
     this.refSelectExpand=true;
   if(actionType=="CAT")
   {
@@ -141,10 +141,8 @@ setActivitiesData(item,statsType?:string,actionType?:string)
 }
 refStatusChanged(evt)
 {
-
   this.getAllActivitiesByCatId(evt.value,"all");
   this.refSelectExpand=true;
-
   //change the stats by orgs panel
   this.populateGrByDeptStats(evt.value);
 }
@@ -157,7 +155,6 @@ private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
           this.calcEachActivity(el,actIds);
         else
           this.calcEachActivity(el);
-
      });
     // this.activityListChanged.next(statsType);
     this.refActExpand=false;
@@ -173,13 +170,11 @@ private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
 {
   this.anService.getActsGrByCat(id).subscribe(data=>{
     this.refActivities=[];
-
      data.forEach(el => {
         if(id!="all")
           this.calcEachActivity(el,actIds);
         else
           this.calcEachActivity(el);
-
      });
     this.refActExpand=false;
    // this.activityListChanged.next(statsType);
@@ -191,7 +186,6 @@ private getAllActivitiesByCatId(id:string,actIds:any,statsType?:string)
  */
 private calcEachActivity(el,actIds?:any)
 {
-
    let model:statsModel={};
        model.inProg=0;
        model.needAtt=0;
@@ -234,7 +228,6 @@ calcEach(field,model)
              if(tempModel.inProg>0)act.stats="IP";
              else
              if(tempModel.complete>0)act.stats="CP";
-
              this.refActivities.push(act);
 }
 /**
@@ -242,7 +235,6 @@ calcEach(field,model)
  * @param id
  */
 viewActDetail(act){
-
     this.scopingBucket=[];
     this.implementBucket=[];
     this.designBucket=[];
@@ -294,7 +286,6 @@ viewActDetail(act){
       this.viewTask(act._id);
       this.actDataAvailable=true;
       this.phasesBucket=this.scopingBucket.concat(this.designBucket,this.implementBucket);
-
       }
     });
 }
@@ -363,7 +354,6 @@ private populateGrByCatStats()
 {
    this.catStatsModel=[];
    this.anService.getActsGrByCat("all").subscribe(data=>{
-     debugger;
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -420,7 +410,6 @@ private placeInBucket(child:any)
   {
       child.phase=phase;
     this.designBucket.push(child);
-
   }
   if(phase=="Implementation")
   {
@@ -438,10 +427,15 @@ viewTask(id)
 changeDetailView()
 {
   this.showDetail=false;
+  this.tasks=[];
 }
-
 setStats(dt,type)
 {
+  dt.filter(type,"stats","equals");
+}
+setStatsWithAllAct(dt,type)
+{
+  this.refActivities = this.allActivitiesStore;
   dt.filter(type,"stats","equals");
 }
 }

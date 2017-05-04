@@ -3,15 +3,15 @@
         <p-panel header="{{refSelectTitle}}" [toggleable]="true" [collapsed]="refSelectExpand">
             <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
         </p-panel>
-        <p-panel header="{{deptSelectTitle}}" [toggleable]="true" [collapsed]="true">
+        <p-panel header="{{deptSelectTitle}}" [toggleable]="true" [collapsed]="false">
             <table class="table package-table">
                 <tbody>
                     <tr *ngIf="deptStatsModel.length>0">
-                        <th class="st-th"></th>
-                        <th>Over Due</th>
-                        <th>Need Att</th>
-                        <th>In Prog</th>
-                        <th>Complete</th>
+                        <th (click)="setStatsWithAllAct(dt2,null)" class="st-th">ORG</th>
+                        <th (click)="setStatsWithAllAct(dt2,'OD')" class="OverDue">Over Due</th>
+                        <th (click)="setStatsWithAllAct(dt2,'NA')" class="NeedAttention">Need Att</th>
+                        <th (click)="setStatsWithAllAct(dt2,'IA')" class="InProgress">In Prog</th>
+                        <th (click)="setStatsWithAllAct(dt2,'CP')" class="Completed">Complete</th>
                     </tr>
                     <tr *ngFor="let model of deptStatsModel">
                         <td (click)="setActivitiesData(model, 'all','DPT')">{{model.deptName}}</td>
@@ -76,11 +76,11 @@
                         <table class="st-table table table-condensed table-hover">
                             <thead>
                                 <tr>
-                                    <th class="tabco1 ">Reference</th>
-                                    <th class="tabco2"> Over Due</th>
-                                    <th class="tabco3">Need Attention</th>
-                                    <th class="tabco4">In Progress</th>
-                                    <th class="tabco5">Completed</th>
+                                    <th (click)="setStatsWithAllAct(dt2,null)" class="tabco1 ">Reference</th>
+                                    <th (click)="setStatsWithAllAct(dt2,'OD')" class="tabco2"> Over Due</th>
+                                    <th (click)="setStatsWithAllAct(dt2,'NA')" class="tabco3">Need Attention</th>
+                                    <th (click)="setStatsWithAllAct(dt2,'IP')" class="tabco4">In Progress</th>
+                                    <th (click)="setStatsWithAllAct(dt2,'CP')" class="tabco5">Completed</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -225,7 +225,7 @@
             </div>
         </p-panel>
     </div>
-    <div class="col-lg-3 at-panel">
+    <div class="col-lg-3 at-panel" style="max-height: 700px; overflow-y: auto;">
         <div *ngIf="tasks.length > 0" class=" act-pad ">
             <p-panel header="Progress updates" [toggleable]="true" [collapsed]="false">
                 <p-dataTable [value]="tasks" [rows]="7" [paginator]="true">

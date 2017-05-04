@@ -121,11 +121,26 @@ var getAllActGroupedByCat = function(req, res, next) {
         }
     });
 };
+var getAllActAggregated = function(req, res, next) {
+
+    Activity.aggregate([an.matchLevel0, an.unwindDept, an.lookupDept,
+        an.selfActLookup,
+        an.actGraphLookup, an.allActProject
+    ], function(err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+};
+
 module.exports = {
     getAllDept: getAllDept,
     getAllDeptPhase: getAllDeptPhase,
     getActivityHchy: getActivityHchy,
     getStatusByRef: getStatusByRef,
     getAllActGroupedByDept: getAllActGroupedByDept,
-    getAllActGroupedByCat: getAllActGroupedByCat
+    getAllActGroupedByCat: getAllActGroupedByCat,
+    getAllActAggregated: getAllActAggregated
 }

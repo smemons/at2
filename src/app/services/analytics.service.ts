@@ -48,5 +48,12 @@ getActsGrByCat(id)
 {
   return this.http.get('/api/analytics/allGrByCat/'+id).map((response: Response) => response.json());
 }
+/**
+ * get all acts group by category
+ */
+getAllActAggregated()
+{
+  return this.http.get('/api/analytics/allActAggregated').map((response: Response) => response.json());
+}
 
 }

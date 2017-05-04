@@ -256,14 +256,20 @@ getAllDepts() {
     model.actId=el._id;
     let ret=this.getComputedStatus(el.startDate,el.endDate,el.percentage);
         if(ret=="Over Due")model.overDue++;
+        else
         if(ret=="Need Attention")model.needAtt++;
+        else
         if(ret=="In Progress")model.inProg++;
+        else
         if(ret=="Completed")model.complete++;
     el.children.forEach(child => {
       let res=this.getComputedStatus(child.startDate,child.endDate,child.percentage);
         if(res=="Over Due")model.overDue++;
+        else
         if(res=="Need Attention")model.needAtt++;
+        else
         if(res=="In Progress")model.inProg++;
+        else
         if(res=="Completed")model.complete++;
     });
      return model;
