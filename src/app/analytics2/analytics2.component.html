@@ -1,24 +1,24 @@
 <div class="row">
     <div class="col-lg-3 at-panel">
-        <p-panel header="{{refSelectTitle}}" [toggleable]="true" [collapsed]="refSelectExpand">
+        <p-panel header="Reference" [toggleable]="true" [collapsed]="false">
             <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
         </p-panel>
-        <p-panel header="{{deptSelectTitle}}" [toggleable]="true" [collapsed]="false">
-            <table class="table package-table">
+        <p-panel header="Organization" [toggleable]="true" [collapsed]="false">
+            <table class="table package-table stats">
                 <tbody>
                     <tr *ngIf="deptStatsModel.length>0">
-                        <th (click)="setStatsWithAllAct(dt2,null)" class="st-th">ORG</th>
-                        <th (click)="setStatsWithAllAct(dt2,'OD')" class="OverDue">Over Due</th>
-                        <th (click)="setStatsWithAllAct(dt2,'NA')" class="NeedAttention">Need Att</th>
-                        <th (click)="setStatsWithAllAct(dt2,'IA')" class="InProgress">In Prog</th>
-                        <th (click)="setStatsWithAllAct(dt2,'CP')" class="Completed">Complete</th>
+                        <th (click)="setStatsActByDept($event,dt2,null)" class="st-th">ORG</th>
+                        <th (click)="setStatsActByDept($event,dt2,'OD')" class="OverDue">Over Due</th>
+                        <th (click)="setStatsActByDept($event,dt2,'NA')" class="NeedAttention">Need Att</th>
+                        <th (click)="setStatsActByDept($event,dt2,'IA')" class="InProgress">In Prog</th>
+                        <th (click)="setStatsActByDept($event,dt2,'CP')" class="Comp">Complete</th>
                     </tr>
                     <tr *ngFor="let model of deptStatsModel">
-                        <td (click)="setActivitiesData(model, 'all','DPT')">{{model.deptName}}</td>
-                        <td (click)="setActivitiesData(model, 'OD','DPT')">{{model.overDue}}</td>
-                        <td (click)="setActivitiesData(model, 'NA','DPT')">{{model.needAtt}}</td>
-                        <td (click)="setActivitiesData(model, 'IP','DPT')">{{model.inProg}}</td>
-                        <td (click)="setActivitiesData(model, 'CP','DPT')">{{model.complete}}</td>
+                        <td (click)="setActivitiesData($event,model, 'all','DPT')">{{model.deptName}}</td>
+                        <td (click)="setActivitiesData($event,model, 'OD','DPT')">{{model.overDue}}</td>
+                        <td (click)="setActivitiesData($event,model, 'NA','DPT')">{{model.needAtt}}</td>
+                        <td (click)="setActivitiesData($event,model, 'IP','DPT')">{{model.inProg}}</td>
+                        <td (click)="setActivitiesData($event,model, 'CP','DPT')">{{model.complete}}</td>
                     </tr>
                     <tr *ngIf="deptStatsModel.length==0">
                         <td style="text-align: left" colspan="5">No records found</td>
@@ -73,25 +73,25 @@
             <div *ngIf="!showDetail">
                 <div class="row">
                     <div class="panel panel-default" style="margin:20px;">
-                        <table class="st-table table table-condensed table-hover">
+                        <table class="st-table table table-condensed table-hover stats">
                             <thead>
                                 <tr>
-                                    <th (click)="setStatsWithAllAct(dt2,null)" class="tabco1 ">Reference</th>
-                                    <th (click)="setStatsWithAllAct(dt2,'OD')" class="tabco2"> Over Due</th>
-                                    <th (click)="setStatsWithAllAct(dt2,'NA')" class="tabco3">Need Attention</th>
-                                    <th (click)="setStatsWithAllAct(dt2,'IP')" class="tabco4">In Progress</th>
-                                    <th (click)="setStatsWithAllAct(dt2,'CP')" class="tabco5">Completed</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,null)" class="tabco1 ">Reference</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" class="tabco2"> Over Due</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" class="tabco3">Need Attention</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" class="tabco4">In Progress</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" class="tabco5">Completed</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of catStatsModel">
-                                    <td class="tabco1 " (click)="setActivitiesData(item, 'all','CAT')">{{item.catName}}</td>
-                                    <td class="tabco2 " (click)="setActivitiesData(item, 'OD','CAT') ">{{item.overDue}}</td>
-                                    <td class="tabco3 " (click)="setActivitiesData(item, 'NA','CAT') ">{{item.needAtt}}
+                                    <td class="tabco1 " (click)="setActivitiesData($event,item, 'all','CAT')">{{item.catName}}</td>
+                                    <td class="tabco2 " (click)="setActivitiesData($event,item, 'OD','CAT') ">{{item.overDue}}</td>
+                                    <td class="tabco3 " (click)="setActivitiesData($event,item, 'NA','CAT') ">{{item.needAtt}}
                                     </td>
-                                    <td class=" tabco4 " (click)="setActivitiesData(item, 'IP','CAT') ">{{item.inProg}}
+                                    <td class=" tabco4 " (click)="setActivitiesData($event,item, 'IP','CAT') ">{{item.inProg}}
                                     </td>
-                                    <td class="tabco5 " (click)="setActivitiesData(item, 'CP','CAT') ">{{item.complete}}
+                                    <td class="tabco5 " (click)="setActivitiesData($event,item, 'CP','CAT') ">{{item.complete}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -102,125 +102,102 @@
             </div>
             <div *ngIf=" showDetail ">
                 <div *ngIf="actDataAvailable ">
-                    <div class="container-fluid ">
-                        <div style="border-radius: 15px;">
-                            <div class="row ">
-                                <div class="col-sm-2 act-hd ">
-                                    Champion
-                                </div>
-                                <div class="col-sm-4 ">
+                    <table class="table detail">
+                        <tbody>
+                            <tr>
+                                <th>Champion</th>
+                                <td>
                                     <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last ">{{chmp}}{{isLast ? '' : ', '}}</span>
-                                </div>
-                                <div class="col-sm-2 act-hd ">
-                                    Backup
-                                </div>
-                                <div class="col-sm-4 ">
-                                    0
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-sm-2 act-hd ">
-                                    Start Date
-                                </div>
-                                <div class="col-sm-2 ">
-                                    {{selectedActivity.startDate|date:'shortDate'}}
-                                </div>
-                                <div class="col-sm-2 act-hd ">
-                                    End Date
-                                </div>
-                                <div class="col-sm-2 ">
-                                    {{selectedActivity.endDate|date:'shortDate'}}
-                                </div>
-                                <div class="col-sm-2 act-hd ">
-                                    Completion
-                                </div>
-                                <div class="col-sm-2 ">
-                                    {{selectedActivity.percentage}}%
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-sm-2 act-hd ">
-                                    Focus Area
-                                </div>
-                                <div class="col-sm-4 ">
-                                    {{selectedActivity.focus}}
-                                </div>
-                                <div class="col-sm-2 act-hd ">
-                                    Status
-                                </div>
-                                <div class="col-sm-4 ">
-                                    {{selectedActivity.status}}
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col-sm-4 act-hd ">
-                                    Implementation Cost
-                                </div>
-                                <div class="col-sm-2 ">
-                                    {{selectedActivity.cost==null?0:selectedActivity.cost}}
-                                </div>
-                                <div class="col-sm-4 act-hd ">
-                                    Potentital Cost Saving
-                                </div>
-                                <div class="col-sm-2 ">
-                                    0
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin: 0 auto;text-align: center;">
-                            <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
-                            <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
-                            <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
-                        </div>
-                        <!--<p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">-->
-                        <!--<p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">-->
-                        <p-dataTable [value]="phasesBucket" [rows]="15" [paginator]="true" sortMode="multiple" #dt>
-                            <p-column field="phase" header="Phase" [sortable]="true" [style]="{'width':'150px'}">
-                                <template let-col let-act="rowData" pTemplate="body">
+                                </td>
+                                <th>Backup</th>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>Start Date</th>
+                                <td> {{selectedActivity.startDate|date:'shortDate'}}</td>
+                                <th>End Date</th>
+                                <td> {{selectedActivity.endDate|date:'shortDate'}}</td>
+                            </tr>
+                            <tr>
+                                <th>Completion%</th>
+                                <td> {{selectedActivity.percentage}}%</td>
+                                <th>Delta%</th>
+                                <td> {{selectedActivity.delta}}%</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td> {{selectedActivity.status}}</td>
+                                <th>Focus Area</th>
+                                <td> {{selectedActivity.focus}}</td>
+                            </tr>
+                            <tr>
+                                <th>Implementation Cost</th>
+                                <td> {{selectedActivity.cost}}</td>
+                                <th>Potentital Cost Saving</th>
+                                <td> {{selectedActivity.costSaving}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin: 0 auto;text-align: center;">
+                        <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                    </div>
+                    <!--<p-accordion [multiple]="true " [style]="{ 'width': '100%'} ">-->
+                    <!--<p-accordionTab *ngIf="scopingBucket.length>0" header="Scoping">-->
+                    <p-dataTable [value]="phasesBucket" [rows]="15" [paginator]="true" sortMode="multiple" #dt>
+                        <p-column field="phase" header="Phase" [sortable]="true" [style]="{'width':'110px'}">
+                            <template let-col let-act="rowData" pTemplate="body">
                                            <span class="{{act.stats}}"> {{act[col.field] }} </span>
                                             </template>
-                            </p-column>
-                            <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
-                                <template let-col let-act="rowData" pTemplate="body">
+                        </p-column>
+                        <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                            <template let-col let-act="rowData" pTemplate="body">
                                            <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
                                             </template>
-                            </p-column>
-                            <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}">
-                                <ng-template let-col let-act="rowData" pTemplate="body">
-                                    <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
-                                </ng-template>
-                            </p-column>
-                            <p-column field="endDate" header="End Date" [style]="{'width':'100px'}">
-                                <ng-template let-col let-act="rowData" pTemplate="body">
-                                    <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
-                                </ng-template>
-                            </p-column>
-                            <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
-                                <ng-template let-col let-act="rowData" pTemplate="body">
-                                    <span class="{{act.stats}}">      {{act[col.field]}} </span>
-                                </ng-template>
-                            </p-column>
-                            <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
-                                <ng-template pTemplate="header">
-                                    <i class="fa fa-flag"></i>
-                                </ng-template>
-                                <ng-template let-col let-act="rowData" pTemplate="body">
-                                    <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
-                                </ng-template>
-                            </p-column>
-                            <p-column styleClass="col-button" [style]="{'width':'40px'}">
-                                <ng-template pTemplate="header">
-                                    <i class="fa fa-cogs"></i>
-                                </ng-template>
-                                <ng-template let-act="rowData" pTemplate="body">
-                                    <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
-                                </ng-template>
-                            </p-column>
-                        </p-dataTable>
+                        </p-column>
+                        <p-column field="startDate" header="Start Date" [style]="{'width':'80px'}">
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="endDate" header="End Date" [style]="{'width':'80px'}">
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="delta" header="Δ" [style]="{'width':'40px'}" [sortable]="true">
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                            </ng-template>
+                        </p-column>
+                        <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
+                            <ng-template pTemplate="header">
+                                <i class="fa fa-flag"></i>
+                            </ng-template>
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
+                            </ng-template>
+                        </p-column>
+                        <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                            <ng-template pTemplate="header">
+                                <i class="fa fa-cogs"></i>
+                            </ng-template>
+                            <ng-template let-act="rowData" pTemplate="body">
+                                <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
+                            </ng-template>
+                        </p-column>
+                    </p-dataTable>
 
-                    </div>
+
                 </div>
             </div>
         </p-panel>

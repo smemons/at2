@@ -27,6 +27,7 @@ export class ViewActivityComponent implements OnInit,OnChanges {
   loading = false;
   category:string;
   percentage:number;
+  delta:number;
   status:string;
   focus:string;
   dept:string[]=[];
@@ -58,6 +59,7 @@ private loadActivity() {
         this.activityService.getActivity(id).subscribe(act=>{
         this.activity=act;
         this.percentage=act.percentage;
+        this.delta=act.delta;
          //get kpi
          if(act.kpiId!=null)
          {
@@ -121,7 +123,7 @@ private loadActivity() {
           this.tasks=[];
         this.taskService.getAllByActivityId(id).subscribe(tasks=>{
           tasks.forEach(task => {
-            debugger;
+
             let time = new Date().getTime() -  moment(task.createdAt).toDate().getTime();
             time=time/1000/60/60;
             if(time<8)
@@ -193,18 +195,22 @@ private loadActivity() {
   }
  //viewActivity(act)
   viewActivity(id){
-    debugger;
+
 
      this.router.navigate(['/viewActivity', id],{ skipLocationChange: true });
   }
   //task created event passed form component
   taskCreated(task)
   {
+
+    let delta=task.percentage-this.activity.percentage;
     let act=new Activity();
     act._id=task.activityId;
     act.percentage=task.percentage;
+    act.delta=delta;
     this.activityService.updatePercentage(act).subscribe();
     this.percentage=task.percentage;
+    this.delta=delta;
     this.taskDialog=false;
     task.editable=true;
     this.tasks.unshift(task);
@@ -214,9 +220,10 @@ private loadActivity() {
   {
     this.taskDialog=false;
   }
-  editTaskDialog(id)
+  editTaskDialog(task)
   {
-   this.utilityService.getTaskById(id).subscribe(task=>this.task=task);
+  // this.utilityService.getTaskById(id).subscribe(task=>this.task=task);
+  this.task=task;
     this.taskUpdateDialog=true;
   }
   //update task
@@ -224,12 +231,15 @@ private loadActivity() {
   {
      this.taskService.updateTask(task).subscribe(tsk=>
      {
+       let delta=task.percentage-this.activity.percentage;
        let act=new Activity();
         act._id=task.activityId;
         act.percentage=task.percentage;
+        act.delta=delta;
         this.alertService.success('Progress updated!');
         this.activityService.updatePercentage(act).subscribe();
         this.percentage=task.percentage;
+        this.delta=delta;
      });
      this.taskUpdateDialog=false;
      this.task=new Task();

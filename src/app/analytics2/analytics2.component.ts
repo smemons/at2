@@ -1,4 +1,3 @@
-
 import { DataTable } from 'primeng/primeng';
 import { forEach } from '@angular/router/src/utils/collection';
 import { element } from 'protractor';
@@ -22,8 +21,11 @@ export class Analytics2Component implements OnInit {
 isDataAvailable:boolean;
 statusData:any=[];
 selectedRef:string;
-refSelectTitle="Select Reference";
-deptSelectTitle="By Organization"
+// refSelectTitle="Select Reference";
+// deptSelectTitle="By Organization"
+prevDeptCss:any;
+prevRefCss:any;
+selectedRefDepts:any=[];
 refSelectExpand:boolean;
 refActExpand:boolean=true;
 refActivities:any=[];
@@ -60,7 +62,7 @@ private activityListChanged = new BehaviorSubject<string>("");
     });
     if(this.refList.length==0)
     {
-      this.cache.getCategories();
+      this.cache.getCategoriesAll();
     }
     //populate stats panel with group by dept and calculate all children for overdue, needatt etc
     this.populateGrByDeptStats();
@@ -84,8 +86,9 @@ private poupulateInitialActList()
        model.complete=0;
        this.calcEach(el,model);
      });
-     this.allActivitiesStore=this.refActivities;
-    this.refActExpand=false;
+     this.selectedRefDepts=this.allActivitiesStore=this.refActivities;
+
+
    });
 }
   //get all drop down from cache service
@@ -126,7 +129,7 @@ debugger;
   if(actionType=="CAT")
   {
     this.selectedRef=item.catId;
-    this.refSelectTitle=item.catName;
+    //this.refSelectTitle=item.catName;
     this.selectedAct=" - "+item.catName;
     this.selectedDept="";
     this.getAllActivitiesByCatId(this.selectedRef,actIds,statsType);
@@ -134,16 +137,19 @@ debugger;
   if(actionType=="DPT")
   {
     let deptId=item.deptId;
-    this.deptSelectTitle=item.deptName;
+   // this.deptSelectTitle=item.deptName;
     this.selectedDept=" - "+item.deptName;
     this.getAllActivitiesByDeptId(deptId,actIds,statsType);
   }
 }
 refStatusChanged(evt)
 {
-  this.getAllActivitiesByCatId(evt.value,"all");
+  debugger;
+   this.selectedDept="";
+  this.selectedAct="";
+  this.getActivitiesOnRefChg(evt.value);
   this.refSelectExpand=true;
-  //change the stats by orgs panel
+
   this.populateGrByDeptStats(evt.value);
 }
 private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
@@ -158,6 +164,26 @@ private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
      });
     // this.activityListChanged.next(statsType);
     this.refActExpand=false;
+  });
+}
+
+/**
+ * when ref drop down changes, load the activity panel with relevant activities found by catId
+ */
+private getActivitiesOnRefChg(id)
+{
+    this.anService.getActsGrByCat(id).subscribe(data=>{
+    this.refActivities=[];
+    if(id=="all")
+    this.selectedAct="";
+    else
+     if(data.length>0)
+      this.selectedAct=" - "+data[0]._id.catName;
+     data.forEach(el => {
+          this.calcEachActivity(el);
+     });
+    this.refActExpand=false;
+    this.selectedRefDepts=this.refActivities;
   });
 }
 /**
@@ -235,6 +261,7 @@ calcEach(field,model)
  * @param id
  */
 viewActDetail(act){
+    debugger;
     this.scopingBucket=[];
     this.implementBucket=[];
     this.designBucket=[];
@@ -303,6 +330,7 @@ getPhaseTitleById(id:string)
 }
 private populateGrByDeptStats(catId?: string)
 {
+  debugger;
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
@@ -433,9 +461,28 @@ setStats(dt,type)
 {
   dt.filter(type,"stats","equals");
 }
-setStatsWithAllAct(dt,type)
+setStatsWithAllAct(event,dt,type)
 {
+
+  var target = event.target || event.srcElement || event.currentTarget;
+
   this.refActivities = this.allActivitiesStore;
   dt.filter(type,"stats","equals");
 }
+setStatsActByDept(event,dt,type)
+{
+  debugger;
+  if(this.prevDeptCss!=null)
+  {
+    console.log(this.prevDeptCss);
+  }
+  var target = event.target || event.srcElement || event.currentTarget;
+  //this.prevDeptCss=target;
+  this.prevDeptCss=target.cloneNode();
+   target.className="selected";
+
+  this.refActivities=this.selectedRefDepts;
+  dt.filter(type,"stats","equals");
+}
+
 }

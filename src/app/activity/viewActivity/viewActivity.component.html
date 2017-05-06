@@ -122,7 +122,12 @@
 
         <div class="left act-hd act-ct">Completion (%) </div>
         <div class="right act-ct">
-            {{percentage}}
+            {{percentage}}%
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct">Delta (%) </div>
+        <div class="right act-ct">
+            {{delta}}%
         </div>
         <div class="clear"></div>
 
@@ -229,7 +234,7 @@
                     <p>{{task.desc}}</p>
                     <span class="act-sm">{{task.createdBy}}, {{task.createdAt|date:'short'}} </span><span class="act-bs"> {{task.percentage}}% completed</span>
                     <br/>
-                    <button *ngIf="task.editable" type="button" (click)="editTaskDialog(task._id)" class="btn btn-success btn-sm">Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                    <button *ngIf="task.editable" type="button" (click)="editTaskDialog(task)" class="btn btn-success btn-sm">Edit <span class="glyphicon glyphicon-pencil"></span></button>
                     <hr/>
                 </div>
             </div>

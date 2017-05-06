@@ -149,6 +149,16 @@ populateAllActivities()
     })
   }
 }
+/**
+ * get all the categories, needed for executive view specially
+ */
+getCategoriesAll() {
+  if(this.categories.length==0){
+      this.utilityService.getAllCategories().subscribe(cat=>{
+       this.categories = this.utilityService.getSelectItemPublishedAll(cat,"References");
+    })
+  }
+}
 
 private getStatuses() {
   if(this.statuses.length==0){

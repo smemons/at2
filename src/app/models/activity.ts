@@ -13,6 +13,7 @@ assignee:[string];
 buAssignee:[string];
 kpiId:string;
 percentage: number;//percentage of completion
+delta:number;//
 catId:string; //category Id
 deptId:[string]; //dept Id
 focusId:string; //focus Id

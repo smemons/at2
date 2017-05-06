@@ -23,8 +23,9 @@ export class TaskComponent implements OnInit {
   @Output()
     taskClosed = new EventEmitter();
   constructor(private taskService:TaskService,private alertService:AlertService) { }
-
+  delta:number;
   ngOnInit() {
+    this.delta=this.percentage;
   }
 
 
@@ -34,9 +35,11 @@ export class TaskComponent implements OnInit {
      this.loading=true;
      this.model.activityId=this.activityId;
      this.model.percentage=this.percentage;
+
       event.preventDefault();
       this.taskService.create(this.model).subscribe(
                 data => {
+                  debugger;
                   this.task=new Task();
                    console.log('Task created - Service!');
                     this.alertService.success("Task saved!");

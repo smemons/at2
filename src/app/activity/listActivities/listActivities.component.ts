@@ -92,6 +92,7 @@ export class ListActivitiesComponent implements OnInit {
   {
     this.activityService.getActivity(id).subscribe(act=>{
             this.activity=act;
+            this.percentage=act.percentage;
             this.selectedCategory=this.utilityService.getTitleById(act.catId,this.categories);
             this.displayDialog = true;
           });
@@ -100,6 +101,9 @@ export class ListActivitiesComponent implements OnInit {
   //update the Activity
   updateActivity(act:Activity)
   {
+    //calculate delta
+    let delta=act.percentage-this.percentage;
+    act.delta=delta;
      this.activityService.update(act)
             .subscribe(
                 data => {

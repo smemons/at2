@@ -35,7 +35,7 @@
     background: #dfe569 !important;
 }
 
-.Completed {
+.Comp {
     background: #97f4bb !important;
 }
 
@@ -134,13 +134,13 @@ th.tabco4 {
     text-transform: uppercase;
 }
 
-td:hover {
+.stats td:hover {
     background-color: #b9f7f7;
     color: #000000;
     cursor: pointer;
 }
 
-th:hover {
+.stats th:hover {
     background-color: #fcd6d6;
     color: #000000;
     cursor: pointer;
@@ -219,10 +219,6 @@ table th {
     text-transform: uppercase;
 }
 
-.Over {
-    color: #FF3333 !important;
-}
-
 @media screen and (max-width: 600px) {
     table {
         border: 0;
@@ -278,4 +274,19 @@ table th {
 .Progress,
 .IP {
     color: blue !important;
+}
+
+.CP,
+.Completed {
+    color: green !important;
+}
+
+.detail table,
+th,
+td {
+    border: 1px solid lightgrey;
+}
+
+.selected {
+    background-color: green;
 }

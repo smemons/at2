@@ -43,6 +43,7 @@ var updateActivityPercent = function(req, res, next) {
     Activity.findByIdAndUpdate(activity._id, {
         $set: {
             percentage: activity.percentage,
+            delta: activity.delta,
             updatedBy: activity.updatedBy,
             updatedAt: new Date()
         }

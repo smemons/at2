@@ -178,6 +178,20 @@ getAllDepts() {
    });
    return si;
   }
+  /**
+ * getSelectItemPublishedAll
+ * get seletItem publised with given data in format of primeng
+ */
+  getSelectItemPublishedAll(itmArry:any[],title:string):SelectItem[]
+  {
+   let si:SelectItem[]=[];
+   if(title!=null)
+        si.push({label:"All "+title, value:"all"});
+   itmArry.forEach(element => {
+      si.push({label:element.title, value:element._id});
+   });
+   return si;
+  }
   //set passed activity for transport to other component
   setPassedActivity(act:Activity)
   {

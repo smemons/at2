@@ -270,7 +270,7 @@ var grByCat_Group = {
 };
 var allActProject = {
     $project: {
-        _id: 0,
+        _id: 1,
         title: 1,
         percentage: 1,
         level: 1,
