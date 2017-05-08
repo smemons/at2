@@ -21,8 +21,6 @@ export class Analytics2Component implements OnInit {
 isDataAvailable:boolean;
 statusData:any=[];
 selectedRef:string;
-// refSelectTitle="Select Reference";
-// deptSelectTitle="By Organization"
 prevDeptCss:any;
 prevRefCss:any;
 selectedRefDepts:any=[];
@@ -30,7 +28,7 @@ refSelectExpand:boolean;
 refActExpand:boolean=true;
 refActivities:any=[];
 showDetail:boolean;
-detailHeading:string="Detail";
+detailHeading:string="Initiatives Overview";
 tasks:any=[];
 allActivitiesStore:any=[];
 selectedActivity:any;
@@ -87,8 +85,6 @@ private poupulateInitialActList()
        this.calcEach(el,model);
      });
      this.selectedRefDepts=this.allActivitiesStore=this.refActivities;
-
-
    });
 }
   //get all drop down from cache service
@@ -99,10 +95,30 @@ get refList():SelectItem[] {
  *
  * click on the link of tables for stats and decide what to do with it.
  */
-setActivitiesData(item,statsType?:string,actionType?:string)
+setActivitiesData(event,item,statsType?:string,actionType?:string)
 {
-debugger;
     this.actTable.reset();
+    if(actionType=="CAT")
+    {
+    if(this.prevRefCss!=null)
+      {
+        document.getElementById(this.prevRefCss).classList.remove("selected");
+      }
+      var target = event.target || event.srcElement || event.currentTarget;
+      this.prevRefCss=target.id;
+      target.classList.add("selected");
+    }
+    else
+    if(actionType=="DPT")
+      {
+      if(this.prevDeptCss!=null)
+        {
+          document.getElementById(this.prevDeptCss).classList.remove("selected");
+        }
+        var target = event.target || event.srcElement || event.currentTarget;
+        this.prevDeptCss=target.id;
+        target.classList.add("selected");
+      }
    let actIds=[];
     if(statsType=="OD")//if over due
     {
@@ -125,31 +141,37 @@ debugger;
       this.refActivities=[];
       return false;//dont do any thing just return empty handed.
     }
-    this.refSelectExpand=true;
+    //this.refSelectExpand=true;
   if(actionType=="CAT")
   {
     this.selectedRef=item.catId;
-    //this.refSelectTitle=item.catName;
-    this.selectedAct=" - "+item.catName;
-    this.selectedDept="";
+    // this.selectedAct=" - "+item.catName;
+    // this.selectedDept="";
+    this.populateGrByDeptStats(item.catId);
+    //this.selectedDept="";
     this.getAllActivitiesByCatId(this.selectedRef,actIds,statsType);
   }
   if(actionType=="DPT")
   {
     let deptId=item.deptId;
    // this.deptSelectTitle=item.deptName;
-    this.selectedDept=" - "+item.deptName;
+    // this.selectedDept=" - "+item.deptName;
     this.getAllActivitiesByDeptId(deptId,actIds,statsType);
   }
 }
+/**
+ * when reference dropdown changes
+ * @param evt
+ */
 refStatusChanged(evt)
 {
   debugger;
-   this.selectedDept="";
-  this.selectedAct="";
+    if(this.prevRefCss!=null)
+      {
+        document.getElementById(this.prevRefCss).classList.remove("selected");
+      }
   this.getActivitiesOnRefChg(evt.value);
-  this.refSelectExpand=true;
-
+  //this.refSelectExpand=true;
   this.populateGrByDeptStats(evt.value);
 }
 private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
@@ -166,7 +188,6 @@ private getAllActivitiesByDeptId(id,actIds:any,statsType?:string)
     this.refActExpand=false;
   });
 }
-
 /**
  * when ref drop down changes, load the activity panel with relevant activities found by catId
  */
@@ -454,6 +475,7 @@ viewTask(id)
 }
 changeDetailView()
 {
+  this.detailHeading="Initiatives Overview";
   this.showDetail=false;
   this.tasks=[];
 }
@@ -463,26 +485,32 @@ setStats(dt,type)
 }
 setStatsWithAllAct(event,dt,type)
 {
-
+debugger;
+   if(this.prevRefCss!=null)
+   {
+    document.getElementById(this.prevRefCss).classList.remove("selected");
+   }
   var target = event.target || event.srcElement || event.currentTarget;
-
+  this.prevRefCss=target.id;
+  target.classList.add("selected");
   this.refActivities = this.allActivitiesStore;
+
+  this.refActExpand=false;
+  this.selectedRef="all";
+   this.populateGrByDeptStats("all");
+  this.actTable.reset();
   dt.filter(type,"stats","equals");
 }
 setStatsActByDept(event,dt,type)
 {
-  debugger;
-  if(this.prevDeptCss!=null)
-  {
-    console.log(this.prevDeptCss);
-  }
+   if(this.prevDeptCss!=null)
+   {
+    document.getElementById(this.prevDeptCss).classList.remove("selected");
+   }
   var target = event.target || event.srcElement || event.currentTarget;
-  //this.prevDeptCss=target;
-  this.prevDeptCss=target.cloneNode();
-   target.className="selected";
-
+  this.prevDeptCss=target.id;
+  target.classList.add("selected");
   this.refActivities=this.selectedRefDepts;
   dt.filter(type,"stats","equals");
 }
-
 }

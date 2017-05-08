@@ -7,18 +7,18 @@
             <table class="table package-table stats">
                 <tbody>
                     <tr *ngIf="deptStatsModel.length>0">
-                        <th (click)="setStatsActByDept($event,dt2,null)" class="st-th">ORG</th>
-                        <th (click)="setStatsActByDept($event,dt2,'OD')" class="OverDue">Over Due</th>
-                        <th (click)="setStatsActByDept($event,dt2,'NA')" class="NeedAttention">Need Att</th>
-                        <th (click)="setStatsActByDept($event,dt2,'IA')" class="InProgress">In Prog</th>
-                        <th (click)="setStatsActByDept($event,dt2,'CP')" class="Comp">Complete</th>
+                        <th (click)="setStatsActByDept($event,dt2,null)" id="dpt-all" class="st-th">ORG</th>
+                        <th (click)="setStatsActByDept($event,dt2,'OD')" id="dpt-od" class="OverDue">Over Due</th>
+                        <th (click)="setStatsActByDept($event,dt2,'NA')" id="dpt-na" class="NeedAttention">Need Att</th>
+                        <th (click)="setStatsActByDept($event,dt2,'IP')" id="dpt-ip" class="InProgress">In Prog</th>
+                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" class="Comp">Complete</th>
                     </tr>
-                    <tr *ngFor="let model of deptStatsModel">
-                        <td (click)="setActivitiesData($event,model, 'all','DPT')">{{model.deptName}}</td>
-                        <td (click)="setActivitiesData($event,model, 'OD','DPT')">{{model.overDue}}</td>
-                        <td (click)="setActivitiesData($event,model, 'NA','DPT')">{{model.needAtt}}</td>
-                        <td (click)="setActivitiesData($event,model, 'IP','DPT')">{{model.inProg}}</td>
-                        <td (click)="setActivitiesData($event,model, 'CP','DPT')">{{model.complete}}</td>
+                    <tr *ngFor="let model of deptStatsModel; let i=index">
+                        <td id="dpt-1-{{i}}" (click)="setActivitiesData($event,model, 'all','DPT')">{{model.deptName}}</td>
+                        <td id="dpt-2-{{i}}" (click)="setActivitiesData($event,model, 'OD','DPT')">{{model.overDue}}</td>
+                        <td id="dpt-3-{{i}}" (click)="setActivitiesData($event,model, 'NA','DPT')">{{model.needAtt}}</td>
+                        <td id="dpt-4-{{i}}" (click)="setActivitiesData($event,model, 'IP','DPT')">{{model.inProg}}</td>
+                        <td id="dpt-5-{{i}}" (click)="setActivitiesData($event,model, 'CP','DPT')">{{model.complete}}</td>
                     </tr>
                     <tr *ngIf="deptStatsModel.length==0">
                         <td style="text-align: left" colspan="5">No records found</td>
@@ -27,7 +27,7 @@
             </table>
         </p-panel>
 
-        <p-panel header="Activities {{selectedAct}} {{selectedDept}}" [toggleable]="true" [collapsed]="refActExpand">
+        <p-panel header="Activities" [toggleable]="true" [collapsed]="refActExpand">
             <div style="margin: 0 auto;text-align: center;">
                 <label class="radio-inline"><input  type="radio" pTooltip="Display All" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
                 <label class="radio-inline"><input type="radio" pTooltip="Over Due"  name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
@@ -76,22 +76,22 @@
                         <table class="st-table table table-condensed table-hover stats">
                             <thead>
                                 <tr>
-                                    <th (click)="setStatsWithAllAct($event,dt2,null)" class="tabco1 ">Reference</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" class="tabco2"> Over Due</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" class="tabco3">Need Attention</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" class="tabco4">In Progress</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" class="tabco5">Completed</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,null)" id="all-ref" class="tabco1">Reference</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" id="od-ref" class="tabco2"> Over Due</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" id="na-ref" class="tabco3">Need Attention</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" id="ip-ref" class="tabco4">In Progress</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" id="cp-ref" class="tabco5">Completed</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of catStatsModel">
-                                    <td class="tabco1 " (click)="setActivitiesData($event,item, 'all','CAT')">{{item.catName}}</td>
-                                    <td class="tabco2 " (click)="setActivitiesData($event,item, 'OD','CAT') ">{{item.overDue}}</td>
-                                    <td class="tabco3 " (click)="setActivitiesData($event,item, 'NA','CAT') ">{{item.needAtt}}
+                                <tr *ngFor="let item of catStatsModel;let i=index">
+                                    <td class="tabco1 " id="ref-1-{{i}}" (click)="setActivitiesData($event,item, 'all','CAT')">{{item.catName}}</td>
+                                    <td class="tabco2 " id="ref-2-{{i}}" (click)="setActivitiesData($event,item, 'OD','CAT') ">{{item.overDue}}</td>
+                                    <td class="tabco3 " id="ref-3-{{i}}" (click)="setActivitiesData($event,item, 'NA','CAT') ">{{item.needAtt}}
                                     </td>
-                                    <td class=" tabco4 " (click)="setActivitiesData($event,item, 'IP','CAT') ">{{item.inProg}}
+                                    <td class=" tabco4 " id="ref-4-{{i}}" (click)="setActivitiesData($event,item, 'IP','CAT') ">{{item.inProg}}
                                     </td>
-                                    <td class="tabco5 " (click)="setActivitiesData($event,item, 'CP','CAT') ">{{item.complete}}
+                                    <td class="tabco5 " id="ref-5-{{i}}" (click)="setActivitiesData($event,item, 'CP','CAT') ">{{item.complete}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -206,7 +206,7 @@
         <div *ngIf="tasks.length > 0" class=" act-pad ">
             <p-panel header="Progress updates" [toggleable]="true" [collapsed]="false">
                 <p-dataTable [value]="tasks" [rows]="7" [paginator]="true">
-                    <p-column field="desc" header="Updates" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+                    <p-column [style]="{'border-bottom':'2px solid #676a6e','padding':'10px'}" field="desc" header="Updates" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
                         <ng-template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]}}
                             <br/>

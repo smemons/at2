@@ -27,27 +27,10 @@
     border-radius: .25em;*/
 }
 
-.OverDue {
-    background: #edba6f !important;
-}
-
-.NeedAttention {
-    background: #dfe569 !important;
-}
-
-.Comp {
-    background: #97f4bb !important;
-}
-
-.InProgress {
-    background: #a4e0fc !important;
-}
-
 .st-table {
     /*max-width: 800px;
     margin: 10 auto;*/
-    /*box-shadow: 10px 10pxpx 10 px 0px red;*/
-    border-radius: 20px;
+    box-shadow: 10px 10px 5px #888888;
 }
 
 .st-table td {
@@ -63,41 +46,42 @@
 .tabco1 {
     background: #fff;
     /*width: 40%;*/
+    color: #676a6e;
     padding: 10px !important;
 }
 
 th.tabco1 {
     background: #fff;
-    /*padding: 32px 10px !important;*/
+    padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
     text-transform: uppercase;
-    color: #000;
+    color: #3d3f42;
 }
 
 .tabco2 {
-    color: #EF5350;
+    color: #f68d2e;
     text-align: center;
 }
 
 th.tabco2 {
-    background: #edba6f;
-    color: black;
-    padding: 20px 5px !important;
+    background: #f68d2e;
+    color: #3d3f42;
+    padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
     text-transform: uppercase;
 }
 
 .tabco3 {
-    color: #8e913d;
+    color: #ffd100;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco3 {
-    background: #dfe569;
-    color: black;
+    background: #ffd100;
+    color: #3d3f42;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -105,14 +89,14 @@ th.tabco3 {
 }
 
 .tabco5 {
-    color: #018234;
+    color: #84bd00;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco5 {
-    background: #97f4bb;
-    color: black;
+    background: #84bd00;
+    color: #3d3f42;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -120,14 +104,14 @@ th.tabco5 {
 }
 
 .tabco4 {
-    color: #006391;
+    color: #00a3e0;
     text-align: center;
     /*color: #fff;*/
 }
 
 th.tabco4 {
-    background: #a4e0fc;
-    color: black;
+    background: #00a3e0;
+    color: #3d3f42;
     padding: 20px 10px !important;
     font-size: 18px;
     font-weight: bolder;
@@ -135,13 +119,13 @@ th.tabco4 {
 }
 
 .stats td:hover {
-    background-color: #b9f7f7;
+    background-color: #dadada;
     color: #000000;
     cursor: pointer;
 }
 
 .stats th:hover {
-    background-color: #fcd6d6;
+    background-color: #dadada;
     color: #000000;
     cursor: pointer;
 }
@@ -156,20 +140,23 @@ th.tabco4 {
 .act-sm {
     font-size: smaller;
     font-style: italic;
+    color: #676a6e !important;
 }
 
 .act-bs {
     font-size: smaller;
     font-weight: bold;
+    color: #676a6e !important;
 }
 
 .act-pad {
     padding: 5px;
 }
 
-.package-table tbody tr:nth-child(odd) {
+
+/*.package-table tbody tr:nth-child(odd) {
     background: #FAFAFA;
-}
+}*/
 
 .package-table th {
     font-size: x-small;
@@ -177,13 +164,14 @@ th.tabco4 {
 
 .package-table td {
     border-top: 0px !important;
-    border-right: 1px solid #fff !important;
+    border-right: 1px solid lightgray !important;
     text-align: right;
 }
 
-.package-table tbody tr:nth-child(even) {
+
+/*.package-table tbody tr:nth-child(even) {
     background: #DFDFDF;
-}
+}*/
 
 table {
     border: 1px solid #ccc;
@@ -263,22 +251,22 @@ table th {
 
 .Over,
 .OD {
-    color: #FF3333 !important;
+    color: #f68d2e !important;
 }
 
 .Need,
 .NA {
-    color: #bf9715 !important;
+    color: #ffd100 !important;
 }
 
 .Progress,
 .IP {
-    color: blue !important;
+    color: #00a3e0 !important;
 }
 
 .CP,
 .Completed {
-    color: green !important;
+    color: #84bd00 !important;
 }
 
 .detail table,
@@ -288,5 +276,29 @@ td {
 }
 
 .selected {
-    background-color: green;
+    background: #c0c0c0 !important;
+}
+
+.OverDue {
+    background: #f68d2e !important;
+}
+
+.NeedAttention {
+    background: #ffd100 !important;
+}
+
+.Comp {
+    background: #00a3e0 !important;
+}
+
+.InProgress {
+    background: #84bd00 !important;
+}
+
+.ui-datatable-odd {
+    background: #ffffff !important;
+}
+
+.ui-datatable-even {
+    background: #F2F5F9 !important;
 }
