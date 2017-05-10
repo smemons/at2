@@ -20,7 +20,7 @@
     font-weight: 700;
     line-height: 1;*/
     color: #711111;
-    font-weight: bold;
+    /*font-weight: bold;*/
     /*text-align: right;
     white-space: nowrap;
     vertical-align: baseline;
@@ -165,7 +165,8 @@ th.tabco4 {
 .package-table td {
     border-top: 0px !important;
     border-right: 1px solid lightgray !important;
-    text-align: right;
+    text-align: center;
+
 }
 
 
@@ -235,10 +236,7 @@ table th {
         text-align: right;
     }
     table td:before {
-        /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
+
         content: attr(data-label);
         float: left;
         font-weight: bold;
@@ -288,11 +286,13 @@ td {
 }
 
 .Comp {
-    background: #00a3e0 !important;
+     background: #84bd00 !important;
 }
 
 .InProgress {
-    background: #84bd00 !important;
+
+    background: #00a3e0 !important;
+
 }
 
 .ui-datatable-odd {

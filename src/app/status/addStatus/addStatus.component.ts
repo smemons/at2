@@ -34,7 +34,7 @@ export class AddStatusComponent implements OnInit {
           .alertService
           .success('Status created!');
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listStatuses']);
       }, error => {
 
         console.log(error._body);

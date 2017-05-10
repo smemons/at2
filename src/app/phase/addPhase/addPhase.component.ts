@@ -32,7 +32,7 @@ export class AddPhaseComponent implements OnInit {
           .alertService
           .success('Phase created!');
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listPhases']);
       }, error => {
 
         console.log(error._body);

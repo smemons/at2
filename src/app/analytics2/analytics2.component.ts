@@ -75,7 +75,7 @@ private poupulateInitialActList()
 {
   this.refActivities=[];
    this.anService.getAllActAggregated().subscribe(data=>{
-     debugger;
+
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -165,7 +165,7 @@ setActivitiesData(event,item,statsType?:string,actionType?:string)
  */
 refStatusChanged(evt)
 {
-  debugger;
+
     if(this.prevRefCss!=null)
       {
         document.getElementById(this.prevRefCss).classList.remove("selected");
@@ -282,7 +282,7 @@ calcEach(field,model)
  * @param id
  */
 viewActDetail(act){
-    debugger;
+
     this.scopingBucket=[];
     this.implementBucket=[];
     this.designBucket=[];
@@ -351,7 +351,7 @@ getPhaseTitleById(id:string)
 }
 private populateGrByDeptStats(catId?: string)
 {
-  debugger;
+
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
@@ -485,7 +485,7 @@ setStats(dt,type)
 }
 setStatsWithAllAct(event,dt,type)
 {
-debugger;
+
    if(this.prevRefCss!=null)
    {
     document.getElementById(this.prevRefCss).classList.remove("selected");

@@ -28,7 +28,7 @@ export class AddDeptComponent implements OnInit {
           .alertService
           .success('Department created!');
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listDept']);
       }, error => {
 
         console.log(error._body);

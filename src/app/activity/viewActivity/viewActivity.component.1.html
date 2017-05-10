@@ -110,97 +110,152 @@
                 <th>Delta</th>
                 <td> {{delta}}%</td>
             </tr>
-
              <tr>
                 <th>Assignee</th>
                 <td> {{activity.assignee}}</td>
             </tr>
-           <ng-container  *ngIf="!isChild">
-              <tr>
-                <th>Sponsers</th>
-                <td> {{activity.sponsor}}</td>
-            </tr>
-             <tr>
-                <th>Focus Area</th>
-                <td> {{focus}}</td>
-            </tr>
-             <tr>
-                <th>Visibility</th>
-                <td> <span *ngFor="let vis of visibility ; let isLast=last">{{vis}}{{isLast ? '' : ', '}}</span></td>
-            </tr>
-             <tr>
-                <th>Cost</th>
-                <td>
-                   {{activity.cost}}
-                </td>
-            </tr>
-             <tr>
-                <th>Benefits</th>
-                 <td>
-                   {{activity.benefit}}
-                </td>
-             </tr>
-              <tr>
-                <th>KPI</th>
-                 <td>
-                   {{kpi}}
-                </td>
-             </tr>
-              <tr>
-                <th>Chartered</th>
-                 <td>
-                    {{activity.chartered?'Yes':'No'}}
-                </td>
-             </tr>
-              <tr>
-                <th>Monitored</th>
-                 <td>
-                  {{activity.monitored?'Yes':'No'}}
-                </td>
-             </tr>
-              <tr>
-                <th>Next Step</th>
-                 <td>
-                {{activity.nextStep}}
-                </td>
-             </tr>
-              <tr>
-                <th>Out of Scope</th>
-                 <td>
-                   {{activity.outOfScope}}
-                </td>
-             </tr>
-               <tr>
-                <th>Project detail</th>
-                 <td>
-                   {{activity.proDetail}}
-                </td>
-             </tr>
-              <tr>
-                <th>Challenges</th>
-                 <td>
-                   {{activity.challenge}}
-                </td>
-             </tr>
-              <tr>
-                <th>Documentation Link</th>
-                 <td>
-                   {{activity.docLink}}
-                </td>
-             </tr>
-           </ng-container>
+
 
         </table>
+        <div class="clear"></div>
+        <div class="left act-hd">Description </div>
+        <div class="right act-ct">
+            {{activity.desc}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Reference </div>
+        <div class="right act-ct">
+            {{category}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Organization(s) </div>
+        <div class="right act-ct">
+            <span *ngFor="let dpt of dept ; let isLast=last">{{dpt}}{{isLast ? '' : ', '}}</span>
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Status </div>
+        <div class="right act-ct">
+            {{status}}
+        </div>
+        <div class="clear"></div>
+
+
+        <div class="left act-hd act-ct">Start Date</div>
+        <div class="right act-ct">
+            {{activity.startDate|date }}
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct">End Date</div>
+        <div class="right act-ct">
+            {{activity.endDate|date}}
+        </div>
+        <div class="clear"></div>
+
+        <div class="left act-hd act-ct">Phase</div>
+        <div class="right act-ct">
+            {{phase}}
+        </div>
+        <div class="clear"></div>
 
 
 
 
+        <div class="left act-hd act-ct">Completion (%) </div>
+        <div class="right act-ct">
+            {{percentage}}%
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct">Delta (%) </div>
+        <div class="right act-ct">
+            {{delta}}%
+        </div>
+        <div class="clear"></div>
 
+        <div class="left act-hd act-ct">Assignee </div>
+        <div class="right act-ct">
+            {{activity.assignee}}
+        </div>
+        <div class="clear"></div>
+        <div *ngIf="!isChild">
+            <div class="left act-hd act-ct">Sponsers </div>
+            <div class="right act-ct">
+                {{activity.sponsor}}
+            </div>
+            <div class="clear"></div>
+            <div class="left act-hd act-ct">Focus Area </div>
+            <div class="right act-ct">
+                {{focus}}
+            </div>
+            <div class="clear"></div>
 
+            <div class="left act-hd act-ct">Escalation </div>
+            <div class="right act-ct">
+                <span *ngFor="let vis of visibility ; let isLast=last">{{vis}}{{isLast ? '' : ', '}}</span>
+            </div>
+            <div class="clear"></div>
 
+            <div class="left act-hd act-ct">Cost(MM)</div>
+            <div class="right act-ct">
+                {{activity.cost}}
+            </div>
+            <div class="clear"></div>
 
+            <div class="left act-hd act-ct">Benefit </div>
+            <div class="right act-ct">
+                {{activity.benefit}}
+            </div>
+            <div class="clear"></div>
 
+            <div class="left act-hd act-ct"> KPI</div>
+            <div class="right act-ct">
+                {{kpi}}
+            </div>
+            <div class="clear"></div>
 
+            <div class="left act-hd act-ct">Chartered </div>
+            <div class="right act-ct">
+                {{activity.chartered?'Yes':'No'}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Monitored </div>
+            <div class="right act-ct">
+                {{activity.monitored?'Yes':'No'}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct"> Next Step</div>
+            <div class="right act-ct">
+                {{activity.nextStep}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Out of Scope</div>
+            <div class="right act-ct">
+                {{activity.outOfScope}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Project Detail</div>
+            <div class="right act-ct">
+                {{activity.proDetail}}
+            </div>
+            <div class="clear"></div>
+
+            <div class="left act-hd act-ct">Challenges</div>
+            <div class="right act-ct">
+                {{activity.challenge}}
+            </div>
+            <div class="clear"></div>
+            <div class="left act-hd act-ct">Documentation Link</div>
+            <div class="right act-ct">
+                {{activity.docLink}}
+            </div>
+            <div class="clear"></div>
+        </div>
         <div class="left act-hd act-ct "></div>
         <div class="right act-ct act-sm">
             Created by: {{activity.createdBy}} on {{activity.createdAt|date:'short'}}
@@ -214,7 +269,7 @@
 
     </div>
     <div *ngIf="tasks.length > 0" class="col-lg-3 pull-right act-pad {">
-        <div class="panel panel-default" style="max-height: 900px;overflow-y: auto;">
+        <div class="panel panel-success" style="max-height: 900px;overflow-y: auto;">
             <div class="panel-heading">Progress Updates</div>
             <div class="panel-body">
                 <div *ngFor="let task of tasks">

@@ -1,5 +1,11 @@
 label {
     display: block;
+    color: gray;
+    font-weight: 500 !important;
+}
+
+.ui-multiselect-label {
+    font-weight: 500 !important;
 }
 
 .at100-col {
@@ -28,9 +34,10 @@ label {
 }
 
 .act-border {
-    border-radius: 25px;
-    border: 1px solid #d0f796;
+    /*border-radius: 25px;
+    border: 1px solid lightgray;
     padding: 20px;
+    background-color: white;*/
 }
 
 textarea {
@@ -39,4 +46,12 @@ textarea {
 
 .act-hdr {
     margin-top: 2px;
+}
+
+.form-control {
+    background: #eeeeef;
+    color: #676a6e;
+}
+.ui-multiselect .ui-multiselect-label{
+  font-weight: 400;
 }

@@ -32,7 +32,7 @@ export class AddVisComponent implements OnInit {
           .alertService
           .success('Visibility created!');
           //go back to where you came from
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listVisibility']);
       }, error => {
 
         console.log(error._body);

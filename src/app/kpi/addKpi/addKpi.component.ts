@@ -32,7 +32,7 @@ export class AddKpiComponent implements OnInit {
           .alertService
           .success('KPI created!');
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listKpi']);
       }, error => {
 
         console.log(error._body);

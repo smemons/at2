@@ -1,147 +1,174 @@
-.ui-grid-row {
-    text-align: center;
-}
+    .ui-grid-row {
+        text-align: center;
+    }
 
-.ui-grid {
-    margin: 10px 0px;
-}
+    .ui-grid {
+        margin: 10px 0px;
+    }
 
-.ui-grid-row>div {
-    padding: 4px 10px;
-}
+    .ui-grid-row>div {
+        padding: 4px 10px;
+    }
 
-.em-sm-panel {
-    height: 320px;
-    width: 100%;
-}
+    .em-sm-panel {
+        height: 320px;
+        width: 100%;
+    }
 
-.left {
-    width: 120px;
-    float: left;
-}
+    .left {
+        width: 120px;
+        float: left;
+    }
 
-.right {
-    margin-left: 150px;
-}
+    .right {
+        margin-left: 150px;
+    }
 
-.clear {
-    clear: both;
-}
+    .clear {
+        clear: both;
+    }
 
-.act-hd {
-    font-weight: bold;
-    text-align: right;
-    padding-right: 10px;
-}
+    .act-hd {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 10px;
+    }
 
-.act-ct {
-    margin-bottom: 10px;
-    padding-left: 40px;
-}
+    .act-ct {
+        margin-bottom: 10px;
+        padding-left: 40px;
+    }
 
-.act-aligned {
-    text-align: left!important;
-}
+    .act-aligned {
+        text-align: left!important;
+    }
 
-.act-pad {
-    padding: 5px;
-}
+    .act-pad {
+        padding: 5px;
+    }
+    /* tree view*/
 
+    .clt,
+    .clt ul,
+    .clt li {
+        position: relative;
+    }
 
-/* tree view*/
+    .clt ul {
+        list-style: none;
+        padding-left: 32px;
+    }
 
-.clt,
-.clt ul,
-.clt li {
-    position: relative;
-}
+    .clt li::before,
+    .clt li::after {
+        content: "";
+        position: absolute;
+        left: -12px;
+    }
 
-.clt ul {
-    list-style: none;
-    padding-left: 32px;
-}
+    .clt li::before {
+        border-top: 1px solid #000;
+        top: 9px;
+        width: 8px;
+        height: 0;
+    }
 
-.clt li::before,
-.clt li::after {
-    content: "";
-    position: absolute;
-    left: -12px;
-}
+    .clt li::after {
+        border-left: 1px solid #000;
+        height: 100%;
+        width: 0px;
+        top: 2px;
+    }
 
-.clt li::before {
-    border-top: 1px solid #000;
-    top: 9px;
-    width: 8px;
-    height: 0;
-}
+    .clt ul>li:last-child::after {
+        height: 8px;
+    }
 
-.clt li::after {
-    border-left: 1px solid #000;
-    height: 100%;
-    width: 0px;
-    top: 2px;
-}
+    .act-box {
+        border: 1px solid lightgray;
+        border-radius: 10px;
+        padding: 0 10px 10px 10px;
+    }
 
-.clt ul>li:last-child::after {
-    height: 8px;
-}
-
-.act-box {
-    border: 1px solid #BCE8F1;
-    border-radius: 10px;
-    padding: 0 10px 10px 10px;
-}
-
-.act-sm {
+  .act-sm {
     font-size: smaller;
     font-style: italic;
+    color: #676a6e !important;
 }
 
 .act-bs {
     font-size: smaller;
     font-weight: bold;
+    color: #676a6e !important;
+}
+    /* unvisited link */
+
+    a:link {
+        color: red;
+    }
+    /* visited link */
+
+    a:visited {
+        color: green;
+    }
+    /* mouse over link */
+
+    span.link:hover {
+        color: hotpink;
+    }
+    /* selected link */
+
+    a:active {
+        color: blue;
+    }
+
+    .selected {
+        font-weight: bold;
+        font-size: 100%;
+        color: green !important;
+        text-decoration: underline;
+    }
+
+    hr {
+        margin: 10px;
+        border-top:2px solid lightgray;
+    }
+
+    span.link {
+        color: blue;
+        cursor: pointer;
+    }
+    .act-table table,
+    th
+    {
+        /*border: 1px solid lightgray;*/
+    }
+
+    .act-table  th {
+        width: 20%;
+        /*padding: 20px 10px !important;*/
+        font-weight: bolder;
+        text-transform: uppercase;
+        color: #8b8d8e;
+        border-top: 2px solid lightgray;
+         text-align:right;
+        vertical-align: top;
+    }
+
+    .act-table td {
+        width: 80%;
+        padding: 0px 5px 20px 40px !important;
+        color:gray;
+
+    }
+
+    .panel-default > .panel-heading {
+  color: gray;
+  background-color:lightgray;
+  border-color: #ddd;
+  font-weight: bold;
+}
+.panel-body{
+  color:gray;
 }
 
-
-/* unvisited link */
-
-a:link {
-    color: red;
-}
-
-
-/* visited link */
-
-a:visited {
-    color: green;
-}
-
-
-/* mouse over link */
-
-span.link:hover {
-    color: hotpink;
-}
-
-
-/* selected link */
-
-a:active {
-    color: blue;
-}
-
-.selected {
-    font-weight: bold;
-    font-size: 100%;
-    color: green !important;
-    text-decoration: underline;
-}
-
-hr {
-    margin: 2px;
-}
-
-span.link {
-    color: blue;
-    cursor: pointer;
-}

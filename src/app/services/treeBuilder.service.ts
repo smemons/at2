@@ -47,7 +47,7 @@ treeBuilder():TreeNode
         node.data=elm._id;
         node.expandedIcon="fa-folder-open";
         node.collapsedIcon="fa-folder";
-        node.expanded=true;
+        node.expanded=false;
         treeRoot.children.push(this.addChildNode(elm,node));
       });
   },
@@ -65,7 +65,7 @@ addChildNode(act:Activity,node:TreeNode):TreeNode
         node.data=act._id;
         node.expandedIcon="fa-folder-open";
         node.collapsedIcon="fa-folder";
-        node.expanded=true;
+        node.expanded=false;
 
   this.getActivityByParentId(act._id).subscribe(myact=>
   {

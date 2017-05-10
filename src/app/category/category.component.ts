@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
                    this.alertService.success('Category created!');
                    let wrapper=new Wrapper(data.title,data._id,DDType.CATEGORY);
                    this.cache.isDataCreated.next(wrapper);
-                    this.router.navigate(['/home']);
+                    this.router.navigate(['/listCategories']);
                 },
                 error => {
                     //this.alertService.error(error);

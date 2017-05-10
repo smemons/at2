@@ -13,8 +13,8 @@
     </div>
     <div class="col-lg-8 col-lg-offset-2">
         <div class="act-border">
-            <h2 class='act-hdr' *ngIf="!isChild">New Activity</h2>
-            <h2 class='act-hdr' *ngIf="isChild">New Task</h2>
+            <h1 class='act-hdr' *ngIf="!isChild">New Activity</h1>
+            <h1 class='act-hdr' *ngIf="isChild">New Task</h1>
 
             <form name="form" autocomplete="off" (ngSubmit)="f.form.valid && createActivity()" #f="ngForm" novalidate>
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !title.valid }">
@@ -25,7 +25,7 @@
 
                 <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !desc.valid }">
                     <label for="title">Description</label>
-                    <textarea class="form-control" name="desc" [(ngModel)]="model.desc" #desc="ngModel" required></textarea>
+                    <textarea class="form-control" name="desc" [(ngModel)]="model.desc" #desc="ngModel"  required></textarea>
                     <div *ngIf="f.submitted && !desc.valid" class="help-block"> Description is required</div>
                 </div>
                 <div class="row">
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !startDate.valid }">
                         <label for="startDate">Start Date</label>
-                        <p-calendar inputId="startDate" name="startDate" [showIcon]="true" [(ngModel)]="model.startDate" #startDate="ngModel" [inputStyle]="{'width':'200px'}" required> </p-calendar>
+                        <p-calendar inputId="startDate" name="startDate" [showIcon]="true" [(ngModel)]="model.startDate" #startDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
                         <div *ngIf="f.submitted && !startDate.valid" class="help-block"> Start Date is required</div>
 
                     </div>
@@ -79,13 +79,13 @@
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
 
                         <label for="endDate">End Date</label>
-                        <p-calendar inputId="endDate" name="startDate" [showIcon]="true" [(ngModel)]="model.endDate" #endDate="ngModel" [inputStyle]="{'width':'200px'}" required> </p-calendar>
+                        <p-calendar inputId="endDate" name="startDate" [showIcon]="true" [(ngModel)]="model.endDate" #endDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
                         <div *ngIf="f.submitted && !endDate.valid" class="help-block"> End Date is required</div>
                     </div>
                     <div *ngIf="isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
 
                         <label for="endDate">End Date</label>
-                        <p-calendar inputId="endDate" [minDate]="minDate" [showIcon]="true" [maxDate]="maxDate" name="startDate" [(ngModel)]="model.endDate" [inputStyle]="{'width':'200px'}" #endDate="ngModel" required> </p-calendar>
+                        <p-calendar inputId="endDate" [minDate]="minDate" [showIcon]="true" [maxDate]="maxDate" name="startDate" [(ngModel)]="model.endDate"  [inputStyle]="{'width':'200px'}" #endDate="ngModel" required> </p-calendar>
                         <div *ngIf="f.submitted && !endDate.valid" class="help-block"> End Date is required</div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                         <label for="dept">Organization</label>
                         <!--<p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" [style]="{'width':'100%'}" #dept="ngModel" required></p-multiSelect>-->
-                        <p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
+                        <p-multiSelect name="dept" defaultLabel="Select Organization" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
                         </p-multiSelect>
 
                         <div *ngIf="f.submitted && !dept.valid" class="help-block"> Organization required</div>
@@ -103,7 +103,7 @@
                     <div *ngIf="isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                         <label for="dept">Organization</label>
                         <!--<p-multiSelect name="dept" [options]="depts" [(ngModel)]="model.deptId" [style]="{'width':'100%'}" #dept="ngModel" required></p-multiSelect>-->
-                        <p-listbox name="dept" [options]="depts" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
+                        <p-listbox name="dept" [options]="depts" defaultLabel="Select Organization" [(ngModel)]="model.deptId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
                         </p-listbox>
                     </div>
 
@@ -121,7 +121,7 @@
                             <label for="assignee">Assignee</label>
                             <!--<p-autoComplete inputId="assignee" [minLength]="2" name="assignee" [(ngModel)]="model.assignee" [inputStyle]="{'width':'100%'}" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true" #assignee="ngModel"
                             required></p-autoComplete>-->
-                            <p-multiSelect name="assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
+                            <p-multiSelect name="assignee" defaultLabel="Select Assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','font-weight':'normal'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
                             </p-multiSelect>
                             <div *ngIf="f.submitted && !assignee.valid" class="help-block"> Assignee required</div>
                         </div>
@@ -129,7 +129,7 @@
                     <div *ngIf="isChild">
                         <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                             <label for="assignee">Assignee</label>
-                            <p-listbox name="assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
+                            <p-listbox name="assignee" defaultLabel="Select Assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','font-weight':'normal'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
                             </p-listbox>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                     <div *ngIf="!isChild">
                         <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                             <label for="sponsor">Sponsor</label>
-                            <p-multiSelect name="sponsor" [options]="foundUsers" [(ngModel)]="model.sponsor" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #sponsor="ngModel" required>
+                            <p-multiSelect name="sponsor" defaultLabel="Select Sponsor" [options]="foundUsers" [(ngModel)]="model.sponsor" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #sponsor="ngModel" required>
                             </p-multiSelect>
                         </div>
                     </div>
@@ -147,16 +147,16 @@
                     <!--hide this entire section if child-->
                     <div class="form-group">
                         <label for="benefit">Benefits</label>
-                        <textarea class="form-control" name="benefit" [(ngModel)]="model.benefit"></textarea>
+                        <textarea class="form-control" name="benefit"  [(ngModel)]="model.benefit"></textarea>
                     </div>
                     <div class="row">
                         <div class="form-group col-xs-6">
                             <label for="cost">Cost(MM)</label>
-                            <input class="form-control" type="number" name="cost" [(ngModel)]="model.cost" />
+                            <input class="form-control"  type="number" name="cost" [(ngModel)]="model.cost" />
                         </div>
                         <div class="form-group col-xs-6">
                             <label for="costs">Cost Saving(MM)</label>
-                            <input class="form-control" type="number" name="costs" [(ngModel)]="model.costSaving" />
+                            <input class="form-control"  type="number" name="costs" [(ngModel)]="model.costSaving" />
                         </div>
 
                     </div>
@@ -166,7 +166,7 @@
                         <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                             <label for="visibility"> Escalation</label>
                             <!--<p-multiSelect name="visibility" [options]="visibilities" [(ngModel)]="model.visId" [style]="{'width':'100%'}" #visibility="ngModel"></p-multiSelect>-->
-                            <p-multiSelect name="visibility" [options]="visibilities" [(ngModel)]="model.visId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #visibility="ngModel">
+                            <p-multiSelect name="visibility" defaultLabel="Select Visibility" [options]="visibilities" [(ngModel)]="model.visId" multiple="multiple" [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #visibility="ngModel">
                             </p-multiSelect>
                         </div>
                         <div class="form-group col-xs-6">
@@ -189,25 +189,25 @@
 
                     <div class="form-group">
                         <label for="next">Next Step</label>
-                        <textarea class="form-control" name="next" [(ngModel)]="model.nextStep"></textarea>
+                        <textarea class="form-control"  name="next" [(ngModel)]="model.nextStep"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="outscope">Out of Scope</label>
-                        <textarea class="form-control" name="outscope" [(ngModel)]="model.outOfScope"></textarea>
+                        <textarea class="form-control" name="outscope"  [(ngModel)]="model.outOfScope"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="detail">Project Detail</label>
-                        <input type="text" class="form-control" name="detail" placeholder="link to project details" [(ngModel)]="model.projDetail" />
+                        <input type="text" class="form-control" name="detail" [(ngModel)]="model.projDetail" />
 
                     </div>
                     <div class="form-group">
                         <label for="challenge">Challenges</label>
-                        <textarea class="form-control" name="challenge" [(ngModel)]="model.challenge"></textarea>
+                        <textarea  class="form-control" name="challenge" [(ngModel)]="model.challenge"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="doc">Documentation Link</label>
-                        <input type="text" class="form-control" name="doc" placeholder="link to documentation" [(ngModel)]="model.docLink" />
+                        <input type="text" class="form-control" name="doc"  [(ngModel)]="model.docLink" />
                     </div>
                 </div>
                 <div class="form-group">

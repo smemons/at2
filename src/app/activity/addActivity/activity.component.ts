@@ -59,7 +59,7 @@ ngAfterViewInit()
    if(parentUrl==='/addChildActivity')
    {
       let act=this.utilityService.getPassedActivity();
-      debugger;
+
       this.model.startDate = moment(act.startDate).toDate();
       this.model.endDate = moment(act.endDate).toDate();
       this.model.parentId=act._id;

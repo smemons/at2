@@ -32,7 +32,7 @@ export class AddFocusComponent implements OnInit {
           .alertService
           .success('Focus created!');
 
-          this.router.navigate(['/home']);
+          this.router.navigate(['/listFocuses']);
       }, error => {
 
         console.log(error._body);
