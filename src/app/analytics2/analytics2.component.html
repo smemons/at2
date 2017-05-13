@@ -26,7 +26,6 @@
                 </tbody>
             </table>
         </p-panel>
-
         <p-panel header="Activities" [toggleable]="true" [collapsed]="refActExpand">
             <div style="margin: 0 auto;text-align: center;">
                 <label class="radio-inline"><input  type="radio" pTooltip="Display All" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
@@ -68,6 +67,7 @@
         <p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
             <p-header>
                 {{detailHeading}}
+                <button type="button" *ngIf="showDetail" class="pull-right" (click)="showActDetail(selectedActivity._id)" title="Detail" pButton icon="fa-eye"></button>
                 <button type="button" *ngIf="showDetail" class="pull-right" (click)="changeDetailView()" title="Over View" pButton icon="fa-tasks"></button>
             </p-header>
             <div *ngIf="!showDetail">
@@ -118,27 +118,26 @@
                                 <th>End Date</th>
                                 <td> {{selectedActivity.endDate|date:'shortDate'}}</td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <th>Completion%</th>
                                 <td> {{selectedActivity.percentage}}%</td>
                                 <th>Delta%</th>
                                 <td> {{selectedActivity.delta}}%</td>
-                            </tr>
-                            <tr>
+                            </tr>-->
+                            <!--<tr>
                                 <th>Status</th>
                                 <td> {{selectedActivity.status}}</td>
                                 <th>Focus Area</th>
                                 <td> {{selectedActivity.focus}}</td>
-                            </tr>
-                            <tr>
+                            </tr>-->
+                            <!--<tr>
                                 <th>Implementation Cost</th>
                                 <td> {{selectedActivity.cost}}</td>
                                 <th>Potentital Cost Saving</th>
                                 <td> {{selectedActivity.costSaving}}</td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
-
                     <div style="margin: 0 auto;text-align: center;">
                         <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
                         <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
@@ -196,8 +195,6 @@
                             </ng-template>
                         </p-column>
                     </p-dataTable>
-
-
                 </div>
             </div>
         </p-panel>
@@ -218,3 +215,149 @@
         </div>
     </div>
 </div>
+<p-dialog header="Activity Detail" [(visible)]="displayActivity" modal="modal" width="800" height="600" responsive="true">
+
+        <div class="col-lg-6 act-pad " style="overflow: auto; width:100%; height:500px;margin:0 auto;background: white;padding:30px;">
+        <h3 style="color:gray">{{activity.title}}</h3>
+        <table class="act-table">
+            <tr>
+                <th>Description</th>
+                <td> {{activity.desc}}</td>
+            </tr>
+             <tr>
+                <th>Reference</th>
+                <td>  {{activity.ref}}</td>
+            </tr>
+             <tr>
+                <th>Organization(s)</th>
+                <td>
+                  {{activity.dept}}
+                </td>
+            </tr>
+             <tr>
+                <th>Status</th>
+                <td>  {{activity.status}}</td>
+            </tr>
+             <tr>
+                <th>Start Date</th>
+                <td>  {{activity.startDate|date }}</td>
+            </tr>
+             <tr>
+                <th>End Date</th>
+                <td>{{activity.endDate|date }}</td>
+            </tr>
+             <tr>
+                <th>Phase</th>
+                <td>{{activity.phase }}</td>
+            </tr>
+             <tr>
+                <th>Completion(%)</th>
+                <td> {{activity.percentage}}%</td>
+            </tr>
+             <tr>
+                <th>Delta</th>
+                <td> {{activity.delta}}%</td>
+            </tr>
+             <tr>
+                <th>Assignee</th>
+                <td> {{activity.assignee}}</td>
+            </tr>
+           <ng-container  *ngIf="activity.level==0">
+              <tr>
+                <th>Sponsers</th>
+                <td> {{activity.sponsor}}</td>
+            </tr>
+             <tr>
+                <th>Focus Area</th>
+                <td> {{activity.focus}}</td>
+            </tr>
+             <tr>
+                <th>Visibility</th>
+                <td> {{activity.vis}}</td>
+            </tr>
+             <tr>
+                <th>Cost</th>
+                <td>
+                   {{activity.cost}}
+                </td>
+            </tr>
+            <tr>
+                <th>Cost</th>
+                <td>
+                   {{activity.costSaving}}
+                </td>
+            </tr>
+             <tr>
+                <th>Benefits</th>
+                 <td>
+                   {{activity.benefit}}
+                </td>
+             </tr>
+              <tr>
+                <th>KPI</th>
+                 <td>
+                   {{activity.kpi}}
+                </td>
+             </tr>
+              <tr>
+                <th>Chartered</th>
+                 <td>
+                    {{activity.chartered?'Yes':'No'}}
+                </td>
+             </tr>
+              <tr>
+                <th>Monitored</th>
+                 <td>
+                  {{activity.monitored?'Yes':'No'}}
+                </td>
+             </tr>
+              <tr>
+                <th>Next Step</th>
+                 <td>
+                {{activity.nextStep}}
+                </td>
+             </tr>
+              <tr>
+                <th>Out of Scope</th>
+                 <td>
+                   {{activity.outOfScope}}
+                </td>
+             </tr>
+               <tr>
+                <th>Project detail</th>
+                 <td>
+                   {{activity.proDetail}}
+                </td>
+             </tr>
+              <tr>
+                <th>Challenges</th>
+                 <td>
+                   {{activity.challenge}}
+                </td>
+             </tr>
+              <tr>
+                <th>Documentation Link</th>
+                 <td>
+                   {{activity.docLink}}
+                </td>
+             </tr>
+           </ng-container>
+        </table>
+        <div class="left act-hd act-ct "></div>
+        <div class="right act-ct act-sm">
+            Created by: {{activity.createdBy}} on {{activity.createdAt|date:'short'}}
+        </div>
+        <div class="clear"></div>
+        <div class="left act-hd act-ct "></div>
+        <div class="right act-ct act-sm">
+            last updated by: {{activity.updatedBy}} on {{activity.updatedAt|date:'short'}}
+        </div>
+        <div class="clear"></div>
+    </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+                <button type="button" pButton icon="fa-close" (click)="displayActivity=false" label="Close"></button>
+
+            </div>
+        </p-footer>
+</p-dialog>

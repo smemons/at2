@@ -1,21 +1,28 @@
-<p-dataTable [value]="kpis">
+<h2>KPI</h2>
 
-    <p-column field="title" header="Title"></p-column>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Created By</th>
+         <th> <i class="fa fa-cogs"></i></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let kpi of kpis" >
+        <td>{{kpi.title}}</td>
+        <td>{{kpi.desc}}</td>
+        <td>{{kpi.createdBy}}</td>
+        <td>
+               <button type="button" pButton (click)="editKPI(kpi)" icon="fa-pencil"></button>
+              <button type="button" (click)="deleteKPI(kpi)" pButton icon="fa-trash"></button>
+        </td>
+      </tr>
 
-    <p-column field="desc" header="Description"></p-column>
-    <p-column field="createdBy" header="Created By"></p-column>
+    </tbody>
+  </table>
 
-    <p-column styleClass="col-button" [style]="{'width':'80px'}">
-        <template pTemplate="header">
-      <i class="fa fa-cogs"></i>
-    </template>
-
-        <template let-kpi="rowData" pTemplate="body">
-      <button type="button" pButton (click)="editKPI(kpi)" icon="fa-pencil"></button>
-      <button type="button" (click)="deleteKPI(kpi)" pButton icon="fa-trash"></button>
-    </template>
-    </p-column>
-</p-dataTable>
 
 <p-dialog header="Department Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}" [style]="{'overflow':'visible'}" [resizable]="false">
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="kpi">

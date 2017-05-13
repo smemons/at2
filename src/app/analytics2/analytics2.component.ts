@@ -18,6 +18,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
   styleUrls: ['./analytics2.component.css']
 })
 export class Analytics2Component implements OnInit {
+    hasChild: boolean;
+displayActivity: boolean;
 isDataAvailable:boolean;
 statusData:any=[];
 selectedRef:string;
@@ -28,7 +30,7 @@ refSelectExpand:boolean;
 refActExpand:boolean=true;
 refActivities:any=[];
 showDetail:boolean;
-detailHeading:string="Initiatives Overview";
+detailHeading:string="Overview";
 tasks:any=[];
 allActivitiesStore:any=[];
 selectedActivity:any;
@@ -42,6 +44,7 @@ implementBucket:any=[];
 phasesBucket:any=[];
 selectedAct:string="";
 selectedDept:string="";
+activity:any=[];
 private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
@@ -292,8 +295,13 @@ viewActDetail(act){
       if(data!=null && data.length>0)
       {
     try{
+      debugger;
       this.selectedActivity=data[0];
-      this.detailHeading=data[0].title;
+      let perc=0;
+      if(this.selectedActivity.percentage!=null) perc=this.selectedActivity.percentage;
+      let delta=0;
+      if(this.selectedActivity.delta!=null) delta=this.selectedActivity.delta;
+      this.detailHeading=data[0].title +"  ⥀"+perc+"% , Δ "+delta+"%";
       if(this.selectedActivity.firstChild!=null && this.selectedActivity.firstChild.length>0)
       {
         //sort all the children if any
@@ -475,7 +483,7 @@ viewTask(id)
 }
 changeDetailView()
 {
-  this.detailHeading="Initiatives Overview";
+  this.detailHeading="Overview";
   this.showDetail=false;
   this.tasks=[];
 }
@@ -512,5 +520,17 @@ setStatsActByDept(event,dt,type)
   target.classList.add("selected");
   this.refActivities=this.selectedRefDepts;
   dt.filter(type,"stats","equals");
+}
+
+showActDetail(id)
+{
+  this.hasChild=false;
+ this.activityService.getActivityById(id).subscribe(act=>{
+   debugger;
+   this.activity=act[0];
+   console.log(this.activity);
+   if(this.activity.level>0)this.hasChild=true;
+   this.displayActivity=true;
+ });
 }
 }

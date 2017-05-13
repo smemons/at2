@@ -6,6 +6,7 @@ var acts = express.Router();
 acts.get('/all', uf.getAll);
 acts.get('/allInProg/:id', uf.getAllInProgress)
 acts.get('/:id', uf.getActivity);
+acts.get('/byId/:id', uf.getActivityById);
 acts.post('/', uf.saveActivity);
 acts.put('/percent', uf.updateActivityPercent);
 acts.put('/', uf.updateActivity);

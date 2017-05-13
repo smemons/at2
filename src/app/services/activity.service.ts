@@ -116,4 +116,12 @@ getAllByCatId(id)
       .get('/api/activity/allByCatId/'+id)
       .map((response: Response) => response.json());
 }
+//get activities by act id
+getActivityById(id)
+{
+  return this
+      .http
+      .get('/api/activity/byId/'+id)
+      .map((response: Response) => response.json());
+}
 }

@@ -1,7 +1,7 @@
 import { KPI } from './../../models/kpi';
 import { AlertService } from './../../services/alert.service';
 import { KpiService } from '../../services/kpi.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {
   ConfirmationService
 } from 'primeng/primeng';
@@ -11,28 +11,23 @@ import {
   styleUrls: ['./listKpi.component.css']
 })
 export class ListKpiComponent implements OnInit {
-
  kpis: KPI[];
   dialogVisible: boolean = false;
   kpi: KPI;
   constructor(private kpiService: KpiService, private alertService: AlertService, private confirmationService: ConfirmationService) {}
-
   ngOnInit() {
     this
       .getAllKPIes()
       .subscribe({
-
         next: kpi => this.kpis = kpi
-      });;
+      });
   }
   //get all kpiegories
   getAllKPIes() {
-
     return this
       .kpiService
       .getAll();
   }
-
   deleteKPI(kpi) {
     this
       .confirmationService
@@ -41,7 +36,6 @@ export class ListKpiComponent implements OnInit {
         header: 'Delete Confirmation',
         icon: 'fa fa-trash',
         accept: () => {
-
           this
             .kpiService
             .delete(kpi._id)
@@ -50,18 +44,14 @@ export class ListKpiComponent implements OnInit {
               this
                 .alertService
                 .success('KPI deleted!');
-
               //remove form kpiegories list too
               this.kpis.splice(this.findSelectedKPIIndex(kpi),1);
-
-
             }, error => {
               //this.alertService.error(error);
               console.log(error);
               this
                 .alertService
                 .error(error);
-
             });
         }
       });
@@ -81,9 +71,7 @@ export class ListKpiComponent implements OnInit {
           .alertService
           .success('KPI updated!');
         this.dialogVisible = false;
-
       }, error => {
-
         console.log(error);
         this
           .alertService
@@ -91,7 +79,6 @@ export class ListKpiComponent implements OnInit {
         this.dialogVisible = false;
       });
   }
-
   //cancel
   cancel() {
     this.dialogVisible = false;

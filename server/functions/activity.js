@@ -66,12 +66,10 @@ var getAll = function(req, res, next) {
 }
 var OLDgetActivitiesByCatId = function(req, res, next) {
         var catId = req.params.id;
-
         if (catId != null) {
             ObjectId = require('mongodb').ObjectID;
             catId = ObjectId(catId);
             query = { catId: catId };
-
             Activity.find(query, { _id: 1, title: 1, percentage: 1 }, function(err, docs) {
                 if (err) {
                     next(err);
@@ -128,24 +126,132 @@ var getAllInProgress = function(req, res, next) {
             }
         });
     }
+ var getActivityById = function(req, res, next) {
+    var actId = req.params.id;
+    if (actId != null) {
+        var query = {};
+        ObjectId = require('mongodb').ObjectID;
+        actId = ObjectId(actId);
+        query = { $match: {  _id: actId }} }
+        else
+        {
+          throw "Activity Id required";
+        }
+        Activity.aggregate([
+            query,
+            {
+    $lookup: {
+    from: "depts",
+    localField: "deptId",
+    foreignField: "_id",
+    as: "dept"}
+  } ,
+  {
+    $lookup: {
+    from: "status",
+    localField: "statusId",
+    foreignField: "_id",
+    as: "status"}
+  }
+   ,
+  {
+    $lookup: {
+    from: "categories",
+    localField: "catId",
+    foreignField: "_id",
+    as: "ref"}
+  }
+  ,
+  {
+    $lookup: {
+    from: "phases",
+    localField: "phaseId",
+    foreignField: "_id",
+    as: "phase"}
+  }
+  ,
+  {
+    $lookup: {
+    from: "kpis",
+    localField: "kpiId",
+    foreignField: "_id",
+    as: "phase"}
+  }
+ ,
+  {
+    $lookup: {
+    from: "focus",
+    localField: "focusId",
+    foreignField: "_id",
+    as: "focus"}
+  },
+ {
+   $lookup: {
+    from: "visibilities",
+    localField: "visId",
+    foreignField: "_id",
+    as: "vis"}
+   }
+  ,
+  {
+   $project:{
+               _id:"$_id",
+              title: 1,
+              desc: 1,
+              benefit: 1,
+              cost: 1,
+              costSaving: 1,
+              startDate: 1,
+              endDate: 1,
+              sponsor: 1,
+              assignee: 1,
+              buAssignee: 1,
+              percentage: 1,
+              delta: 1,
+              createdAt: 1,
+              createdBy: 1,
+              updatedAt: 1,
+              updatedBy: 1,
+              projDetail: 1,
+              docLink: 1,
+              outOfScope: 1,
+              challenge: 1,
+              nextStep: 1,
+              monitored: 1,
+              chartered: 1,
+              level:1,
+               deptName:"$dept.title",
+               focus:"$focus.title",
+               phase:"$phase.title",
+               status:"$status.title",
+               ref:"$ref.title",
+               vis:"$vis.title",
+               kpi:"$kpi.title"
+   }
+   }
+            ], function(err, docs) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(docs);
+            }
+        });
+    }
     /**
      * get all activities by catId
      */
 var getActivitiesByCatId = function(req, res, next) {
-
     var catId = req.params.id;
     if (catId != null) {
         var query = {};
         ObjectId = require('mongodb').ObjectID;
         catId = ObjectId(catId);
         query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
-
         Activity.aggregate([
             query,
             {
                 $unwind: "$deptId"
             },
-
             {
                 $lookup: {
                     from: "depts",
@@ -153,7 +259,6 @@ var getActivitiesByCatId = function(req, res, next) {
                     foreignField: "_id",
                     as: "dept"
                 }
-
             },
             {
                 $lookup: {
@@ -162,7 +267,6 @@ var getActivitiesByCatId = function(req, res, next) {
                     foreignField: "_id",
                     as: "cat"
                 }
-
             },
             {
                 $project: {
@@ -176,14 +280,11 @@ var getActivitiesByCatId = function(req, res, next) {
                     startDate: 1,
                     endDate: 1,
                     level: 1
-
                 }
             },
             {
                 $sort: { percentage: 1 }
             }
-
-
         ], function(err, docs) {
             if (err) {
                 next(err);
@@ -193,12 +294,10 @@ var getActivitiesByCatId = function(req, res, next) {
         });
     }
 }
-
 /**
  *
  *
  */
-
 var getAllByParentId = function(req, res, next) {
         var id = req.params.id;
         Activity.find({ 'parentId': id }, function(err, docs) {
@@ -244,9 +343,7 @@ var getAllAssigned = function(req, res, next) {
     }).sort({ 'createdAt': -1 });
 }
 var getActivityByName = function(req, res, next) {
-
         var inc = req.params.incName;
-
         Activity.findOne({ "title": inc }, function(err, rooms) {
             if (err) {
                 next(err);
@@ -278,5 +375,6 @@ module.exports = {
     getAllByLevel: getAllByLevel,
     getAllByParentId: getAllByParentId,
     getAllInProgress: getAllInProgress,
-    getActivitiesByCatId: getActivitiesByCatId
+    getActivitiesByCatId: getActivitiesByCatId,
+    getActivityById:getActivityById
 }

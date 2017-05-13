@@ -1,4 +1,4 @@
-import { OnChanges } from '@angular/core/core';
+
 import { UtilityService } from './../../services/utility.service';
 import { SelectItem } from 'primeng/primeng';
 import { Task } from './../../models/task';
@@ -7,14 +7,14 @@ import { TaskService } from './../../services/task.service';
 import { ActivityService } from './../../services/activity.service';
 import { Activity } from './../../models/activity';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 declare var moment: any;
 @Component({
   selector: 'app-viewActivity',
   templateUrl: './viewActivity.component.html',
   styleUrls: ['./viewActivity.component.css']
 })
-export class ViewActivityComponent implements OnInit,OnChanges {
+export class ViewActivityComponent implements OnInit {
   taskDialog:boolean=false;
   taskUpdateDialog:boolean;
   activity:Activity;
@@ -40,9 +40,7 @@ export class ViewActivityComponent implements OnInit,OnChanges {
               private activityService:ActivityService,
               private utilityService:UtilityService
               ) { }
-  ngOnChanges(){
-    console.log('ng on change');
-  }
+
   ngOnInit() {
     this.loadActivity();
   }

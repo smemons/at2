@@ -222,7 +222,6 @@ var actGraphLookup = {
         as: "children"
     }
 };
-
 var actProject = {
     $project: {
         _id: "$_id",
@@ -425,6 +424,5 @@ module.exports = {
         grByDept_Group: grByDept_Group,
         allActProject: allActProject,
         allActProject2: allActProject2
-
     }
     //db.getCollection('activities').aggregate([unwind, lookup, project1, project2, group]);
