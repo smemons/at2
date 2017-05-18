@@ -11,3 +11,22 @@
 .closed {
     background-color: #f76a6a;
 }
+.text-center{
+  text-align: center;
+}
+.Over,
+.OD {
+    color: #e2a300 !important;
+}
+.Need,
+.NA {
+    color: #ffd521 !important;
+}
+.Progress,
+.IP {
+    color: #aad2c9 !important;
+}
+.CP,
+.Completed {
+    color: #67917b !important;
+}

@@ -18,9 +18,7 @@ declare var moment: any;
   templateUrl: './listActivities.component.html',
   styleUrls: ['./listActivities.component.css']
 })
-
 export class ListActivitiesComponent implements OnInit {
-
   displayDialog: boolean = false;
   taskDialog:boolean;
   activity:Activity=new Activity();
@@ -32,7 +30,6 @@ export class ListActivitiesComponent implements OnInit {
   listStatuses:SelectItem[];
   assigned:any=[];
   created:any=[];
-
   constructor(private authService:AuthService,
               private userService:Userservice,
               private categoryService:CategoryService,
@@ -42,9 +39,7 @@ export class ListActivitiesComponent implements OnInit {
               private cache:CacheStoreService,
               private router:Router
               ) { }
-
   ngOnInit() {
-
     this.categoryService.getAll().subscribe(cat=>this.categories=cat);
     let loggedInUser=this.authService.getCurrentUser();
     this.cache.populateAllActivities();
@@ -54,39 +49,30 @@ export class ListActivitiesComponent implements OnInit {
                             act.forEach(element => {
                               element.startDate=moment(element.startDate).toDate();
                               element.endDate=moment(element.endDate).toDate();
+                              let stats=this.utilityService.getComputedStatus(element.startDate,element.endDate,element.percentage);
+                              element.stats=stats;
                             });
                             this.assigned=act
                           });
-
      //get all created
                      this.activityService.getAllCreated(loggedInUser).
                           subscribe(act=>{
-
                             act.forEach(element => {
-
                               element.startDate=moment(element.startDate).toDate();
                               element.endDate=moment(element.endDate).toDate();
+                               let stats=this.utilityService.getComputedStatus(element.startDate,element.endDate,element.percentage);
+                              element.stats=stats;
                             });
                             this.created=act
                           });
-
                           //get all statuses for color
-
                   this.listStatuses=[];
                   this.utilityService.getAllStatus().subscribe(status=>{
-
                     status.forEach(element => {
                       this.listStatuses.push({label:element.title, value:element._id});
                     });
-
-
     })
-
-
   }
-
-
-
    //edit activity
   editAct(id:string)
   {
@@ -97,7 +83,6 @@ export class ListActivitiesComponent implements OnInit {
             this.displayDialog = true;
           });
   }
-
   //update the Activity
   updateActivity(act:Activity)
   {
@@ -110,7 +95,6 @@ export class ListActivitiesComponent implements OnInit {
                    console.log('Category updated - Service!');
                    this.alertService.success('Activty updated!');
                    this.displayDialog = false;
-
                 },
                 error => {
                     //this.alertService.error(error);
@@ -119,17 +103,14 @@ export class ListActivitiesComponent implements OnInit {
                      this.displayDialog = false;
                 });
    }
-
   //viewActivity(act)
   viewActivity(id:string){
     this.utilityService.viewActivity(id);
   }
-
   closeActivityDialog()
   {
     this.displayDialog = false;
   }
-
   createTask(id:string,percentage:number)
   {
     this.activityId=id;
@@ -139,14 +120,12 @@ export class ListActivitiesComponent implements OnInit {
   //task created event passed form component
   taskCreated(task)
   {
-
     let act=new Activity();
     act._id=task.activityId;
     act.percentage=task.percentage;
     this.activityService.updatePercentage(act).subscribe();
     //tell cache that data is changed
     this.cache.isActivityChanged.next(act);
-
     this.taskDialog=false;
   }
   //again through injection
@@ -154,14 +133,8 @@ export class ListActivitiesComponent implements OnInit {
   {
     this.taskDialog=false;
   }
-
-  // get assigned():MiniActivity[]
-  // {
-  //   return this.cache.assigned;
-  // }
-  // get created():MiniActivity[]
-  // {
-  //   return this.cache.created;
-  // }
-
+  setStats(dt,type)
+  {
+    dt.filter(type,"stats","equals");
+  }
 }

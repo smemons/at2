@@ -65,13 +65,13 @@
                 <div class="row">
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !startDate.valid }">
                         <label for="startDate">Start Date</label>
-                        <p-calendar inputId="startDate" name="startDate" [showIcon]="true" [(ngModel)]="model.startDate" #startDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
+                        <p-calendar inputId="startDate" name="startDate" placeholder="MM/DD/YYYY" [showIcon]="true" [(ngModel)]="model.startDate" #startDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
                         <div *ngIf="f.submitted && !startDate.valid" class="help-block"> Start Date is required</div>
 
                     </div>
                     <div *ngIf="isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !startDate.valid }">
                         <label for="startDate">Start Date</label>
-                        <p-calendar [minDate]="minDate" [maxDate]="maxDate" [showIcon]="true" inputId="startDate" name="startDate" [(ngModel)]="model.startDate" [inputStyle]="{'width':'200px'}" #startDate="ngModel" required> </p-calendar>
+                        <p-calendar [minDate]="minDate" [maxDate]="maxDate" placeholder="MM/DD/YYYY"  [showIcon]="true" inputId="startDate" name="startDate" [(ngModel)]="model.startDate" [inputStyle]="{'width':'200px'}" #startDate="ngModel" required> </p-calendar>
                         <div *ngIf="f.submitted && !startDate.valid" class="help-block"> Start Date is required</div>
 
                     </div>
@@ -79,13 +79,13 @@
                     <div *ngIf="!isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
 
                         <label for="endDate">End Date</label>
-                        <p-calendar inputId="endDate" name="startDate" [showIcon]="true" [(ngModel)]="model.endDate" #endDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
+                        <p-calendar inputId="endDate" name="startDate" placeholder="MM/DD/YYYY"  [showIcon]="true" [(ngModel)]="model.endDate" #endDate="ngModel"  [inputStyle]="{'width':'200px'}" required> </p-calendar>
                         <div *ngIf="f.submitted && !endDate.valid" class="help-block"> End Date is required</div>
                     </div>
                     <div *ngIf="isChild" class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted && !endDate.valid }">
 
                         <label for="endDate">End Date</label>
-                        <p-calendar inputId="endDate" [minDate]="minDate" [showIcon]="true" [maxDate]="maxDate" name="startDate" [(ngModel)]="model.endDate"  [inputStyle]="{'width':'200px'}" #endDate="ngModel" required> </p-calendar>
+                        <p-calendar inputId="endDate" [minDate]="minDate" placeholder="MM/DD/YYYY"  [showIcon]="true" [maxDate]="maxDate" name="startDate" [(ngModel)]="model.endDate"  [inputStyle]="{'width':'200px'}" #endDate="ngModel" required> </p-calendar>
                         <div *ngIf="f.submitted && !endDate.valid" class="help-block"> End Date is required</div>
                     </div>
                 </div>
@@ -151,11 +151,11 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-xs-6">
-                            <label for="cost">Cost(MM)</label>
+                            <label for="cost">Cost (MM)</label>
                             <input class="form-control"  type="number" name="cost" [(ngModel)]="model.cost" />
                         </div>
                         <div class="form-group col-xs-6">
-                            <label for="costs">Cost Saving(MM)</label>
+                            <label for="costs">Cost Saving (MM)</label>
                             <input class="form-control"  type="number" name="costs" [(ngModel)]="model.costSaving" />
                         </div>
 

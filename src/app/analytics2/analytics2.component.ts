@@ -18,7 +18,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
   styleUrls: ['./analytics2.component.css']
 })
 export class Analytics2Component implements OnInit {
-    hasChild: boolean;
+hasChild: boolean;
 displayActivity: boolean;
 isDataAvailable:boolean;
 statusData:any=[];
@@ -76,9 +76,8 @@ private activityListChanged = new BehaviorSubject<string>("");
  */
 private poupulateInitialActList()
 {
-  this.refActivities=[];
+   this.refActivities=[];
    this.anService.getAllActAggregated().subscribe(data=>{
-
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -100,6 +99,7 @@ get refList():SelectItem[] {
  */
 setActivitiesData(event,item,statsType?:string,actionType?:string)
 {
+  debugger;
     this.actTable.reset();
     if(actionType=="CAT")
     {
@@ -295,13 +295,12 @@ viewActDetail(act){
       if(data!=null && data.length>0)
       {
     try{
-      debugger;
       this.selectedActivity=data[0];
       let perc=0;
       if(this.selectedActivity.percentage!=null) perc=this.selectedActivity.percentage;
       let delta=0;
       if(this.selectedActivity.delta!=null) delta=this.selectedActivity.delta;
-      this.detailHeading=data[0].title +"  ⥀"+perc+"% , Δ "+delta+"%";
+      this.detailHeading=data[0].title +"   ("+perc+"% , Δ "+delta+"%)";
       if(this.selectedActivity.firstChild!=null && this.selectedActivity.firstChild.length>0)
       {
         //sort all the children if any
@@ -315,7 +314,7 @@ viewActDetail(act){
         }
         this.selectedActivity.firstChild.forEach(child => {
            let stats=this.utilityService.getComputedStatus(child.startDate,child.endDate,child.percentage);
-               child.stats=stats;
+           child.stats=stats;
           this.placeInBucket(child);
         });
         //check the rest of children and and add them in

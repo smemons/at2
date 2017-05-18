@@ -34,7 +34,7 @@ var getActivityHchy = function(req, res, next) {
         var deptId = req.params.deptId;
 
         var query = { $match: {} };
-        if (actId != null && deptId != null) {
+        if (actId != null && deptId != null && deptId!=='null') {
             ObjectId = require('mongodb').ObjectID;
             actId = ObjectId(actId);
             deptId = ObjectId(deptId);
@@ -74,7 +74,7 @@ var getAllActGroupedByDept = function(req, res, next) {
 
 
     var query = { $match: { level: 0 } };
-    if (id != null && id != "all") {
+    if (id != null && id != "all" && id!=='null') {
         ObjectId = require('mongodb').ObjectID;
         id = ObjectId(id);
         if (by == "cat")
@@ -105,7 +105,8 @@ var getAllActGroupedByDept = function(req, res, next) {
 var getAllActGroupedByCat = function(req, res, next) {
     var catId = req.params.id;
     var query = { $match: { level: 0 } };
-    if (catId != null && catId != "all") {
+
+    if (catId !== null && catId !== "all" && catId!=='null') {
         ObjectId = require('mongodb').ObjectID;
         catId = ObjectId(catId);
         query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };

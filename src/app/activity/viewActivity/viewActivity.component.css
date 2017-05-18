@@ -150,7 +150,7 @@
         font-weight: bolder;
         text-transform: uppercase;
         color: #8b8d8e;
-        border-top: 2px solid lightgray;
+        /*border-top: 2px solid lightgray;*/
          text-align:right;
         vertical-align: top;
     }
@@ -171,4 +171,3 @@
 .panel-body{
   color:gray;
 }
-

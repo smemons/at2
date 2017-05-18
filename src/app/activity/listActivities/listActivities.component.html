@@ -2,8 +2,15 @@
 <div class="row">
     <div class="col-lg-6 col-md-6">
         <p-panel header="Activities created By me" [toggleable]="true">
+           <div style="margin: 0 auto;text-align: center;">
+                        <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                    </div>
             <div class="at-sm-panel">
-                <p-dataTable [value]="created" [rows]="9" [paginator]="true">
+                <p-dataTable [value]="created" [rows]="9" [paginator]="true" #dt>
                     <p-column field="title" header="Title" [style]="{'width':'180px'}">
                         <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:20 }}
@@ -24,10 +31,18 @@
                             {{act[col.field]|truncate:15 }}
                         </template>
                     </p-column>
-                    <p-column field="percentage" header="%" [style]="{'width':'40px'}">
+                    <p-column field="percentage" styleClass="text-center" header="%" [style]="{'width':'40px'}">
                     </p-column>
-                    <p-column field="delta" header="Δ" [style]="{'width':'40px'}">
+                    <p-column field="delta" styleClass="text-center"  header="Δ" [style]="{'width':'40px'}">
                     </p-column>
+                    <p-column field="stats" styleClass="col-button text-center" [style]="{'width':'40px'}">
+                            <ng-template pTemplate="header">
+                                <i class="fa fa-flag"></i>
+                            </ng-template>
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
+                            </ng-template>
+                        </p-column>
                     <p-column styleClass="col-button" [style]="{'width':'80px'}">
                         <template pTemplate="header">
                             <i class="fa fa-cogs"></i>
@@ -44,8 +59,15 @@
     </div>
     <div class="col-lg-6 col-md-6">
         <p-panel header="Activities assigned to me" [toggleable]="true">
+           <div style="margin: 0 auto;text-align: center;">
+                        <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt2,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Need Attention" name="optradio" (click)="setStats(dt2,'Need Attention')"><i class="fa fa-flag NA" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt2,'In Progress')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
+                        <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt2,'Completed')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
+                    </div>
             <div class="at-sm-panel">
-                <p-dataTable [value]="assigned" [rows]="9" [paginator]="true">
+                <p-dataTable [value]="assigned" [rows]="9" [paginator]="true" #dt2>
                     <p-column field="title" header="Title" [style]="{'width':'180px'}">
                         <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:20 }}
@@ -66,10 +88,18 @@
                             {{act[col.field]|truncate:15 }}
                         </template>
                     </p-column>
-                    <p-column field="percentage" header="%" [style]="{'width':'40px'}">
+                    <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}">
                     </p-column>
-                    <p-column field="delta" header="Δ" [style]="{'width':'40px'}">
+                    <p-column field="delta" styleClass="text-center"  header="Δ" [style]="{'width':'40px'}">
                     </p-column>
+                    <p-column field="stats" styleClass="col-button text-center" [style]="{'width':'40px'}">
+                            <ng-template pTemplate="header">
+                                <i class="fa fa-flag"></i>
+                            </ng-template>
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
+                            </ng-template>
+                        </p-column>
                     <p-column styleClass="col-button" [style]="{'width':'50px'}">
                         <template pTemplate="header">
                             <i class="fa fa-cogs"></i>

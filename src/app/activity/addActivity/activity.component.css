@@ -46,12 +46,15 @@ textarea {
 
 .act-hdr {
     margin-top: 2px;
+    color:gray;
 }
 
 .form-control {
     background: #eeeeef;
     color: #676a6e;
+        border: 1px solid #EEEEEF !important;
 }
 .ui-multiselect .ui-multiselect-label{
   font-weight: 400;
 }
+

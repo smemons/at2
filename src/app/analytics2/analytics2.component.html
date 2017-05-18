@@ -40,9 +40,9 @@
                             {{act[col.field]|truncate:40 }}
                         </template>
                 </p-column>
-                <p-column field="deptName" header="Org" [style]="{'width':'50px'}" [sortable]="true">
+                <p-column field="deptName" styleClass="text-center" header="Org" [style]="{'width':'50px'}" [sortable]="true">
                 </p-column>
-                <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
                 <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
                     <template pTemplate="header">
@@ -52,7 +52,7 @@
                         <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                     </ng-template>
                 </p-column>
-                <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                <p-column styleClass="col-button text-center" [style]="{'width':'40px'}">
                     <ng-template pTemplate="header">
                         <i class="fa fa-cogs"></i>
                     </ng-template>
@@ -118,24 +118,6 @@
                                 <th>End Date</th>
                                 <td> {{selectedActivity.endDate|date:'shortDate'}}</td>
                             </tr>
-                            <!--<tr>
-                                <th>Completion%</th>
-                                <td> {{selectedActivity.percentage}}%</td>
-                                <th>Delta%</th>
-                                <td> {{selectedActivity.delta}}%</td>
-                            </tr>-->
-                            <!--<tr>
-                                <th>Status</th>
-                                <td> {{selectedActivity.status}}</td>
-                                <th>Focus Area</th>
-                                <td> {{selectedActivity.focus}}</td>
-                            </tr>-->
-                            <!--<tr>
-                                <th>Implementation Cost</th>
-                                <td> {{selectedActivity.cost}}</td>
-                                <th>Potentital Cost Saving</th>
-                                <td> {{selectedActivity.costSaving}}</td>
-                            </tr>-->
                         </tbody>
                     </table>
                     <div style="margin: 0 auto;text-align: center;">
@@ -150,35 +132,35 @@
                     <p-dataTable [value]="phasesBucket" [rows]="15" [paginator]="true" sortMode="multiple" #dt>
                         <p-column field="phase" header="Phase" [sortable]="true" [style]="{'width':'110px'}">
                             <template let-col let-act="rowData" pTemplate="body">
-                                           <span class="{{act.stats}}"> {{act[col.field] }} </span>
+                                           <span > {{act[col.field] }} </span>
                                             </template>
                         </p-column>
                         <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
                             <template let-col let-act="rowData" pTemplate="body">
-                                           <span class="{{act.stats}}"> {{act[col.field]|truncate:40 }} </span>
+                                           <span > {{act[col.field]|truncate:40 }} </span>
                                             </template>
                         </p-column>
                         <p-column field="startDate" header="Start Date" [style]="{'width':'80px'}">
                             <ng-template let-col let-act="rowData" pTemplate="body">
-                                <span class="{{act.stats}}">    {{act[col.field]|date:'shortDate' }} </span>
+                                <span >    {{act[col.field]|date:'shortDate' }} </span>
                             </ng-template>
                         </p-column>
                         <p-column field="endDate" header="End Date" [style]="{'width':'80px'}">
                             <ng-template let-col let-act="rowData" pTemplate="body">
-                                <span class="{{act.stats}}">      {{act[col.field]|date :'shortDate'}} </span>
+                                <span >      {{act[col.field]|date :'shortDate'}} </span>
                             </ng-template>
                         </p-column>
-                        <p-column field="percentage" header="%" [style]="{'width':'40px'}" [sortable]="true">
+                        <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}" [sortable]="true">
                             <ng-template let-col let-act="rowData" pTemplate="body">
-                                <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                <span >      {{act[col.field]}} </span>
                             </ng-template>
                         </p-column>
-                        <p-column field="delta" header="Δ" [style]="{'width':'40px'}" [sortable]="true">
+                        <p-column field="delta" styleClass="text-center"  header="Δ" [style]="{'width':'40px'}" [sortable]="true">
                             <ng-template let-col let-act="rowData" pTemplate="body">
-                                <span class="{{act.stats}}">      {{act[col.field]}} </span>
+                                <span >      {{act[col.field]}} </span>
                             </ng-template>
                         </p-column>
-                        <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
+                        <p-column field="stats" styleClass="col-button text-center" [style]="{'width':'40px'}">
                             <ng-template pTemplate="header">
                                 <i class="fa fa-flag"></i>
                             </ng-template>
@@ -186,7 +168,7 @@
                                 <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                             </ng-template>
                         </p-column>
-                        <p-column styleClass="col-button" [style]="{'width':'40px'}">
+                        <p-column styleClass="col-button" styleClass="text-center" [style]="{'width':'40px'}">
                             <ng-template pTemplate="header">
                                 <i class="fa fa-cogs"></i>
                             </ng-template>
