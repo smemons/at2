@@ -37,7 +37,7 @@ export class AuthService {
    usr.password=usr.password.toLowerCase();
     return this
       .http
-      .post('/api/user/authenticate', usr, this.jwt())
+      .post('/api/ldap/authenticate', usr, this.jwt())
       .map((response: Response) => {
 
           console.log(response.json());
@@ -90,7 +90,7 @@ export class AuthService {
       return JSON.parse(sessionStorage.getItem('currentUser')).username;
     return "";
   }
-  
+
 
   // private helper methods
 

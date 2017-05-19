@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "ldapjs": "^1.0.1",
     "moment": "^2.18.1",
     "mongoose": "^4.9.4",
     "primeng": "^4.0.0-rc.3",

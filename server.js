@@ -18,6 +18,7 @@ const statusapi = require('./server/routes/statusapi');
 const lookupapi = require('./server/routes/actlookupapi');
 const kpiapi = require('./server/routes/kpiapi');
 const analysticsapi = require('./server/routes/analyticsapi');
+const ldapapi = require('./server/routes/ldapapi');
 
 // // Parsers for POST data
 app.use(bodyParser.json());
@@ -39,6 +40,7 @@ app.use('/api/status', statusapi);
 app.use('/api/actLookup', lookupapi);
 app.use('/api/kpi', kpiapi);
 app.use('/api/analytics', analysticsapi);
+app.use('/api/ldap', ldapapi);
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
