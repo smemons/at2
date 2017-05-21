@@ -1,21 +1,9 @@
 var User = require('../schema/user');
 var ad = require('ldapjs');
-/*
-var url="ldap://ldapvqa.aramco.com.sa:389";
-var username="memosa0b";
-var password="aramco2.1";
-var dn='DC=aramco2,DC=com';
-*/
-// var url="ldap://ldapv01.aramco.com.sa:389";
-// var username="memosa0b";
-// var password="Mko09ijn";
-// var dn='DC=aramco,DC=com';
-// var bindUser="eaiusrvc@aramco.com";
-// var bindPass='NTivHKm^et*83$SE';
+
 
 var url="ldap://ldap.forumsys.com:389";
-var username="memosa0b";
-var password="Mko09ijn";
+
 var dn='dc=example,dc=com';
 var bindUser="cn=read-only-admin,dc=example,dc=com";
 var bindPass='password';
@@ -35,6 +23,8 @@ var authenticate = function(req, res, next) {
     console.log('inside search');
   result.on('searchEntry', function (entry) {
     ldapres = entry.raw
+    console.log('entry: ' + JSON.stringify(entry.object));
+
 
   })
   result.on('end', function (result) {
