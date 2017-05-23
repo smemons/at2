@@ -50,6 +50,7 @@ private activityListChanged = new BehaviorSubject<string>("");
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
   @ViewChild('dt2') actTable: DataTable;
   ngOnInit() {
+
    this.utilityService.getAllPhases().subscribe(data=>{
       this.utilityService.phaseKeyValues=new Map();
       data.forEach(el => {

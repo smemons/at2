@@ -86,10 +86,7 @@
                 <th>Organization(s)</th>
                 <td>   <span *ngFor="let dpt of dept ; let isLast=last">{{dpt}}{{isLast ? '' : ', '}}</span></td>
             </tr>
-             <tr>
-                <th>Status</th>
-                <td>  {{status}}</td>
-            </tr>
+
              <tr>
                 <th>Start Date</th>
                 <td>  {{activity.startDate|date }}</td>
@@ -115,10 +112,18 @@
                 <th>Assignee</th>
                 <td> {{activity.assignee}}</td>
             </tr>
+            <tr>
+                <th>Backup Assignee</th>
+                <td> {{activity.buAssignee}}</td>
+            </tr>
            <ng-container  *ngIf="!isChild">
               <tr>
                 <th>Sponsers</th>
                 <td> {{activity.sponsor}}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>  {{status}}</td>
             </tr>
              <tr>
                 <th>Focus Area</th>

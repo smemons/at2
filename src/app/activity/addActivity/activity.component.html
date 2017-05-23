@@ -116,29 +116,32 @@
                 </div>
 
                 <div class="row">
-                    <div *ngIf="!isChild">
+                    <!--<div *ngIf="!isChild">-->
                         <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                             <label for="assignee">Assignee</label>
                             <!--<p-autoComplete inputId="assignee" [minLength]="2" name="assignee" [(ngModel)]="model.assignee" [inputStyle]="{'width':'100%'}" [suggestions]="foundUsers" (completeMethod)="searchTypeAheadUsers($event)" placeholder="Type User Name" [multiple]="true" #assignee="ngModel"
                             required></p-autoComplete>-->
-                            <p-multiSelect name="assignee" defaultLabel="Select Assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','font-weight':'normal'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
-                            </p-multiSelect>
+                            <input type="text" class="form-control" name="assignee" [(ngModel)]="model.assignee" #assignee="ngModel" required />
+                            <!--<p-multiSelect name="assignee" defaultLabel="Select Assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','font-weight':'normal'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
+                            </p-multiSelect>-->
                             <div *ngIf="f.submitted && !assignee.valid" class="help-block"> Assignee required</div>
                         </div>
-                    </div>
-                    <div *ngIf="isChild">
-                        <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
-                            <label for="assignee">Assignee</label>
-                            <p-listbox name="assignee" defaultLabel="Select Assignee" [options]="foundUsers" [(ngModel)]="model.assignee" multiple="multiple" [style]="{'width':'100%','font-weight':'normal'}" checkbox="checkbox" filter="filter" #assignee="ngModel" required>
-                            </p-listbox>
+
+                    <!--</div>-->
+                    <!--<div *ngIf="!isChild">-->
+                        <div class="form-group col-xs-6" >
+                            <label for="buAssignee">Backup Assignee</label>
+                            <input type="text" class="form-control" name="buAssignee" [(ngModel)]="model.buAssignee" #buAssignee="ngModel"  />
+
                         </div>
-                    </div>
-                    <!-- set this entire group hidden if it is sub activity -->
+                    <!--</div>-->
+
                     <div *ngIf="!isChild">
                         <div class="form-group col-xs-6" [ngClass]="{ 'has-error': f.submitted  }">
                             <label for="sponsor">Sponsor</label>
-                            <p-multiSelect name="sponsor" defaultLabel="Select Sponsor" [options]="foundUsers" [(ngModel)]="model.sponsor" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #sponsor="ngModel" required>
-                            </p-multiSelect>
+                            <input type="text" class="form-control" name="sponsor" [(ngModel)]="model.sponsor" #sponsor="ngModel" required />
+                            <!--<p-multiSelect name="sponsor" defaultLabel="Select Sponsor" [options]="foundUsers" [(ngModel)]="model.sponsor" multiple="multiple" [style]="{'width':'100%'}" checkbox="checkbox" filter="filter" #sponsor="ngModel" required>
+                            </p-multiSelect>-->
                         </div>
                     </div>
 

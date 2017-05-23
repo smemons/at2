@@ -33,11 +33,11 @@ export class AuthService {
 
   authenticate(usr: User) {
 
-   usr.username=usr.username.toLowerCase();
-   usr.password=usr.password.toLowerCase();
+   //usr.username=usr.username.toLowerCase();
+   //usr.password=usr.password.toLowerCase();
     return this
       .http
-      .post('/api/ldap/authenticate', usr, this.jwt())
+      .post('/api/ldap/authenticate', usr, this.jwt()) /*.post('/api/ldap/authenticate', usr, this.jwt())*/
       .map((response: Response) => {
 
           console.log(response.json());

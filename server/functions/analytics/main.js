@@ -231,6 +231,7 @@ var actProject = {
         cost: 1,
         title: 1,
         assignee: 1,
+        buAssignee:1,
         phaseId: 1,
         deptName: "$dept.title",
         focus: "$focus.title",

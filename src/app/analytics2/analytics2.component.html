@@ -35,7 +35,7 @@
                 <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
             </div>
             <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple" #dt2>
-                <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
                     <template let-col let-act="rowData" pTemplate="body">
                             {{act[col.field]|truncate:40 }}
                         </template>
@@ -110,7 +110,9 @@
                                     <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last ">{{chmp}}{{isLast ? '' : ', '}}</span>
                                 </td>
                                 <th>Backup</th>
-                                <td>0</td>
+                                <td>
+                                  <span *ngFor="let buchmp of selectedActivity.buAssignee ; let isLast=last ">{{buchmp}}{{isLast ? '' : ', '}}</span>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Start Date</th>
@@ -135,7 +137,7 @@
                                            <span > {{act[col.field] }} </span>
                                             </template>
                         </p-column>
-                        <p-column field="title" header="Title" [filter]="true" filterPlaceholder="Search">
+                        <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
                             <template let-col let-act="rowData" pTemplate="body">
                                            <span > {{act[col.field]|truncate:40 }} </span>
                                             </template>
@@ -264,7 +266,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Cost</th>
+                <th>Cost Saving</th>
                 <td>
                    {{activity.costSaving}}
                 </td>
