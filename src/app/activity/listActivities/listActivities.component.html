@@ -28,7 +28,7 @@
                     </p-column>
                     <p-column field="assignee" header="Assignee">
                         <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|truncate:15 }}
+                            {{act[col.field] }}
                         </template>
                     </p-column>
                     <p-column field="percentage" styleClass="text-center" header="%" [style]="{'width':'40px'}">
@@ -85,7 +85,7 @@
                     </p-column>
                     <p-column field="createdBy" header="Created By">
                         <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|truncate:15 }}
+                            {{act[col.field] }}
                         </template>
                     </p-column>
                     <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}">

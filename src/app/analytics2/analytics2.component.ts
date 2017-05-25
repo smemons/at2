@@ -1,3 +1,4 @@
+import { LoaderService } from './../services/loaderService';
 import { DataTable } from 'primeng/primeng';
 import { forEach } from '@angular/router/src/utils/collection';
 import { element } from 'protractor';
@@ -46,22 +47,24 @@ selectedAct:string="";
 selectedDept:string="";
 activity:any=[];
 private activityListChanged = new BehaviorSubject<string>("");
-  constructor(private anService:AnalyticsService,private utilityService:UtilityService,
+  constructor(private anService:AnalyticsService,private utilityService:UtilityService, private loaderService:LoaderService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
   @ViewChild('dt2') actTable: DataTable;
   ngOnInit() {
 
    this.utilityService.getAllPhases().subscribe(data=>{
+
       this.utilityService.phaseKeyValues=new Map();
       data.forEach(el => {
         this.utilityService.phaseKeyValues.set(el._id,el.title);
       });
+
     });
     //get all status by ref
-    this.anService.getStatusByRef().subscribe(data=>{
-    this.statusData=data;
-     this.isDataAvailable=true;
-    });
+    // this.anService.getStatusByRef().subscribe(data=>{
+    // this.statusData=data;
+    //  this.isDataAvailable=true;
+    // });
     if(this.refList.length==0)
     {
       this.cache.getCategoriesAll();
@@ -78,7 +81,9 @@ private activityListChanged = new BehaviorSubject<string>("");
 private poupulateInitialActList()
 {
    this.refActivities=[];
+   this.loaderService.showLoader();
    this.anService.getAllActAggregated().subscribe(data=>{
+
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -88,7 +93,8 @@ private poupulateInitialActList()
        this.calcEach(el,model);
      });
      this.selectedRefDepts=this.allActivitiesStore=this.refActivities;
-   });
+     this.loaderService.hideLoader();
+   },err=>this.loaderService.hideLoader());
 }
   //get all drop down from cache service
 get refList():SelectItem[] {
@@ -100,7 +106,7 @@ get refList():SelectItem[] {
  */
 setActivitiesData(event,item,statsType?:string,actionType?:string)
 {
-  debugger;
+
     this.actTable.reset();
     if(actionType=="CAT")
     {
@@ -362,8 +368,11 @@ private populateGrByDeptStats(catId?: string)
 
   this.deptStatsModel=[];
   let id=catId==null?"all":catId;
+   this.loaderService.showLoader();
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
+
      data.forEach(el => {
+
        let model:statsModel={};
        model.inProg=0;
        model.needAtt=0;
@@ -405,12 +414,15 @@ private populateGrByDeptStats(catId?: string)
           });
       this.deptStatsModel.push(model);
      });
-   });
+     this.loaderService.hideLoader();
+   },err=> this.loaderService.hideLoader());
 }
 private populateGrByCatStats()
 {
    this.catStatsModel=[];
+      this.loaderService.showLoader();
    this.anService.getActsGrByCat("all").subscribe(data=>{
+
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -453,7 +465,8 @@ private populateGrByCatStats()
           });
       this.catStatsModel.push(model);
      });
-   });
+     this.loaderService.hideLoader();
+   },err=>this.loaderService.hideLoader());
 }
 private placeInBucket(child:any)
 {
@@ -533,4 +546,5 @@ showActDetail(id)
    this.displayActivity=true;
  });
 }
+
 }

@@ -1,14 +1,14 @@
-<p-tabView>
+<p-tabView (onChange)="handleChange($event)">
     <p-tabPanel header="Executive View">
         <app-analytics2></app-analytics2>
     </p-tabPanel>
-
     <p-tabPanel header="Activities View">
+
         <app-listActivities></app-listActivities>
+
+
     </p-tabPanel>
-
-
     <p-tabPanel header="Activities Hierarchy">
-        <app-tree></app-tree>
+        <!--<app-tree></app-tree>-->
     </p-tabPanel>
 </p-tabView>

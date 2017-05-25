@@ -40,6 +40,7 @@ export class ListActivitiesComponent implements OnInit {
               private router:Router
               ) { }
   ngOnInit() {
+
     this.categoryService.getAll().subscribe(cat=>this.categories=cat);
     let loggedInUser=this.authService.getCurrentUser();
     this.cache.populateAllActivities();

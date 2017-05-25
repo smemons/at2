@@ -1,3 +1,5 @@
+import { TreeComponent } from './activity/tree/tree.component';
+import { Analytics2Component } from './analytics2/analytics2.component';
 import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
 import { AddKpiComponent } from './kpi/addKpi/addKpi.component';
 import { ListStatusComponent } from './status/listStatus/listStatus.component';
@@ -23,6 +25,21 @@ import { UserComponent } from './user/user.component';
 import { PageNotFoundComponent } from './pageNotFound/pageNotFound.component';
 import { HomeComponent } from './home/home.component';
 export const ROUTES = [
+  {
+        path: 'exview',
+        component:Analytics2Component,
+         canActivate: [AuthGuard]
+    },
+    {
+        path: 'myview',
+        component:ListActivitiesComponent,
+         canActivate: [AuthGuard]
+    },
+    {
+        path: 'hrchview',
+        component:TreeComponent,
+         canActivate: [AuthGuard]
+    },
    {
         path: 'addStatus',
         component:AddStatusComponent,

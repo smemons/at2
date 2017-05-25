@@ -54,6 +54,7 @@ var getAll = function(req, res, next) {
 
 var getAllByActivity = function(req, res, next) {
     actId = req.params.id;
+
     Task.find({ 'activityId': actId }, function(err, docs) {
         if (err) {
 

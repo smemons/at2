@@ -1,3 +1,4 @@
+import { LoaderService } from './loaderService';
 import { element } from 'protractor';
 import { Activity } from './../models/activity';
 import { TreeNode } from 'primeng/primeng';
@@ -8,7 +9,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class TreeBuilderService {
 
-constructor(private http:Http) { }
+constructor(private http:Http,private loaderService:LoaderService) { }
 
 
 //get one activity by id
@@ -32,7 +33,7 @@ constructor(private http:Http) { }
 //build a set of node
 treeBuilder():TreeNode
 {
-
+  this.loaderService.showLoader();
   let treeRoot:TreeNode=[];
   treeRoot.label="IT Projects";
    treeRoot.data="00";
@@ -50,8 +51,10 @@ treeBuilder():TreeNode
         node.expanded=false;
         treeRoot.children.push(this.addChildNode(elm,node));
       });
+      this.loaderService.hideLoader();
   },
   error=>{
+    this.loaderService.hideLoader();
     console.log('Error fetching data for activity by level'+error);
   })
   return treeRoot;

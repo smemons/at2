@@ -1,3 +1,4 @@
+import { LoaderService } from './services/loaderService';
 import { AnalyticsService } from './services/analytics.service';
 import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
 import { AddKpiComponent } from './kpi/addKpi/addKpi.component';
@@ -59,6 +60,7 @@ import {GrowlModule,ListboxModule,CalendarModule,PanelModule,DataTableModule,
 import { AppComponent } from './app.component';
 
 import { Analytics2Component } from './analytics2/analytics2.component';
+import { LoaderComponent } from './loader/loader.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +94,7 @@ import { Analytics2Component } from './analytics2/analytics2.component';
     ListKpiComponent,
 
     Analytics2Component,
-
+    LoaderComponent
 ],
   imports: [
      BrowserModule,
@@ -140,7 +142,8 @@ import { Analytics2Component } from './analytics2/analytics2.component';
     TruncatePipe,
     CacheStoreService,
     KpiService,
-    AnalyticsService
+    AnalyticsService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })
