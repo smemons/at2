@@ -1,50 +1,18 @@
-<div class="row" *ngIf="!showDetail" >
-
-    <div class="col-lg-3 at-panel ">
-        <!--<p-panel header="Reference" [toggleable]="true" [collapsed]="false">
+<div class="row">
+    <div class="col-lg-3 at-panel">
+        <p-panel header="Reference" [toggleable]="true" [collapsed]="false">
             <p-dropdown [options]="refList" [(ngModel)]="selectedRef" [style]="{'width':'100%'}" (onChange)="refStatusChanged($event)"></p-dropdown>
-        </p-panel>-->
-        <p-panel header="By Reference" [toggleable]="true" [collapsed]="false">
-               <div class="row">
-
-                        <table class="table package-table stats">
-                            <thead>
-                                <tr>
-                                    <th (click)="setStatsWithAllAct($event,dt2,null)" id="all-ref" class="st-th">REF</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" id="od-ref" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" id="na-ref" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" id="ip-ref" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" id="cp-ref" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of catStatsModel;let i=index">
-                                    <td  id="ref-1-{{i}}" (click)="setActivitiesData($event,item, 'all','CAT')">{{item.catName}}</td>
-                                    <td  id="ref-2-{{i}}" (click)="setActivitiesData($event,item, 'OD','CAT') ">{{item.overDue}}</td>
-                                    <td  id="ref-3-{{i}}" (click)="setActivitiesData($event,item, 'NA','CAT') ">{{item.needAtt}}
-                                    </td>
-                                    <td id="ref-4-{{i}}" (click)="setActivitiesData($event,item, 'IP','CAT') ">{{item.inProg}}
-                                    </td>
-                                    <td  id="ref-5-{{i}}" (click)="setActivitiesData($event,item, 'CP','CAT') ">{{item.complete}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>
-      </p-panel>
-        <p-panel header="By Organization" [toggleable]="true" [collapsed]="false">
-           <div class="row">
+        </p-panel>
+        <p-panel header="Organization" [toggleable]="true" [collapsed]="false">
             <table class="table package-table stats">
-                   <thead>
+                <tbody>
                     <tr *ngIf="deptStatsModel.length>0">
                         <th (click)="setStatsActByDept($event,dt2,null)" id="dpt-all" class="st-th">ORG</th>
-                        <th (click)="setStatsActByDept($event,dt2,'OD')" id="dpt-od" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'NA')" id="dpt-na" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'IP')" id="dpt-ip" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,'OD')" id="dpt-od" class="OverDue">Over Due</th>
+                        <th (click)="setStatsActByDept($event,dt2,'NA')" id="dpt-na" class="NeedAttention">Need Att</th>
+                        <th (click)="setStatsActByDept($event,dt2,'IP')" id="dpt-ip" class="InProgress">In Prog</th>
+                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" class="Comp">Complete</th>
                     </tr>
-                   </thead>
-                   <tbody>
                     <tr *ngFor="let model of deptStatsModel; let i=index">
                         <td id="dpt-1-{{i}}" (click)="setActivitiesData($event,model, 'all','DPT')">{{model.deptName}}</td>
                         <td id="dpt-2-{{i}}" (click)="setActivitiesData($event,model, 'OD','DPT')">{{model.overDue}}</td>
@@ -57,19 +25,8 @@
                     </tr>
                 </tbody>
             </table>
-           </div>
         </p-panel>
-
-    </div>
-    <div class="col-lg-9 at-panel">
-        <p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
-            <p-header>
-                {{detailHeading}}
-                <button type="button" *ngIf="showDetail" class="pull-right" (click)="showActDetail(selectedActivity._id)" title="Detail" pButton icon="fa-eye"></button>
-                <button type="button" *ngIf="showDetail" class="pull-right" (click)="changeDetailView()" title="Over View" pButton icon="fa-tasks"></button>
-            </p-header>
-          <div >
-
+        <p-panel header="Activities" [toggleable]="true" [collapsed]="refActExpand">
             <div style="margin: 0 auto;text-align: center;">
                 <label class="radio-inline"><input  type="radio" pTooltip="Display All" name="optradio" checked="checked" (click)="setStats(dt2,null)" > All</label>
                 <label class="radio-inline"><input type="radio" pTooltip="Over Due"  name="optradio" (click)="setStats(dt2,'OD')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
@@ -77,25 +34,13 @@
                 <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt2,'IP')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
                 <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
             </div>
-                 <p-dataTable [value]="refActivities" [rows]="10" [paginator]="true" sortMode="multiple" #dt2>
+            <p-dataTable [value]="refActivities" [rows]="7" [paginator]="true" sortMode="multiple" #dt2>
                 <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
-
-                </p-column>
-                <p-column field="refTitle" styleClass="text-center" header="Reference" [style]="{'width':'200px'}" [sortable]="true">
-                </p-column>
-                <p-column field="deptName" styleClass="text-center" header="Org" [style]="{'width':'100px'}" [sortable]="true">
-                </p-column>
-                <p-column field="startDate" header="Start Date" [style]="{'width':'100px'}" >
-                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date:'shortDate' }}
+                    <template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]|truncate:40 }}
                         </template>
-                    </p-column>
-                    <p-column field="endDate" header="End Date" [style]="{'width':'100px'}" >
-                        <template let-col let-act="rowData" pTemplate="body">
-                            {{act[col.field]|date :'shortDate'}}
-                        </template>
-                    </p-column>
-                <p-column field="assignee" styleClass="text-center" header="Assignee" [style]="{'width':'100px'}" [sortable]="true">
+                </p-column>
+                <p-column field="deptName" styleClass="text-center" header="Org" [style]="{'width':'50px'}" [sortable]="true">
                 </p-column>
                 <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
@@ -116,99 +61,67 @@
                     </ng-template>
                 </p-column>
             </p-dataTable>
-    </div>
-
         </p-panel>
     </div>
-
-</div>
-
-<div class="row" *ngIf="showDetail" >
-<p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
+    <div class="col-lg-6 at-panel">
+        <p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
             <p-header>
                 {{detailHeading}}
                 <button type="button" *ngIf="showDetail" class="pull-right" (click)="showActDetail(selectedActivity._id)" title="Detail" pButton icon="fa-eye"></button>
-                <button type="button" *ngIf="showDetail" class="pull-right" (click)="changeDetailView()" title="Back" pButton icon="fa-undo"></button>
+                <button type="button" *ngIf="showDetail" class="pull-right" (click)="changeDetailView()" title="Over View" pButton icon="fa-tasks"></button>
             </p-header>
-
-<div class="col-lg-3 at-panel" style=" overflow-y: auto;">
-  <p-panel header="Activity Detail" [toggleable]="false" [style]="{'max-height':'740px'}">
-    <div *ngIf="actDataAvailable " >
-
-              <table class="act-table">
-            <tr>
-                <th>Description</th>
-                <td> {{selectedActivity.desc|truncate:400 }}</td>
-            </tr>
-             <tr>
-                <th>Reference</th>
-                <td>  {{selectedActivity.cat}}</td>
-            </tr>
-             <tr>
-                <th>Organization(s)</th>
-                <td>
-                  {{selectedActivity.deptName}}
-                </td>
-            </tr>
-             <tr>
-                <th>Status</th>
-                <td>  {{selectedActivity.status}}</td>
-            </tr>
-             <tr>
-                <th>Start Date</th>
-                <td>  {{selectedActivity.startDate|date }}</td>
-            </tr>
-             <tr>
-                <th>End Date</th>
-                <td>{{selectedActivity.endDate|date }}</td>
-            </tr>
-
-             <tr>
-                <th>Completion(%)</th>
-                <td> {{selectedActivity.percentage}}%</td>
-            </tr>
-             <tr>
-                <th>Delta</th>
-                <td> {{selectedActivity.delta}}%</td>
-            </tr>
-             <tr>
-                <th>Assignee</th>
-                <td> {{selectedActivity.assignee}}</td>
-            </tr>
-           <ng-container  *ngIf="selectedActivity.level==0">
-              <tr>
-                <th>Sponsers</th>
-                <td> {{selectedActivity.sponsor}}</td>
-            </tr>
-             <tr>
-                <th>Focus Area</th>
-                <td> {{selectedActivity.focus}}</td>
-            </tr>
-
-             <tr>
-                <th>Cost</th>
-                <td>
-                   {{selectedActivity.cost}}
-                </td>
-            </tr>
-            <tr>
-                <th>Cost Saving</th>
-                <td>
-                   {{selectedActivity.costSaving}}
-                </td>
-            </tr>
-
-           </ng-container>
-        </table>
-
-    </div>
-  </p-panel>
-</div>
-
-<div class="col-lg-6 at-panel" style=" overflow-y: auto;">
-   <p-panel header="Sub Activities" [toggleable]="false" [style]="{'max-height':'740px'}">
+            <div *ngIf="!showDetail">
+                <div class="row">
+                    <div class="panel panel-default" style="margin:20px;">
+                        <table class="st-table table table-condensed table-hover stats">
+                            <thead>
+                                <tr>
+                                    <th (click)="setStatsWithAllAct($event,dt2,null)" id="all-ref" class="tabco1">Reference</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" id="od-ref" class="tabco2"> Over Due</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" id="na-ref" class="tabco3">Need Attention</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" id="ip-ref" class="tabco4">In Progress</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" id="cp-ref" class="tabco5">Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of catStatsModel;let i=index">
+                                    <td class="tabco1 " id="ref-1-{{i}}" (click)="setActivitiesData($event,item, 'all','CAT')">{{item.catName}}</td>
+                                    <td class="tabco2 " id="ref-2-{{i}}" (click)="setActivitiesData($event,item, 'OD','CAT') ">{{item.overDue}}</td>
+                                    <td class="tabco3 " id="ref-3-{{i}}" (click)="setActivitiesData($event,item, 'NA','CAT') ">{{item.needAtt}}
+                                    </td>
+                                    <td class=" tabco4 " id="ref-4-{{i}}" (click)="setActivitiesData($event,item, 'IP','CAT') ">{{item.inProg}}
+                                    </td>
+                                    <td class="tabco5 " id="ref-5-{{i}}" (click)="setActivitiesData($event,item, 'CP','CAT') ">{{item.complete}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--row-->
+            </div>
+            <div *ngIf=" showDetail ">
                 <div *ngIf="actDataAvailable ">
-
+                    <table class="table detail">
+                        <tbody>
+                            <tr>
+                                <th>Champion</th>
+                                <td>
+                                    <span *ngFor="let chmp of selectedActivity.assignee ; let isLast=last ">{{chmp}}{{isLast ? '' : ', '}}</span>
+                                </td>
+                                <th>Backup</th>
+                                <td>
+                                  <span *ngFor="let buchmp of selectedActivity.buAssignee ; let isLast=last ">{{buchmp}}{{isLast ? '' : ', '}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Start Date</th>
+                                <td> {{selectedActivity.startDate|date:'shortDate'}}</td>
+                                <th>End Date</th>
+                                <td> {{selectedActivity.endDate|date:'shortDate'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <div style="margin: 0 auto;text-align: center;">
                         <label class="radio-inline"><input type="radio" pTooltip="Show All " name="optradio" checked="checked" (click)="setStats(dt,null)" > All</label>
                         <label class="radio-inline"><input type="radio" pTooltip="Over Due" name="optradio" (click)="setStats(dt,'Over Due')"> <i class="fa fa-flag OD" aria-hidden="true"></i></label>
@@ -225,9 +138,9 @@
                                             </template>
                         </p-column>
                         <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
-                            <ng-template let-col let-act="rowData" pTemplate="body">
-                                           <span > {{act[col.field] }} </span>
-                             </ng-template>
+                            <template let-col let-act="rowData" pTemplate="body">
+                                           <span > {{act[col.field]|truncate:40 }} </span>
+                                            </template>
                         </p-column>
                         <p-column field="startDate" header="Start Date" [style]="{'width':'80px'}">
                             <ng-template let-col let-act="rowData" pTemplate="body">
@@ -257,37 +170,35 @@
                                 <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                             </ng-template>
                         </p-column>
-                        <p-column styleClass="col-button" styleClass="text-center" [style]="{'width':'80px'}">
+                        <p-column styleClass="col-button" styleClass="text-center" [style]="{'width':'40px'}">
                             <ng-template pTemplate="header">
                                 <i class="fa fa-cogs"></i>
                             </ng-template>
                             <ng-template let-act="rowData" pTemplate="body">
-                                 <button type="button" class="pull-left" title="Activity Detail" (click)="showActDetail(act._id)" pButton icon="fa-eye"></button>
-                                <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-info-circle"></button>
+                                <button type="button" class="pull-left" title="Activity Detail" (click)="viewTask(act._id)" pButton icon="fa-eye"></button>
                             </ng-template>
                         </p-column>
                     </p-dataTable>
                 </div>
-   </p-panel>
-  </div>
-  <div class="col-lg-3 at-panel" style="max-height: 700px; overflow-y: auto;">
-          <!--<div *ngIf="tasks.length > 0" class=" act-pad ">-->
-              <p-panel header="Progress updates" [toggleable]="true" [collapsed]="false">
-                  <p-dataTable [value]="tasks" [rows]="7" [paginator]="true">
-                      <p-column [style]="{'border-bottom':'2px solid #676a6e','padding':'10px'}" field="desc" header="Updates" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
-                          <ng-template let-col let-act="rowData" pTemplate="body">
-                              {{act[col.field]}}
-                              <br/>
-                              <span class="act-sm">{{act.createdBy}}, {{act.createdAt|date:'short'}} </span><span class="act-bs"> {{act.percentage}}% completed</span>
-                          </ng-template>
-                      </p-column>
-                  </p-dataTable>
-              </p-panel>
-          <!--</div>-->
-      </div>
-</p-panel>
+            </div>
+        </p-panel>
+    </div>
+    <div class="col-lg-3 at-panel" style="max-height: 700px; overflow-y: auto;">
+        <div *ngIf="tasks.length > 0" class=" act-pad ">
+            <p-panel header="Progress updates" [toggleable]="true" [collapsed]="false">
+                <p-dataTable [value]="tasks" [rows]="7" [paginator]="true">
+                    <p-column [style]="{'border-bottom':'2px solid #676a6e','padding':'10px'}" field="desc" header="Updates" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search">
+                        <ng-template let-col let-act="rowData" pTemplate="body">
+                            {{act[col.field]}}
+                            <br/>
+                            <span class="act-sm">{{act.createdBy}}, {{act.createdAt|date:'short'}} </span><span class="act-bs"> {{act.percentage}}% completed</span>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+            </p-panel>
+        </div>
+    </div>
 </div>
-
 <p-dialog header="Activity Detail" [(visible)]="displayActivity" modal="modal" width="800" height="600" responsive="true">
 
         <div class="col-lg-6 act-pad " style="overflow: auto; width:100%; height:500px;margin:0 auto;background: white;padding:30px;">

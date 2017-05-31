@@ -9,5 +9,7 @@ export class MiniActivity {
   stats:string;
   deptName:string;
   deptId:string;
+  refTitle:string;
+
 
 }

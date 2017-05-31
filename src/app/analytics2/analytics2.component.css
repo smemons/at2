@@ -130,11 +130,21 @@ th.tabco4 {
     color: #000000;
     cursor: pointer;
 }
+.stats{
+  /*font-size: normal;*/
+}
+.st-th{
+  width: 60%;
+}
 /*.table-hover tr:hover td {
     background: grey !important;
     cursor: pointer;
     color: green;
 }*/
+.table>tbody>tr>td,
+.table>tbody>tr>th{
+  padding: 2px !important;
+}
 .act-sm {
     font-size: smaller;
     font-style: italic;
@@ -237,19 +247,19 @@ table th {
 }
 .Over,
 .OD {
-    color: #e2a300 !important;
+    color: #f76b23 !important;
 }
 .Need,
 .NA {
-    color: #ffd521 !important;
+    color: #eabe00 !important;
 }
 .Progress,
 .IP {
-    color: #aad2c9 !important;
+    color: #75a4f1 !important;
 }
 .CP,
 .Completed {
-    color: #67917b !important;
+    color: #4eaf7c !important;
 }
 .detail table,
 th,
@@ -260,16 +270,16 @@ td {
     background: #c0c0c0 !important;
 }
 .OverDue {
-    background: #e2a300 !important;
+    background: #f76b23 !important;
 }
 .NeedAttention {
-    background: #ffd521 !important;
+    background: #eabe00 !important;
 }
 .Comp {
-     background: #67917b !important;
+     background: #4eaf7c !important;
 }
 .InProgress {
-    background: #aad2c9 !important;
+    background: #75a4f1 !important;
 }
 .ui-datatable-odd {
     background: #ffffff !important;
@@ -288,7 +298,7 @@ td {
   border: none;
 }
 .act-table  th {
-        width: 20%;
+        width: 30%;
         /*padding: 20px 10px !important;*/
         font-weight: bolder;
         text-transform: uppercase;
@@ -301,9 +311,9 @@ td {
     border: none;
   }
     .act-table td {
-        width: 80%;
+        width: 70%;
         padding: 0px 5px 20px 40px !important;
-        color:gray;
+        color:#272727;
         text-align: left;
         border:none !important;
     }

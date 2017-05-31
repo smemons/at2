@@ -41,7 +41,7 @@ var getActivityHchy = function(req, res, next) {
 
             query = { $match: { $and: [{ _id: actId }, { deptId: deptId }] } };
         }
-        Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupPhase, an.lookupStatus, an.lookupFocus, an.selfActLookup,
+        Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupPhase, an.lookupStatus, an.lookupFocus, an.selfActLookup,an.lookupCategory,
             an.actGraphLookup, an.actProject
         ], function(err, result) {
             if (err) {
@@ -85,7 +85,7 @@ var getAllActGroupedByDept = function(req, res, next) {
 
     }
 
-    Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupCategory,
+    Activity.aggregate([an.unwindDept, query, an.lookupDept, an.lookupCategory,an.lookupStatus,
         an.selfActLookup,
         an.actGraphLookup, an.grByCat_DeptProject, an.grByDept_Group
     ], function(err, result) {
@@ -124,7 +124,7 @@ var getAllActGroupedByCat = function(req, res, next) {
 };
 var getAllActAggregated = function(req, res, next) {
 
-    Activity.aggregate([an.matchLevel0, an.unwindDept, an.lookupDept,
+    Activity.aggregate([an.matchLevel0, an.unwindDept, an.lookupDept,an.lookupCategory,an.lookupStatus,
         an.selfActLookup,
         an.actGraphLookup, an.allActProject
     ], function(err, result) {

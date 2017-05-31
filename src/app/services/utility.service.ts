@@ -234,7 +234,7 @@ getAllDepts() {
    * return values: overdue, need attention, in progress and completed
    * param: startdate, enddate, completPerc
    */
-  getComputedStatus(startDate:Date,endDate:Date,perc:number=0):string
+  getComputedStatus(startDate:Date,endDate:Date,perc:number=-99,actStatus?:string):string
   {
     let status="";
     let start         =moment(startDate);
@@ -244,13 +244,20 @@ getAllDepts() {
     let consumedDays  =today.diff(start,'days');
     let remainDays    =end.diff(today,'days');
     let actual=(consumedDays/totalDays)*100;
-    if(perc==100) status="Completed";
+
+    //if status is completed then regardless make it compelted
+    if(actStatus!=undefined && actStatus.toLowerCase()==='completed')
+        status='Completed';
     else
+    if(perc==100) status="Completed";
+
+    else
+
     if(perc < 100 && remainDays < 0) status="Over Due";
     else
-    if(actual>perc && remainDays >=  0) status="Need Attention";
+    if(perc!=-99 && (actual>perc && remainDays >=  0)) status="Need Attention";
     else
-    if(actual<=perc && remainDays >=  0 ) status="In Progress";
+    status="In Progress";
 
 
         return status;
@@ -261,6 +268,7 @@ getAllDepts() {
  */
   findStatsInChildren(el:any)
   {
+
     let model:statsModel={};
     model.actId=[];
     model.overDue=0;
@@ -268,7 +276,12 @@ getAllDepts() {
     model.needAtt=0;
     model.inProg=0;
     model.actId=el._id;
-    let ret=this.getComputedStatus(el.startDate,el.endDate,el.percentage);
+    let status="";
+    if(el.status!=null)
+    {
+      status=el.status.title;
+    }
+    let ret=this.getComputedStatus(el.startDate,el.endDate,el.percentage,status);
         if(ret=="Over Due")model.overDue++;
         else
         if(ret=="Need Attention")model.needAtt++;
@@ -277,7 +290,7 @@ getAllDepts() {
         else
         if(ret=="Completed")model.complete++;
     el.children.forEach(child => {
-      let res=this.getComputedStatus(child.startDate,child.endDate,child.percentage);
+      let res=this.getComputedStatus(child.startDate,child.endDate,child.percentage,status);
         if(res=="Over Due")model.overDue++;
         else
         if(res=="Need Attention")model.needAtt++;

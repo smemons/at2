@@ -226,6 +226,7 @@ var actProject = {
     $project: {
         _id: "$_id",
         percentage: 1,
+        desc:1,
         endDate: 1,
         startDate: 1,
         cost: 1,
@@ -237,6 +238,7 @@ var actProject = {
         focus: "$focus.title",
         phase: "$phase.title",
         status: "$status.title",
+        cat:"$cat.title",
         firstChild: 1,
         children: 1,
     }
@@ -249,7 +251,9 @@ var grByCat_DeptProject = {
         percentage: 1,
         level: 1,
         startDate: 1,
+        assignee:1,
         endDate: 1,
+        status:{ $arrayElemAt: ["$status", 0] },
         dept: { $arrayElemAt: ["$dept", 0] },
         cat: { $arrayElemAt: ["$cat", 0] },
         firstChild: 1,
@@ -275,8 +279,11 @@ var allActProject = {
         percentage: 1,
         level: 1,
         startDate: 1,
+        assignee:1,
         endDate: 1,
+        status:{ $arrayElemAt: ["$status", 0] },
         dept: { $arrayElemAt: ["$dept", 0] },
+        cat: { $arrayElemAt: ["$cat", 0] },
         firstChild: 1,
         children: 1
     }

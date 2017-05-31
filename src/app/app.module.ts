@@ -121,6 +121,7 @@ import { LoaderComponent } from './loader/loader.component';
     BrowserAnimationsModule,
     AccordionModule,
     TooltipModule,
+
     RouterModule.forRoot(ROUTES)
   ],
   providers: [

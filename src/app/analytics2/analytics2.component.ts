@@ -50,6 +50,7 @@ private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService, private loaderService:LoaderService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
   @ViewChild('dt2') actTable: DataTable;
+
   ngOnInit() {
 
    this.utilityService.getAllPhases().subscribe(data=>{
@@ -83,7 +84,7 @@ private poupulateInitialActList()
    this.refActivities=[];
    this.loaderService.showLoader();
    this.anService.getAllActAggregated().subscribe(data=>{
-
+debugger;
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
@@ -92,6 +93,7 @@ private poupulateInitialActList()
        model.complete=0;
        this.calcEach(el,model);
      });
+
      this.selectedRefDepts=this.allActivitiesStore=this.refActivities;
      this.loaderService.hideLoader();
    },err=>this.loaderService.hideLoader());
@@ -110,7 +112,7 @@ setActivitiesData(event,item,statsType?:string,actionType?:string)
     this.actTable.reset();
     if(actionType=="CAT")
     {
-    if(this.prevRefCss!=null)
+    if(this.prevRefCss!=null && this.prevRefCss!=="")
       {
         document.getElementById(this.prevRefCss).classList.remove("selected");
       }
@@ -121,7 +123,7 @@ setActivitiesData(event,item,statsType?:string,actionType?:string)
     else
     if(actionType=="DPT")
       {
-      if(this.prevDeptCss!=null)
+      if(this.prevDeptCss!=null && this.prevDeptCss!=="")
         {
           document.getElementById(this.prevDeptCss).classList.remove("selected");
         }
@@ -176,7 +178,7 @@ setActivitiesData(event,item,statsType?:string,actionType?:string)
 refStatusChanged(evt)
 {
 
-    if(this.prevRefCss!=null)
+    if(this.prevRefCss!=null && this.prevRefCss!=="")
       {
         document.getElementById(this.prevRefCss).classList.remove("selected");
       }
@@ -271,6 +273,8 @@ calcEach(field,model)
            act.percentage=field.percentage;
            act.deptName=field.dept.title;
            act.deptId=field.dept._id;
+           act.refTitle=field.cat.title;
+           act.assignee=field.assignee;
               //each field item may have many activities under and each may have childen
              let tempModel=this.utilityService.findStatsInChildren(field);
              model.overDue+=tempModel.overDue>0?1:0;
@@ -370,7 +374,7 @@ private populateGrByDeptStats(catId?: string)
   let id=catId==null?"all":catId;
    this.loaderService.showLoader();
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
-
+  debugger;
      data.forEach(el => {
 
        let model:statsModel={};
@@ -507,7 +511,8 @@ setStats(dt,type)
 setStatsWithAllAct(event,dt,type)
 {
 
-   if(this.prevRefCss!=null)
+debugger;
+   if(this.prevRefCss!=null && this.prevRefCss!=="")
    {
     document.getElementById(this.prevRefCss).classList.remove("selected");
    }
@@ -520,11 +525,13 @@ setStatsWithAllAct(event,dt,type)
   this.selectedRef="all";
    this.populateGrByDeptStats("all");
   this.actTable.reset();
-  dt.filter(type,"stats","equals");
+  this.actTable.filter(type,"stats","equals");
 }
 setStatsActByDept(event,dt,type)
 {
-   if(this.prevDeptCss!=null)
+  debugger;
+
+   if(this.prevDeptCss!=null && this.prevDeptCss!=="")
    {
     document.getElementById(this.prevDeptCss).classList.remove("selected");
    }
@@ -532,7 +539,8 @@ setStatsActByDept(event,dt,type)
   this.prevDeptCss=target.id;
   target.classList.add("selected");
   this.refActivities=this.selectedRefDepts;
-  dt.filter(type,"stats","equals");
+  this.actTable.reset();
+  this.actTable.filter(type,"stats","equals");
 }
 
 showActDetail(id)

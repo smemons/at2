@@ -16,7 +16,6 @@ export class LoaderComponent implements OnInit {
 
   ngOnInit() {
    this.loaderService.showOrHideLoader().subscribe((index: number) => {
-     debugger;
      if(index<=0)
       this.hidden=true;//hide
      else
