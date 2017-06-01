@@ -189,7 +189,7 @@ table caption {
     margin: .5em 0 .75em;
 }
 table tr {
-    background: #f8f8f8;
+    /*background: #f8f8f8;*/
     border: 1px solid #ddd;
     padding: .35em;
 }
@@ -208,46 +208,10 @@ table th {
 
 
 }
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
-    }
-    table caption {
-        font-size: 1.3em;
-    }
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: .625em;
-    }
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        text-align: right;
-    }
-    table td:before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    table td:last-child {
-        border-bottom: 0;
-    }
-}
+
 .Over,
 .OD {
-    color: #f76b23 !important;
+    color: #d82c00 !important;
 }
 .Need,
 .NA {
@@ -270,7 +234,7 @@ td {
     background: #c0c0c0 !important;
 }
 .OverDue {
-    background: #f76b23 !important;
+    background: #d82c00 !important;
 }
 .NeedAttention {
     background: #eabe00 !important;
@@ -287,15 +251,44 @@ td {
 .ui-datatable-even {
     background: #F2F5F9 !important;
 }
+
+.act-table-sml td {
+  width: 100%;
+  text-align: left;
+
+        color:#272727;
+
+        border:none !important;
+
+}
+.act-table-sml th {
+  width: 100%;
+  text-align: left !important;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: #8b8d8e;
+
+
+}
 /*for activity view on popup*/
-.act-table table,td,
+.act-table-sml table,tr, td,
+    th
+    {
+        border: none !important;
+    }
+    .act-table table,td,
     th
     {
         border: none !important;
     }
 .act-table {
   width:100%;
-  border: none;
+  border: none !important;
+}
+.act-table-sml {
+  width:100%;
+  border: none !important;
+  background-color: white !important;
 }
 .act-table  th {
         width: 30%;
@@ -307,9 +300,8 @@ td {
          text-align:right;
         vertical-align: top;
     }
-  .act-table tr{
-    border: none;
-  }
+
+
     .act-table td {
         width: 70%;
         padding: 0px 5px 20px 40px !important;

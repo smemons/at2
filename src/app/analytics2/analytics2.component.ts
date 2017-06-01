@@ -426,7 +426,7 @@ private populateGrByCatStats()
    this.catStatsModel=[];
       this.loaderService.showLoader();
    this.anService.getActsGrByCat("all").subscribe(data=>{
-
+debugger;
      data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;

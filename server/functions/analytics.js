@@ -111,7 +111,7 @@ var getAllActGroupedByCat = function(req, res, next) {
         catId = ObjectId(catId);
         query = { $match: { $and: [{ catId: catId }, { level: 0 }] } };
     }
-    Activity.aggregate([query, an.unwindDept, an.lookupDept, an.lookupCategory,
+    Activity.aggregate([query, an.unwindDept, an.lookupDept, an.lookupCategory,an.lookupStatus,
         an.selfActLookup,
         an.actGraphLookup, an.grByCat_DeptProject, an.grByCat_Group
     ], function(err, result) {

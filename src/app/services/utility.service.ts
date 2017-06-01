@@ -245,7 +245,7 @@ getAllDepts() {
     let remainDays    =end.diff(today,'days');
     let actual=(consumedDays/totalDays)*100;
 
-    //if status is completed then regardless make it compelted
+     //if status is completed then regardless make it compelted
     if(actStatus!=undefined && actStatus.toLowerCase()==='completed')
         status='Completed';
     else
@@ -255,7 +255,7 @@ getAllDepts() {
 
     if(perc < 100 && remainDays < 0) status="Over Due";
     else
-    if(perc!=-99 && (actual>perc && remainDays >=  0)) status="Need Attention";
+    if(perc!=-99 && ((actual*0.3)>perc && remainDays >=  0)) status="Need Attention";
     else
     status="In Progress";
 

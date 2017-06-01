@@ -41,7 +41,7 @@
                         <th (click)="setStatsActByDept($event,dt2,'OD')" id="dpt-od" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
                         <th (click)="setStatsActByDept($event,dt2,'NA')" id="dpt-na" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
                         <th (click)="setStatsActByDept($event,dt2,'IP')" id="dpt-ip" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
                     </tr>
                    </thead>
                    <tbody>
@@ -62,7 +62,7 @@
 
     </div>
     <div class="col-lg-9 at-panel">
-        <p-panel [toggleable]="false" [style]="{'max-height':'740px'}">
+        <p-panel [toggleable]="false" [style]="{'max-height':'1000px'}">
             <p-header>
                 {{detailHeading}}
                 <button type="button" *ngIf="showDetail" class="pull-right" (click)="showActDetail(selectedActivity._id)" title="Detail" pButton icon="fa-eye"></button>
@@ -77,7 +77,7 @@
                 <label class="radio-inline"><input type="radio" pTooltip="In Progress" name="optradio" (click)="setStats(dt2,'IP')"><i class="fa fa-flag IP" aria-hidden="true"></i></label>
                 <label class="radio-inline"><input type="radio" pTooltip="Completed" name="optradio" (click)="setStats(dt2,'CP')"><i class="fa fa-flag CP" aria-hidden="true"></i></label>
             </div>
-                 <p-dataTable [value]="refActivities" [rows]="10" [paginator]="true" sortMode="multiple" #dt2>
+                 <p-dataTable [value]="refActivities" [rows]="13" [paginator]="true" sortMode="multiple" #dt2>
                 <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
 
                 </p-column>
@@ -132,73 +132,96 @@
             </p-header>
 
 <div class="col-lg-3 at-panel" style=" overflow-y: auto;">
-  <p-panel header="Activity Detail" [toggleable]="false" [style]="{'max-height':'740px'}">
+  <p-panel header="Activity Detail" [toggleable]="false" [style]="{'max-height':'740px', 'padding':'10px'}">
     <div *ngIf="actDataAvailable " >
 
-              <table class="act-table">
+              <table class=" act-table-sml">
             <tr>
-                <th>Description</th>
-                <td> {{selectedActivity.desc|truncate:400 }}</td>
+                <th >Description</th>
+
             </tr>
+             <tr>
+
+                <td> {{selectedActivity.desc|truncate:300 }}</td>
+            </tr>
+              </table>
+             <table class=" act-table">
              <tr>
                 <th>Reference</th>
                 <td>  {{selectedActivity.cat}}</td>
+
             </tr>
+
              <tr>
                 <th>Organization(s)</th>
-                <td>
-                  {{selectedActivity.deptName}}
-                </td>
+                  <td> {{selectedActivity.deptName}} </td>
+
             </tr>
+
              <tr>
                 <th>Status</th>
-                <td>  {{selectedActivity.status}}</td>
+                 <td>  {{selectedActivity.status}}</td>
+
             </tr>
+
              <tr>
                 <th>Start Date</th>
                 <td>  {{selectedActivity.startDate|date }}</td>
             </tr>
-             <tr>
+
+            <tr>
                 <th>End Date</th>
                 <td>{{selectedActivity.endDate|date }}</td>
+
             </tr>
+
 
              <tr>
                 <th>Completion(%)</th>
                 <td> {{selectedActivity.percentage}}%</td>
             </tr>
+
              <tr>
                 <th>Delta</th>
                 <td> {{selectedActivity.delta}}%</td>
             </tr>
+
              <tr>
                 <th>Assignee</th>
                 <td> {{selectedActivity.assignee}}</td>
             </tr>
+
            <ng-container  *ngIf="selectedActivity.level==0">
               <tr>
                 <th>Sponsers</th>
-                <td> {{selectedActivity.sponsor}}</td>
+                 <td> {{selectedActivity.sponsor}}</td>
+
             </tr>
+
              <tr>
                 <th>Focus Area</th>
                 <td> {{selectedActivity.focus}}</td>
+
             </tr>
+
 
              <tr>
                 <th>Cost</th>
-                <td>
+                 <td>
                    {{selectedActivity.cost}}
                 </td>
-            </tr>
-            <tr>
-                <th>Cost Saving</th>
-                <td>
-                   {{selectedActivity.costSaving}}
-                </td>
+
             </tr>
 
-           </ng-container>
+            <tr>
+                <th>Cost Saving</th>
+                 <td>
+                   {{selectedActivity.costSaving}}
+                </td>
+
+            </tr>
+
+          </ng-container>
         </table>
 
     </div>
