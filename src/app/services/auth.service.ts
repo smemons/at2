@@ -91,6 +91,20 @@ export class AuthService {
     return "";
   }
 
+//get current User role
+  getCurrentUserRoles(): User {
+    let user=new User();
+    if (this.isUserLoggedin)
+    {
+      let usr= JSON.parse(sessionStorage.getItem('currentUser')).username;
+
+       this.http
+      .post('/api/user/roles', usr)
+      .map((response: Response) => {});
+
+    }
+    return user
+  }
 
   // private helper methods
 

@@ -46,6 +46,10 @@ phasesBucket:any=[];
 selectedAct:string="";
 selectedDept:string="";
 activity:any=[];
+taskDialog:boolean;
+activityId:string;
+percentage:number;
+editActivity:Activity;
 private activityListChanged = new BehaviorSubject<string>("");
   constructor(private anService:AnalyticsService,private utilityService:UtilityService, private loaderService:LoaderService,
   private cache:CacheStoreService,private activityService:ActivityService, private taskService:TaskService) { }
@@ -271,6 +275,7 @@ calcEach(field,model)
            act.startDate=field.startDate;
            act.endDate=field.endDate;
            act.percentage=field.percentage;
+           act.delta=field.delta;
            act.deptName=field.dept.title;
            act.deptId=field.dept._id;
            act.refTitle=field.cat.title;
@@ -374,9 +379,8 @@ private populateGrByDeptStats(catId?: string)
   let id=catId==null?"all":catId;
    this.loaderService.showLoader();
    this.anService.getActsGrByDept(id,"cat").subscribe(data=>{
-  debugger;
-     data.forEach(el => {
 
+     data.forEach(el => {
        let model:statsModel={};
        model.inProg=0;
        model.needAtt=0;
@@ -554,5 +558,34 @@ showActDetail(id)
    this.displayActivity=true;
  });
 }
+ createTask(act:Activity)
+  {
+
+    this.activityId=act._id;
+    this.percentage=act.percentage;
+    this.taskDialog=true;
+    this.editActivity=act;
+  }
+  //task created event passed form component
+  taskCreated(task)
+  {
+    let delta=task.percentage-this.editActivity.percentage;
+    this.percentage=task.percentage;
+    let act=new Activity();
+    act._id=task.activityId;
+    act.delta=delta;
+    act.percentage=task.percentage;
+    this.editActivity.percentage=act.percentage;
+    this.editActivity.delta=act.delta;
+    this.activityService.updatePercentage(act).subscribe();
+    //tell cache that data is changed
+    //this.cache.isActivityChanged.next(act);
+    this.taskDialog=false;
+  }
+  //again through injection
+  taskClosed(val)
+  {
+    this.taskDialog=false;
+  }
 
 }

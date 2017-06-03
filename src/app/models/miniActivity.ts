@@ -5,6 +5,7 @@ export class MiniActivity {
   endDate:Date;
   assignee:[string];
   percentage:number;
+  delta:number;
   createdBy:string;
   stats:string;
   deptName:string;

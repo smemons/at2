@@ -10,11 +10,11 @@
                         <table class="table package-table stats">
                             <thead>
                                 <tr>
-                                    <th (click)="setStatsWithAllAct($event,dt2,null)" id="all-ref" class="st-th">REF</th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" id="od-ref" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" id="na-ref" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" id="ip-ref" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
-                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" id="cp-ref" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,null)" pTooltip="Display All Ref" id="all-ref" class="st-th">REF</th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'OD')" pTooltip="Over Due" id="od-ref" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'NA')" pTooltip="Need Attention" id="na-ref" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'IP')" pTooltip="In Progress" id="ip-ref" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
+                                    <th (click)="setStatsWithAllAct($event,dt2,'CP')" pTooltip="Completed" id="cp-ref" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,11 +37,11 @@
             <table class="table package-table stats">
                    <thead>
                     <tr *ngIf="deptStatsModel.length>0">
-                        <th (click)="setStatsActByDept($event,dt2,null)" id="dpt-all" class="st-th">ORG</th>
-                        <th (click)="setStatsActByDept($event,dt2,'OD')" id="dpt-od" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'NA')" id="dpt-na" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'IP')" id="dpt-ip" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
-                        <th (click)="setStatsActByDept($event,dt2,'CP')" id="dpt-cp" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,null)" pTooltip="Display All by Org" id="dpt-all" class="st-th">ORG</th>
+                        <th (click)="setStatsActByDept($event,dt2,'OD')" pTooltip="Over Due" id="dpt-od" ><i class="fa fa-flag fa-lg OD" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,'NA')" pTooltip="Need Attention" id="dpt-na" ><i class="fa fa-flag fa-lg NA" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,'IP')" pTooltip="In Progress" id="dpt-ip" ><i class="fa fa-flag fa-lg IP" aria-hidden="true"></i></th>
+                        <th (click)="setStatsActByDept($event,dt2,'CP')"  pTooltip="Completed" id="dpt-cp" ><i class="fa fa-flag fa-lg CP" aria-hidden="true"></i></th>
                     </tr>
                    </thead>
                    <tbody>
@@ -81,7 +81,7 @@
                 <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains"  filterPlaceholder="Search">
 
                 </p-column>
-                <p-column field="refTitle" styleClass="text-center" header="Reference" [style]="{'width':'200px'}" [sortable]="true">
+                <p-column field="refTitle" styleClass="text-center" header="Reference" [style]="{'width':'150px'}" [sortable]="true">
                 </p-column>
                 <p-column field="deptName" styleClass="text-center" header="Org" [style]="{'width':'100px'}" [sortable]="true">
                 </p-column>
@@ -99,6 +99,11 @@
                 </p-column>
                 <p-column field="percentage" styleClass="text-center"  header="%" [style]="{'width':'40px'}" [sortable]="true">
                 </p-column>
+                <p-column field="delta" styleClass="text-center"  header="Δ" [style]="{'width':'40px'}" [sortable]="true">
+                            <ng-template let-col let-act="rowData" pTemplate="body">
+                                <span >      {{act[col.field]}} </span>
+                            </ng-template>
+                        </p-column>
                 <p-column field="stats" styleClass="col-button" [style]="{'width':'40px'}">
                     <template pTemplate="header">
                                                 <i class="fa fa-flag"></i>
@@ -107,12 +112,14 @@
                         <i class="fa fa-flag {{act.stats}}" aria-hidden="true"></i>
                     </ng-template>
                 </p-column>
-                <p-column styleClass="col-button text-center" [style]="{'width':'40px'}">
+                <p-column styleClass="col-button text-center" [style]="{'width':'80px'}">
                     <ng-template pTemplate="header">
                         <i class="fa fa-cogs"></i>
                     </ng-template>
                     <ng-template let-act="rowData" pTemplate="body">
                         <button type="button" class="pull-left" title="Activity Detail" (click)="viewActDetail(act)" pButton icon="fa-eye"></button>
+                        <button type="button" class="pull-left" title="Progress Update" pButton (click)="createTask(act)" icon="fa-check-square-o"></button>
+
                     </ng-template>
                 </p-column>
             </p-dataTable>
@@ -456,4 +463,7 @@
 
             </div>
         </p-footer>
+</p-dialog>
+<p-dialog #aTaskDialog header="Add Progress Update" [(visible)]="taskDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+    <app-task [(percentage)]="percentage" [activityId]="activityId" (taskChanged)="taskCreated($event)" (taskClosed)="taskClosed($event)"></app-task>
 </p-dialog>
