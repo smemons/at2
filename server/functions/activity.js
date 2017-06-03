@@ -55,6 +55,20 @@ var updateActivityPercent = function(req, res, next) {
         res.send('Done')
     });
 }
+//delete by id
+var deleteActivity=function(req, res, next) {
+        var id = req.params.id;
+        console.log('deleting activity  by id: ' + id);
+        Activity.remove({ _id: id }, function(err) {
+            if (err) {
+                console.log(err);
+                next(err);
+            }
+            console.log("Activity deleted");
+            res.send('Done')
+        });
+    }
+//get all activities
 var getAll = function(req, res, next) {
     Activity.find(function(err, docs) {
         if (err) {
@@ -62,7 +76,7 @@ var getAll = function(req, res, next) {
         } else {
             res.json(docs);
         }
-    });
+    }).sort({ 'createdAt': -1 });
 }
 var OLDgetActivitiesByCatId = function(req, res, next) {
         var catId = req.params.id;
@@ -376,5 +390,6 @@ module.exports = {
     getAllByParentId: getAllByParentId,
     getAllInProgress: getAllInProgress,
     getActivitiesByCatId: getActivitiesByCatId,
-    getActivityById:getActivityById
+    getActivityById:getActivityById,
+    deleteActivity:deleteActivity
 }

@@ -1,3 +1,4 @@
+import { EditActivityComponent } from './activity/editActivity/editActivity.component';
 import { LoaderService } from './services/loaderService';
 import { AnalyticsService } from './services/analytics.service';
 import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
@@ -92,9 +93,9 @@ import { LoaderComponent } from './loader/loader.component';
     TruncatePipe,
     AddKpiComponent,
     ListKpiComponent,
-
     Analytics2Component,
-    LoaderComponent
+    LoaderComponent,
+    EditActivityComponent
 ],
   imports: [
      BrowserModule,

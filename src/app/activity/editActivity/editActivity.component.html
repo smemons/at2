@@ -1,0 +1,225 @@
+<p-dataTable [value]="activities" [rows]="15" [paginator]="true">
+  <p-column field="title" header="Title" [filter]="true" filterMatchMode="contains" filterPlaceholder="Search" [style]="{'width':'40%'}"></p-column>
+  <p-column field="startDate" header="Start Date">
+    <ng-template let-col let-act="rowData" pTemplate="body">
+      {{act[col.field]|date:'shortDate' }}
+    </ng-template>
+  </p-column>
+  <p-column field="endDate" header="End Date">
+    <ng-template let-col let-act="rowData" pTemplate="body">
+      {{act[col.field]|date :'shortDate'}}
+    </ng-template>
+  </p-column>
+  <p-column field="assignee" header="Assignee">
+    <ng-template let-col let-act="rowData" pTemplate="body">
+      {{act[col.field] }}
+    </ng-template>
+  </p-column>
+  <p-column field="createdBy" header="Created By"></p-column>
+  <p-column field="createdAt" header="Created on">
+    <ng-template let-col let-act="rowData" pTemplate="body">
+      {{act[col.field]|date :'shortDate'}}
+    </ng-template>
+  </p-column>
+  <p-column styleClass="col-button" [style]="{'width':'80px'}">
+    <template pTemplate="header">
+      <i class="fa fa-cogs"></i>
+    </template>
+
+    <template let-activity="rowData" pTemplate="body">
+      <button type="button" pButton (click)="editActivity(activity)" icon="fa-pencil"></button>
+      <button type="button" (click)="deleteActivity(activity)" pButton icon="fa-trash"></button>
+    </template>
+  </p-column>
+</p-dataTable>
+
+<p-dialog #aDialog header="Activity Update" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false"
+  [contentStyle]="{'overflow':'visible'}" [style]="{'overflow':'visible'}" [width]="700" [height]="700" [resizable]="false">
+
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="activity" style="max-height: 500px; overflow-y: auto;">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="title">Title</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="activity.title" required/></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="desc">Description</label></div>
+      <div class="ui-grid-col-8"><textarea id="desc" pInputTextarea [(ngModel)]="activity.desc"></textarea></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="category">Reference</label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [style]="{'width':'100%'}" name="category" [appendTo]="aDialog" inputId="category" [options]="categories" [(ngModel)]="activity.catId"
+          required></p-dropdown>
+
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="phase">Phase</label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [style]="{'width':'100%'}" name="phase" [appendTo]="aDialog" inputId="phase" [options]="phases" [(ngModel)]="activity.phaseId"
+          required></p-dropdown>
+
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="startDate">Start Date</label></div>
+      <div class="ui-grid-col-8">
+        <p-calendar [appendTo]="aDialog" name="startDate" [icon]="true" [(ngModel)]="activity.startDate" dateFormat="mm/dd/yy" dataType="string"></p-calendar>
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="endDate">End Date</label></div>
+      <div class="ui-grid-col-8">
+        <!--{{activity.endDate|date}}-->
+        <p-calendar [appendTo]="aDialog" name="endDate" [icon]="true" [(ngModel)]="activity.endDate" dateFormat="mm/dd/yy" dataType="string"></p-calendar>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="status">Completion(%)</label></div>
+      <div class="ui-grid-col-8">
+        <input type="text" pInputText [(ngModel)]="activity.percentage" style="width:200px" />
+        <p-slider [(ngModel)]="activity.percentage" [style]="{'width':'200px'}"></p-slider>
+      </div>
+    </div>
+    <br>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="status">Status</label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [style]="{'width':'100%'}" name="status" [appendTo]="aDialog" inputId="status" [options]="statuses" [(ngModel)]="activity.statusId"
+          required></p-dropdown>
+        <!--<p-selectButton [style]="{'font-size':'x-small'}" name="status" inputId="status" [options]="listStatuses" [(ngModel)]="activity.statusId" #status="ngModel" required></p-selectButton>-->
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="org">Organization</label></div>
+      <div class="ui-grid-col-8">
+        <p-multiSelect name="org" defaultLabel="Select Organization" [options]="depts" [(ngModel)]="activity.deptId" multiple="multiple"
+          [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #dept="ngModel" required>
+        </p-multiSelect>
+      </div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="assignee">Assignee</label></div>
+      <div class="ui-grid-col-8">
+
+        <input pInputText id="assignee" [(ngModel)]="activity.assignee" />
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="buassignee">Backup Assignee</label></div>
+      <div class="ui-grid-col-8">
+
+        <input pInputText id="buassignee" [(ngModel)]="activity.buAssignee" />
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="sponsor">Sponsor</label></div>
+      <div class="ui-grid-col-8">
+
+        <input pInputText id="sponsor" [(ngModel)]="activity.sponsor" />
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="focus">Focus</label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [style]="{'width':'100%'}" name="focus" [options]="focuses" [(ngModel)]="activity.focusId"></p-dropdown>
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="benefit">Benefit</label></div>
+      <div class="ui-grid-col-8">
+        <textarea name="benefit" pInputTextarea [(ngModel)]="activity.benefit"></textarea>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="cost">Cost</label></div>
+      <div class="ui-grid-col-8">
+
+        <input pInputText id="cost" [(ngModel)]="activity.cost" />
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="costs">Cost Saving</label></div>
+      <div class="ui-grid-col-8">
+
+        <input pInputText id="costs" [(ngModel)]="activity.costSaving" />
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="vis">Visibility</label></div>
+      <div class="ui-grid-col-8">
+
+        <p-multiSelect name="vis" defaultLabel="Select Visibility" [options]="visibilities" [(ngModel)]="activity.visId" multiple="multiple"
+          [style]="{'width':'100%','max-height':'200px'}" checkbox="checkbox" filter="filter" #visibility="ngModel">
+        </p-multiSelect>
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="kpi">KPI</label></div>
+      <div class="ui-grid-col-8">
+
+        <p-dropdown name="kpi" [options]="kpis" [(ngModel)]="activity.kpiId" [style]="{'width':'100%'}"></p-dropdown>
+
+
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class=" col-xs-6">
+        <label for="chartered">Chartered</label>
+        <p-inputSwitch name="chartered" onLabel="Yes" offLabel="No" [(ngModel)]="activity.chartered"></p-inputSwitch>
+      </div>
+
+      <div class="col-xs-6">
+        <label for="monitor">Monitored</label>
+        <p-inputSwitch name="monitor" onLabel="Yes" offLabel="No" [(ngModel)]="activity.monitored"></p-inputSwitch>
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"> <label for="next">Next Step</label></div>
+      <div class="ui-grid-col-8"> <textarea pInputTextarea class="form-control" name="next" [(ngModel)]="activity.nextStep"></textarea></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"> <label for="outscope">Out of Scope</label></div>
+      <div class="ui-grid-col-8"> <textarea pInputTextarea class="form-control" name="outscope" [(ngModel)]="activity.outOfScope"></textarea></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"> <label for="detail">Project Detail</label></div>
+      <div class="ui-grid-col-8"> <input pInputText type="text" class="form-control" name="detail" [(ngModel)]="activity.projDetail" /></div>
+
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"> <label for="challenge">Challenges</label></div>
+      <div class="ui-grid-col-8"> <textarea pInputTextarea class="form-control" name="challenge" [(ngModel)]="activity.challenge"></textarea></div>
+    </div>
+
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"> <label for="doc">Documentation Link</label></div>
+      <div class="ui-grid-col-8"> <input pInputText type="text" class="form-control" name="doc" [(ngModel)]="activity.docLink" /></div>
+    </div>
+
+  </div>
+
+
+
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton icon="fa-window-close-o" (click)="cancel()" label="Cancel"></button>
+      <button type="button" pButton icon="fa-floppy-o" (click)="updateActivity(activity)" label="Update"></button>
+
+    </div>
+  </p-footer>
+
+</p-dialog>
+<p-confirmDialog width="425"></p-confirmDialog>

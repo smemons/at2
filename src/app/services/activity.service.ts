@@ -124,4 +124,11 @@ getActivityById(id)
       .get('/api/activity/byId/'+id)
       .map((response: Response) => response.json());
 }
+ /////////////////////////////////////////////////////////// delete activity
+  delete(id : String) {
+    return this
+      .http
+      .delete('/api/activity/' + id)
+      .map((response : Response) => response);
+  }
 }

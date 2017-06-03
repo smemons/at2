@@ -1,3 +1,4 @@
+import { EditActivityComponent } from './activity/editActivity/editActivity.component';
 import { TreeComponent } from './activity/tree/tree.component';
 import { Analytics2Component } from './analytics2/analytics2.component';
 import { ListKpiComponent } from './kpi/listKpi/listKpi.component';
@@ -128,8 +129,8 @@ export const ROUTES = [
          canActivate: [AuthGuard]
     },
      {
-        path: 'listActivities',
-        component:ActivityComponent,
+        path: 'editActivities',
+        component:EditActivityComponent,
          canActivate: [AuthGuard]
     },
   {

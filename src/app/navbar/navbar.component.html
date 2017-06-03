@@ -15,6 +15,12 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>Settings<span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                      <!-- activities links -->
+                        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a [routerLink]="['/createActivity']"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add Activity</a></li>
+                        <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a [routerLink]="['/editActivities']"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>List/Edit Activities</a></li>
+
+                        <!-- ref links -->
+                         <li role="separator" class="divider"></li>
                         <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a [routerLink]="['/addCategory']"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Add Reference</a></li>
                         <li data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><a [routerLink]="['/listCategories']"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>List References</a></li>
                         <!--department links -->
